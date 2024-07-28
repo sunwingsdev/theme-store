@@ -9,8 +9,8 @@ import PrivateRoute from "./PrivateRoute";
 import AboutUs from "../pages/Home/AboutUs/AboutUs";
 import Contact from "../pages/Home/Contact/Contact";
 import PopularCourse from "../components/Home/PopularCourse/PopularCourse";
-import AddCourse from "../pages/Dashboard/AddCourse/AddCourse";
 import AdmissionDetails from "../components/Dashboard/Sidebar/AdmissionDetails/AdmissionDetails";
+import AddWebsite from "../pages/Dashboard/AddCourse/AddWebsite";
 
 const Router = createBrowserRouter([
   {
@@ -48,8 +48,8 @@ const Router = createBrowserRouter([
         element: <AdmissionStudent />,
       },
       {
-        path: "add-course",
-        element: <AddCourse />,
+        path: "add-website",
+        element: <AddWebsite />,
       },
     ],
   },

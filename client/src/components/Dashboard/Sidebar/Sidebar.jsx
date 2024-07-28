@@ -95,9 +95,9 @@ const Sidebar = () => {
                       Admission Student List
                     </li>
                   </Link>
-                  <Link to="/dashboard/add-course">
+                  <Link to="/dashboard/add-website">
                     <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
-                      Add Course
+                      Add Website
                     </li>
                   </Link>
                 </ul>
@@ -134,9 +134,9 @@ const Sidebar = () => {
                   Admission Student List
                 </li>
               </Link>
-              <Link to="/dashboard/add-course">
+              <Link to="/dashboard/add-website">
                 <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
-                  Add Course
+                  Add Website
                 </li>
               </Link>
             </ul>
