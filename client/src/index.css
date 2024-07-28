@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.gradientBg {
+  @apply bg-gradient-to-r from-[#ff1e1e] to-[#ff8079];
+}
+.gradientTextBg {
+  @apply gradientBg text-transparent bg-clip-text;
+}
+.bannerBg {
+  background: url(./assets/banner/banner_bg.png);
+  object-fit: cover;
+}
+/* Example CSS to apply background color to the table heading row */
+th {
+  background-color: #4a90e2; /* Change the color to your desired background color */
+  color: white; /* Optional: Change the text color */
+}
