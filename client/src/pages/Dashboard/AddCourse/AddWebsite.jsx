@@ -198,7 +198,7 @@ const AddWebsite = () => {
               <span className="text-red-600 text-sm">
                 {errors.demoLink.message}
               </span>
-            )}
+            )} 
             {/* Tutorial*/}
             <TextInput name={"tutorialLink"} label={"Tutorial Link"} />
             {errors.tutorialLink && (
