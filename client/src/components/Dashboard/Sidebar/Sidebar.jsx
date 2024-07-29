@@ -81,7 +81,7 @@ const Sidebar = () => {
                   className="bg-green-600 hover:bg-green-700 duration-300 py-2 px-4 flex gap-2 items-center"
                   onClick={() => toggleCollapse("admission")}
                 >
-                  Admission
+                  Websites
                 </div>
                 <ul
                   className={`pl-4 mt-2 ${
@@ -95,9 +95,9 @@ const Sidebar = () => {
                       Admission Student List
                     </li>
                   </Link>
-                  <Link to="/dashboard/add-course">
+                  <Link to="/dashboard/add-website">
                     <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
-                      Add Course
+                      Add Website
                     </li>
                   </Link>
                 </ul>
@@ -120,7 +120,7 @@ const Sidebar = () => {
               className="bg-green-600 hover:bg-green-700  duration-300 py-2 px-4 flex gap-2 items-center lg:text-lg"
               onClick={() => toggleCollapse("admission")}
             >
-              Admission
+              Websites
             </div>
             <ul
               className={`pl-4 mt-2 text-sm lg:text-base ${

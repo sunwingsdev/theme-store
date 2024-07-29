@@ -5,6 +5,8 @@ import { useGetAllCourseQuery } from "../../../redux/features/allApis/coursesApi
 export default function CourseTab() {
   const { data } = useGetAllCourseQuery();
 
+  console.log(data);
+
   return (
     <div className="w-full px-2 sm:px-0">
       <Tab.Group>

@@ -10,6 +10,7 @@ const coursesApi = (coursesCollection) => {
     courseInfo.unlimitedLicensePrice = parseFloat(
       courseInfo.unlimitedLicensePrice
     );
+    courseInfo.createdAt = new Date();
     const result = await coursesCollection.insertOne(courseInfo);
     res.send(result);
   });
