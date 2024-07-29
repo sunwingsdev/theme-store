@@ -17,3 +17,9 @@ th {
   background-color: #4a90e2; /* Change the color to your desired background color */
   color: white; /* Optional: Change the text color */
 }
+
+@media (min-width: 1024px) {
+  .container {
+    padding: 0 60px;
+  }
+}

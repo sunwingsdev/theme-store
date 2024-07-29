@@ -16,11 +16,11 @@ const Navbar = () => {
       <div className="flex items-center justify-between container mx-auto py-2">
         <img className="w-20" src={logo} alt="Logo" />
         <div className="hidden md:flex flex-row gap-8">
-          <ul className="flex flex-row items-center justify-center gap-8 text-lg font-semibold text-[#1f1e1e]">
+          <ul className="flex flex-row items-center justify-center gap-8 text-base font-semibold text-[#1f1e1e]">
             <NavLink
               className={({ isActive }) =>
-                `hover:border-b-2 hover:border-[#ff1e1e] ${
-                  isActive && "border-b-2 border-[#ff1e1e]"
+                `hover:border-b-2 hover:border-[#404040] ${
+                  isActive && "border-b-2 border-[#404040]"
                 }`
               }
               to="/"
@@ -29,8 +29,8 @@ const Navbar = () => {
             </NavLink>
             <NavLink
               className={({ isActive }) =>
-                `hover:border-b-2 hover:border-[#ff1e1e] ${
-                  isActive && "border-b-2 border-[#ff1e1e]"
+                `hover:border-b-2 hover:border-[#404040] ${
+                  isActive && "border-b-2 border-[#404040]"
                 }`
               }
               to="/about-us"
@@ -49,8 +49,8 @@ const Navbar = () => {
             </NavLink> */}
             <NavLink
               className={({ isActive }) =>
-                `hover:border-b-2 hover:border-[#ff1e1e] ${
-                  isActive && "border-b-2 border-[#ff1e1e]"
+                `hover:border-b-2 hover:border-[#404040] ${
+                  isActive && "border-b-2 border-[#404040]"
                 }`
               }
               to="/contact"
@@ -58,18 +58,16 @@ const Navbar = () => {
               <li>Contact</li>
             </NavLink>
             <NavLink
-              className={`hover:border-b-2 hover:border-[#ff1e1e]`}
+              className={`hover:border-b-2 hover:border-[#404040]`}
               to="/dashboard"
             >
               <li>Dashboard</li>
             </NavLink>
           </ul>
-          <Link to="/courses">
-            <PrimaryButton
-              icon={IoBookOutline}
-              text="Browse Course"
-              arrow={true}
-            ></PrimaryButton>
+          <Link to="/login">
+            <div className="px-6 py-1 text-base font-semibold bg-orange-500 text-white rounded-md shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] hover:shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)] transition-all duration-500">
+              Login
+            </div>
           </Link>
         </div>
         <div className="md:hidden flex items-center">
