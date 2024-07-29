@@ -146,7 +146,7 @@ const Sidebar = () => {
               Home
             </li>
           </Link>
-          <li
+          <li 
             onClick={handleLogout}
             className="text-white cursor-pointer bg-green-600 hover:bg-green-700  duration-300 py-2 px-4 flex gap-2 items-center lg:text-lg"
           >
