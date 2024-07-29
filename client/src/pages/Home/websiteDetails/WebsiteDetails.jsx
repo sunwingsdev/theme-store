@@ -1,12 +1,22 @@
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useGetAllCourseQuery } from "../../../redux/features/allApis/coursesApi/coursesApi";
 
 const WebsiteDetails = () => {
+  const { id } = useParams();
+  const { data, isLoading } = useGetAllCourseQuery();
+
+  console.log(id);
+
+  const singleWebsite = data?.find((singleData) => singleData._id === id);
+
+  if (isLoading) return <p>Loading...</p>;
+
   return (
     <div className="">
       {/* single website details page header area */}
       <div className="bg-slate-900 text-center text-white py-14 lg:py-16 xl:py-20 text-2xl lg:text-4xl font-bold flex flex-col items-center justify-center">
-        <h2>ESchool</h2>
+        <h2>{singleWebsite?.title}</h2>
         <img
           className="w-20 mx-auto"
           src="https://themesbazar.com/wp-content/themes/themesbazar/assets/images/icon-image.png"
@@ -16,7 +26,12 @@ const WebsiteDetails = () => {
       {/* all single card */}
       <div className="container mx-auto">
         <div className="flex items-center justify-center mt-10 md:mt-16">
-          <Link className="bg-white hover:bg-red-600 hover:text-white text-red-600 border border-red-600 rounded-full p-2 px-10 text-lg font-bold hover:shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] transition-all duration-300">
+          <Link
+            to={singleWebsite?.demoLink}
+            rel="noreferrer"
+            target={"_blank"}
+            className="bg-white hover:bg-red-600 hover:text-white text-red-600 border border-red-600 rounded-full p-2 px-10 text-lg font-bold hover:shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] transition-all duration-300"
+          >
             Live Demo
           </Link>
         </div>
@@ -28,7 +43,7 @@ const WebsiteDetails = () => {
                 Single License
               </h2>
               <h3 className="text-2xl md:text-3xl font-bold text-[#3c3b3e]">
-                $42.38 / 4,000 ৳
+                $42.38 / {singleWebsite?.singleLicensePrice} ৳
               </h3>
               <p className="text-base">
                 <span className="font-bold">One </span>Premium themes
@@ -47,7 +62,7 @@ const WebsiteDetails = () => {
                 Unlimited License
               </h2>
               <h3 className="text-2xl md:text-3xl font-bold text-[#3c3b3e]">
-                ৳10,000 / $106
+                $106 / {singleWebsite?.unlimitedLicensePrice} ৳
               </h3>
               <p className="text-base">
                 <span className="font-bold">One </span>Premium themes
