@@ -43,17 +43,19 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center gap-4 container mx-auto">
-      <div className="w-full md:w-2/5">
+    <div className="flex flex-col md:flex-row items-center justify-center gap-4 container mx-auto h-screen">
+      <div className="w-full md:w-2/5 md:block hidden">
         <img src={loginImg} alt="" className="w-full" />
       </div>
-      <div className="max-w-md mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 md:w-3/5">
-        <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
+      <div className="max-w-md mx-auto bg-white rounded px-8 pt-6 pb-8 md:w-3/5 shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]">
+        <h2 className="text-3xl font-bold mb-4 text-center">
+          Lo<span className="text-orange-500">gin</span>
+        </h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <label
               htmlFor="email"
-              className="block text-gray-700 font-bold mb-2"
+              className="block text-gray-700 font-semibold mb-2"
             >
               Email
             </label>
@@ -70,7 +72,7 @@ const Login = () => {
           <div>
             <label
               htmlFor="password"
-              className="block text-gray-700 font-bold mb-2"
+              className="block text-gray-700 font-semibold mb-2"
             >
               Password
             </label>
@@ -93,12 +95,19 @@ const Login = () => {
               <span className="text-red-500">Password is required</span>
             )}
           </div>
-          <button
-            type="submit"
-            className="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          >
-            {loading ? "Logging in" : "Login"}
-          </button>
+          <div className="flex justify-between">
+            <button
+              type="submit"
+              className="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded"
+            >
+              {loading ? "Logging in" : "Login"}
+            </button>
+            <Link>
+              <div className="text-blue-500 hover:underline">
+                Forget password
+              </div>
+            </Link>
+          </div>
         </form>
         <div className="mt-4 text-center">
           <p>
