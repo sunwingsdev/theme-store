@@ -46,7 +46,7 @@ const CourseCard = ({ course }) => {
               rel="noreferrer"
               target={"_blank"}
               // onClick={() => openModal(course?.courseName)}
-              className="border w-full border-red-600 p-[8px] font-semibold
+              className="text-center border w-full border-red-600 p-[8px] font-semibold
          rounded-sm hover:bg-red-600 text-red-600 hover:text-white transition-all duration-300"
             >
               Live Demo
