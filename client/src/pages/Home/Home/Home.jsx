@@ -3,8 +3,8 @@ import PopularCourse from "../../../components/Home/PopularCourse/PopularCourse"
 
 const Home = () => {
   return (
-    <div className="px-4">
-      <Banner />
+    <div className="">
+      {/* <Banner /> */}
       <PopularCourse />
     </div>
   );

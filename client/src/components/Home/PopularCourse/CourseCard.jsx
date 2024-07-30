@@ -17,7 +17,7 @@ const CourseCard = ({ course }) => {
 
   return (
     <>
-      <div className="flex flex-col bg-slate-100 rounded-lg shadow-[0_3px_10px_rgb(0,0,0,0.2)] hover:shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] transition-all duration-300">
+      <div className="flex flex-col bg-slate-100 rounded-lg shadow-[0_3px_10px_rgb(0,0,0,0.2)] hover:shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)] transition-all duration-300">
         <Link>
           <img
             className="rounded-t-lg w-full md:h-60"
