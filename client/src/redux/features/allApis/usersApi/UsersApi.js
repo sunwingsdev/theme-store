@@ -11,7 +11,13 @@ const usersApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["users"],
     }),
+
+    // get all users
+    getAllUsers: builder.query({
+      query: () => "/users",
+      providesTags: ["users"],
+    }),
   }),
 });
 
-export const { useAddUserMutation } = usersApi;
+export const { useAddUserMutation, useGetAllUsersQuery } = usersApi;

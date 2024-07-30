@@ -2,6 +2,7 @@ import { useState } from "react";
 import CourseCard from "../PopularCourse/CourseCard";
 import { useGetAllCourseQuery } from "../../../redux/features/allApis/coursesApi/coursesApi";
 import { Tab } from "@headlessui/react";
+import Loader from "../../shared/Loader";
 
 export default function CourseTab() {
   const { data, isLoading } = useGetAllCourseQuery();
@@ -24,7 +25,7 @@ export default function CourseTab() {
     },
   ];
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loader />;
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -45,7 +46,7 @@ export default function CourseTab() {
       <Tab.Group
         onChange={(index) => {
           setSelectedCategory(categoryOptions[index].value);
-          setCurrentPage(1); // Reset to the first page on category change
+          setCurrentPage(1);
         }}
       >
         <Tab.List className="flex items-center justify-center gap-4 overflow-x-auto py-2 px-10">
