@@ -1,12 +1,11 @@
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
 import { Link, useParams } from "react-router-dom";
 import { useGetAllCourseQuery } from "../../../redux/features/allApis/coursesApi/coursesApi";
+import Heading from "../../../components/shared/Heading";
 
 const WebsiteDetails = () => {
   const { id } = useParams();
   const { data, isLoading } = useGetAllCourseQuery();
-
-  console.log(id);
 
   const singleWebsite = data?.find((singleData) => singleData._id === id);
 
@@ -15,14 +14,7 @@ const WebsiteDetails = () => {
   return (
     <div className="">
       {/* single website details page header area */}
-      <div className="bg-slate-900 text-center text-white py-14 lg:py-16 xl:py-20 text-2xl lg:text-4xl font-bold flex flex-col items-center justify-center">
-        <h2>{singleWebsite?.title}</h2>
-        <img
-          className="w-20 mx-auto"
-          src="https://themesbazar.com/wp-content/themes/themesbazar/assets/images/icon-image.png"
-          alt=""
-        />
-      </div>
+      <Heading title={singleWebsite?.title} />
       {/* all single card */}
       <div className="container mx-auto">
         <div className="flex items-center justify-center mt-10 md:mt-16">

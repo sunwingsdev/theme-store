@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { imageUpload } from "../../../apis/api";
 import { useAddCourseMutation } from "../../../redux/features/allApis/coursesApi/coursesApi";
 import { useToasts } from "react-toast-notifications";
 import TextInput from "../../../components/shared/TextInput";
 import SelectInput from "../../../components/shared/SelectInput";
 import TextareaInput from "../../../components/shared/TextareaInput";
+import { imageUpload } from "../../../apis/api";
 
 const AddWebsite = () => {
   const {
@@ -81,7 +81,7 @@ const AddWebsite = () => {
     try {
       setLoading(true);
       const imageData = await imageUpload(image);
-      const imageUrl = imageData?.data?.display_url;
+      const imageUrl = imageData?.url;
       data.image = imageUrl;
       data.features = modules;
       try {
