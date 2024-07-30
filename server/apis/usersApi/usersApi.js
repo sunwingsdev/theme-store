@@ -10,6 +10,11 @@ const usersApi = (usersCollection) => {
     res.send(result);
   });
 
+  userRouter.get("/", async (req, res) => {
+    const result = await usersCollection.find().toArray();
+    res.send(result);
+  });
+
   return userRouter;
 };
 

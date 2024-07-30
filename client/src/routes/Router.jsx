@@ -12,6 +12,7 @@ import PopularCourse from "../components/Home/PopularCourse/PopularCourse";
 import AdmissionDetails from "../components/Dashboard/Sidebar/AdmissionDetails/AdmissionDetails";
 import WebsiteDetails from "../pages/Home/websiteDetails/WebsiteDetails";
 import AddWebsite from "../pages/Dashboard/AddCourse/AddWebsite";
+import UsersList from "../pages/Dashboard/UsersList/UsersList";
 
 const Router = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ const Router = createBrowserRouter([
       {
         path: "add-website",
         element: <AddWebsite />,
+      },
+      {
+        path: "users",
+        element: <UsersList />,
       },
     ],
   },

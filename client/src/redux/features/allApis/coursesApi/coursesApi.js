@@ -11,11 +11,12 @@ const coursesApi = baseApi.injectEndpoints({
       invalidatesTags: ["courses"],
     }),
 
-    // get all course
+    // get all courses
     getAllCourse: builder.query({
       query: () => "/courses",
       providesTags: ["courses"],
     }),
   }),
 });
+
 export const { useAddCourseMutation, useGetAllCourseQuery } = coursesApi;

@@ -9,7 +9,7 @@ const Sidebar = () => {
   const { addToast } = useToasts();
   const [collapsed, setCollapsed] = useState({
     admission: true,
-    branch: true,
+    users: true,
     saleHistory: true,
     stockManager: true,
     paymentGateway: true,
@@ -139,6 +139,32 @@ const Sidebar = () => {
                   Add Website
                 </li>
               </Link>
+            </ul>
+          </li>
+          <li className="text-white cursor-pointer">
+            <div
+              className="bg-green-600 hover:bg-green-700  duration-300 py-2 px-4 flex gap-2 items-center lg:text-lg"
+              onClick={() => toggleCollapse("users")}
+            >
+              Users
+            </div>
+            <ul
+              className={`pl-4 mt-2 text-sm lg:text-base ${
+                collapsed.users
+                  ? "hidden"
+                  : "block transition-all ease-in duration-500"
+              }`}
+            >
+              <Link to="/dashboard/users">
+                <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
+                  Users List
+                </li>
+              </Link>
+              {/* <Link to="/dashboard/add-website">
+                <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
+                  Add Website
+                </li>
+              </Link> */}
             </ul>
           </li>
           <Link to="/">
