@@ -15,7 +15,10 @@ const coursesApi = require("./apis/coursesApi/coursesApi");
 const corsConfig = {
   origin: [
     "http://localhost:5173",
-    "https://sunwingstrainingcentre.netlify.app",
+    "https://rabbitcode.org",
+    "http://rabbitcode.org",
+    "www.rabbitcode.org",
+    "rabbitcode.org",
     "*",
   ],
   credentials: true,
@@ -76,9 +79,9 @@ run().catch(console.dir);
 
 // basic setup
 app.get("/", (req, res) => {
-  res.send("Training Admission Server is Running.");
+  res.send("Theme store server is Running.");
 });
 
 app.listen(port, () => {
-  console.log(`Training Admission Server is Running on PORT:🆗 ${port}`);
+  console.log(`Theme store server is Running on PORT:🆗 ${port}`);
 });
