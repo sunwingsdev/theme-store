@@ -1,92 +1,138 @@
-import { useState } from "react";
-import CourseCard from "../PopularCourse/CourseCard";
-import { useGetAllCourseQuery } from "../../../redux/features/allApis/coursesApi/coursesApi";
 import { Tab } from "@headlessui/react";
-import Loader from "../../shared/Loader";
+import CourseCard from "../PopularCourse/CourseCard";
+
+// function classNames(...classes) {
+//   return classes.filter(Boolean).join(" ");
+// }
 
 export default function CourseTab() {
-  const { data, isLoading } = useGetAllCourseQuery();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(6);
-  const [selectedCategory, setSelectedCategory] = useState("");
+  // const tabList = [
+  //   { name: "all-course", label: "All Course" },
+  //   { name: "graphic-multimedia", label: "Graphic & Multimedia" },
+  //   { name: "web-software", label: "Web & Software" },
+  //   { name: "digital-marketing", label: "Digital & Marketing" },
+  // ];
 
-  const categoryOptions = [
+  const courseList = [
     {
-      label: "All",
-      value: "",
+      _id: 1,
+      image:
+        "https://www.creativeitinstitute.com/images/course/course_1663052056.jpg",
+      courseName: "Visa Processing Course",
+      onlinePrice: 10000,
+      offlinePrice: 18000,
+      module: ["visa processing", "visa consultant"],
+      duration: "2 Months",
+      classSchedule: "Saturday and Friday",
+      overview: "",
+      conclusion: "Certificate and other stuff",
     },
     {
-      label: "News",
-      value: "news",
+      _id: 2,
+      image:
+        "https://www.creativeitinstitute.com/images/course/course_1663052056.jpg",
+      courseName: "Air Ticketing Course",
+      onlinePrice: 9000,
+      offlinePrice: 16000,
+      module: ["Buy Ticket", "ticket issue"],
+      duration: "2 Months",
+      classSchedule: "Saturday and Friday",
+      overview: "",
+      conclusion: "Certificate and other stuff",
     },
     {
-      label: "Ecommerce",
-      value: "e-commerce",
+      _id: 1,
+      image:
+        "https://www.creativeitinstitute.com/images/course/course_1663052056.jpg",
+      courseName: "Travel Business Course",
+      onlinePrice: 15000,
+      offlinePrice: 40000,
+      module: ["travel agency business", "business license"],
+      duration: "2 Months",
+      classSchedule: "Saturday and Friday",
+      overview: "",
+      conclusion: "Certificate and other stuff",
     },
   ];
 
-  if (isLoading) return <Loader />;
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
-  const filteredData = selectedCategory
-    ? data?.filter((course) => course.category === selectedCategory)
-    : data;
-
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredData?.slice(indexOfFirstItem, indexOfLastItem);
-
-  const totalPages = Math.ceil(filteredData?.length / itemsPerPage);
-
   return (
-    <div className="w-full px-2 py-10 pb-20 sm:px-0">
-      <Tab.Group
-        onChange={(index) => {
-          setSelectedCategory(categoryOptions[index].value);
-          setCurrentPage(1);
-        }}
-      >
-        <Tab.List className="flex items-center justify-center gap-4 overflow-x-auto py-2 px-10">
-          {categoryOptions.map(({ label, value }) => (
+    <div className="w-full px-2 py-16 sm:px-0">
+      <Tab.Group>
+        <Tab.List className="flex rounded-xl p-1 text-black flex-row items-center justify-center gap-3">
+          {/* {tabList &&
+            tabList?.map((tab, i) => (
+              <Tab
+                // onClick={() => handleSelect(tab.category)} // Make sure to pass the category to handleSelect
+                className={`px-6 py-1 font-semibold capitalize border-b-2 border-transparent hover:border-red-600 hover:text-red-600`}
+                key={i} // Use tab._id as key
+              >
+                {tab.label}
+              </Tab>
+            ))} */}
+          {/* {Object.keys(categories).map((category) => (
             <Tab
-              key={value}
-              className="text-gray-800 hover:text-white hover:bg-black border hover:border-gray-800 rounded-full py-2 px-6 text-base font-semibold focus:outline-none data-[selected]:bg-white/10 data-[hover]:bg-white/5 data-[selected]:data-[hover]:bg-white/10 data-[focus]:outline-1 data-[focus]:outline-white transition-all duration-300 shadow-[0_3px_10px_rgb(0,0,0,0.2)]"
+              key={category}
+              className={({ selected }) =>
+                classNames(
+                  "w-full rounded-lg py-2.5 text-sm font-medium leading-5",
+                  "ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2",
+                  selected
+                    ? "bg-white text-blue-700 shadow"
+                    : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
+                )
+              }
             >
-              {label}
+              {category}
             </Tab>
-          ))}
+          ))} */}
         </Tab.List>
-        <Tab.Panels className="">
-          {categoryOptions.map((_, index) => (
-            <Tab.Panel
-              key={index}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-6 py-10"
-            >
-              {currentItems?.map((course) => (
-                <CourseCard key={course._id} course={course} />
+        {
+          <Tab.Panels className="mt-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 container mx-auto gap-10 md:gap-6 py-10">
+            {courseList &&
+              courseList?.map((course) => (
+                <CourseCard key={course?._id} course={course} />
               ))}
+            {/* {Object.values(categories).map((posts, idx) => (
+            <Tab.Panel
+              key={idx}
+              className={classNames(
+                "rounded-xl bg-white p-3",
+                "ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
+              )}
+            >
+              <ul>
+                {posts.map((post) => (
+                  <li
+                    key={post.id}
+                    className="relative rounded-md p-3 hover:bg-gray-100"
+                  >
+                    <h3 className="text-sm font-medium leading-5">
+                      {post.title}
+                    </h3>
+
+                    <ul className="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-500">
+                      <li>{post.date}</li>
+                      <li>&middot;</li>
+                      <li>{post.commentCount} comments</li>
+                      <li>&middot;</li>
+                      <li>{post.shareCount} shares</li>
+                    </ul>
+
+                    <a
+                      href="#"
+                      className={classNames(
+                        "absolute inset-0 rounded-md",
+                        "ring-blue-400 focus:z-10 focus:outline-none focus:ring-2"
+                      )}
+                    />
+                  </li>
+                ))}
+              </ul>
             </Tab.Panel>
-          ))}
-        </Tab.Panels>
+          ))} */}
+          </Tab.Panels>
+        }
       </Tab.Group>
-      <div className="flex justify-center">
-        {Array.from({ length: totalPages }, (_, index) => (
-          <button
-            key={index + 1}
-            onClick={() => handlePageChange(index + 1)}
-            className={`px-3 py-1 mx-1 border rounded ${
-              currentPage === index + 1
-                ? "bg-blue-500 text-white"
-                : "bg-white text-black"
-            }`}
-          >
-            {index + 1}
-          </button>
-        ))}
-      </div>
     </div>
   );
 }

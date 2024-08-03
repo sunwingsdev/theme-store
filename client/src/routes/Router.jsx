@@ -13,6 +13,7 @@ import AdmissionDetails from "../components/Dashboard/Sidebar/AdmissionDetails/A
 import WebsiteDetails from "../pages/Home/websiteDetails/WebsiteDetails";
 import AddWebsite from "../pages/Dashboard/AddCourse/AddWebsite";
 import UsersList from "../pages/Dashboard/UsersList/UsersList";
+import Product from "../pages/Home/product/Product";
 
 const Router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const Router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/product",
+        element: <Product />,
       },
       {
         path: "/about-us",
