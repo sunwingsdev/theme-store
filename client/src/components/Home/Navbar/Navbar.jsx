@@ -40,6 +40,16 @@ const Navbar = () => {
                     isActive && "border-b-2 border-[#404040]"
                   }`
                 }
+                to="/product"
+              >
+                <li>Product</li>
+              </NavLink>
+              <NavLink
+                className={({ isActive }) =>
+                  `hover:border-b-2 hover:border-[#404040] ${
+                    isActive && "border-b-2 border-[#404040]"
+                  }`
+                }
                 to="/about-us"
               >
                 <li>About us</li>
