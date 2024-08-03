@@ -1,20 +1,59 @@
 import { Tab } from "@headlessui/react";
 import CourseCard from "../PopularCourse/CourseCard";
-import { useGetAllCourseQuery } from "../../../redux/features/allApis/coursesApi/coursesApi";
 
 // function classNames(...classes) {
 //   return classes.filter(Boolean).join(" ");
 // }
 
 export default function CourseTab() {
-  const { data } = useGetAllCourseQuery();
-
   // const tabList = [
   //   { name: "all-course", label: "All Course" },
   //   { name: "graphic-multimedia", label: "Graphic & Multimedia" },
   //   { name: "web-software", label: "Web & Software" },
   //   { name: "digital-marketing", label: "Digital & Marketing" },
   // ];
+
+  const courseList = [
+    {
+      _id: 1,
+      image:
+        "https://www.creativeitinstitute.com/images/course/course_1663052056.jpg",
+      courseName: "Visa Processing Course",
+      onlinePrice: 10000,
+      offlinePrice: 18000,
+      module: ["visa processing", "visa consultant"],
+      duration: "2 Months",
+      classSchedule: "Saturday and Friday",
+      overview: "",
+      conclusion: "Certificate and other stuff",
+    },
+    {
+      _id: 2,
+      image:
+        "https://www.creativeitinstitute.com/images/course/course_1663052056.jpg",
+      courseName: "Air Ticketing Course",
+      onlinePrice: 9000,
+      offlinePrice: 16000,
+      module: ["Buy Ticket", "ticket issue"],
+      duration: "2 Months",
+      classSchedule: "Saturday and Friday",
+      overview: "",
+      conclusion: "Certificate and other stuff",
+    },
+    {
+      _id: 1,
+      image:
+        "https://www.creativeitinstitute.com/images/course/course_1663052056.jpg",
+      courseName: "Travel Business Course",
+      onlinePrice: 15000,
+      offlinePrice: 40000,
+      module: ["travel agency business", "business license"],
+      duration: "2 Months",
+      classSchedule: "Saturday and Friday",
+      overview: "",
+      conclusion: "Certificate and other stuff",
+    },
+  ];
 
   return (
     <div className="w-full px-2 py-16 sm:px-0">
@@ -49,8 +88,8 @@ export default function CourseTab() {
         </Tab.List>
         {
           <Tab.Panels className="mt-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 container mx-auto gap-10 md:gap-6 py-10">
-            {data &&
-              data?.map((course) => (
+            {courseList &&
+              courseList?.map((course) => (
                 <CourseCard key={course?._id} course={course} />
               ))}
             {/* {Object.values(categories).map((posts, idx) => (

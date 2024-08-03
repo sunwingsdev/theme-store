@@ -6,7 +6,7 @@ const DashboardLayout = () => {
     <div className="">
       <div className="flex flex-col lg:flex-row lg:items-start lg:gap-2">
         <Sidebar />
-        <div className="lg:w-4/5 flex items-center justify-center">
+        <div className="lg:w-4/5 flex items-center">
           <Outlet />
         </div>
       </div>

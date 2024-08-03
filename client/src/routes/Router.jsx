@@ -10,7 +10,10 @@ import AboutUs from "../pages/Home/AboutUs/AboutUs";
 import Contact from "../pages/Home/Contact/Contact";
 import PopularCourse from "../components/Home/PopularCourse/PopularCourse";
 import AdmissionDetails from "../components/Dashboard/Sidebar/AdmissionDetails/AdmissionDetails";
+import WebsiteDetails from "../pages/Home/websiteDetails/WebsiteDetails";
 import AddWebsite from "../pages/Dashboard/AddCourse/AddWebsite";
+import UsersList from "../pages/Dashboard/UsersList/UsersList";
+import Product from "../pages/Home/product/Product";
 
 const Router = createBrowserRouter([
   {
@@ -20,6 +23,10 @@ const Router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/product",
+        element: <Product />,
       },
       {
         path: "/about-us",
@@ -32,6 +39,10 @@ const Router = createBrowserRouter([
       {
         path: "/courses",
         element: <PopularCourse />,
+      },
+      {
+        path: "/single-website-details/:id",
+        element: <WebsiteDetails />,
       },
     ],
   },
@@ -50,6 +61,10 @@ const Router = createBrowserRouter([
       {
         path: "add-website",
         element: <AddWebsite />,
+      },
+      {
+        path: "users",
+        element: <UsersList />,
       },
     ],
   },

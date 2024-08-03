@@ -11,11 +11,15 @@ const admissionApi = require("./apis/admissionApi/admissionApi");
 const usersApi = require("./apis/usersApi/usersApi");
 const queriesApi = require("./apis/queriesApi/queryApi");
 const coursesApi = require("./apis/coursesApi/coursesApi");
+const websitesApi = require("./apis/websitesApi/websitesApi");
 
 const corsConfig = {
   origin: [
     "http://localhost:5173",
-    "https://sunwingstrainingcentre.netlify.app",
+    "https://rabbitcode.org",
+    "http://rabbitcode.org",
+    "www.rabbitcode.org",
+    "rabbitcode.org",
     "*",
   ],
   credentials: true,
@@ -55,6 +59,9 @@ async function run() {
     const coursesCollection = client
       .db("training-admission")
       .collection("courses");
+    const websitesCollection = client
+      .db("training-admission")
+      .collection("websites");
     // collection ends here--------
 
     // api start here-------
@@ -62,6 +69,7 @@ async function run() {
     app.use("/users", usersApi(usersCollection));
     app.use("/query", queriesApi(queriesCollection));
     app.use("/courses", coursesApi(coursesCollection));
+    app.use("/websites", websitesApi(websitesCollection));
     // api ends here--------
 
     // Send a ping to confirm a successful connection
@@ -76,7 +84,7 @@ run().catch(console.dir);
 
 // basic setup
 app.get("/", (req, res) => {
-  res.send("Theme store server  is Running.");
+  res.send("Theme store server is Running.");
 });
 
 app.listen(port, () => {

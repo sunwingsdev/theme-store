@@ -6,8 +6,11 @@ const coursesApi = (coursesCollection) => {
   //   add course
   courseRouter.post("/", async (req, res) => {
     const courseInfo = req.body;
-    courseInfo.onlinePrice = parseInt(courseInfo.onlinePrice);
-    courseInfo.offlinePrice = parseInt(courseInfo.offlinePrice);
+    courseInfo.singleLicensePrice = parseFloat(courseInfo.singleLicensePrice);
+    courseInfo.unlimitedLicensePrice = parseFloat(
+      courseInfo.unlimitedLicensePrice
+    );
+    courseInfo.createdAt = new Date();
     const result = await coursesCollection.insertOne(courseInfo);
     res.send(result);
   });
