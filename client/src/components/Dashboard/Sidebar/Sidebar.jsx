@@ -114,6 +114,13 @@ const Sidebar = () => {
       )}
       {/* Desktop menu */}
       <div className="hidden lg:block bg-slate-500 h-screen">
+        <div className="px-5 py-6">
+          <Link to="/">
+            <h2 className="text-4xl font-bold text-center text-black">
+              Rabbit<span className="text-white">Code</span>
+            </h2>
+          </Link>
+        </div>
         <ul className="flex gap-2 flex-col p-4 text text-base">
           <li className="text-white cursor-pointer">
             <div
@@ -167,11 +174,6 @@ const Sidebar = () => {
               </Link> */}
             </ul>
           </li>
-          <Link to="/">
-            <li className="text-white cursor-pointer bg-green-600 hover:bg-green-700  duration-300 py-2 px-4 flex gap-2 items-center lg:text-lg">
-              Home
-            </li>
-          </Link>
           <li
             onClick={handleLogout}
             className="text-white cursor-pointer bg-green-600 hover:bg-green-700  duration-300 py-2 px-4 flex gap-2 items-center lg:text-lg"
