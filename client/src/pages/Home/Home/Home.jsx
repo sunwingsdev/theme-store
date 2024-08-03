@@ -1,6 +1,6 @@
 import Banner from "../../../components/Home/Banner/Banner";
 import PopularCourse from "../../../components/Home/PopularCourse/PopularCourse";
-import ProductCard from "../../../components/Home/productCard/ProductCard";
+import Products from "../../../components/Home/Products/Products";
 import Videos from "../../../components/Home/videos/Videos";
 
 const Home = () => {
@@ -8,7 +8,7 @@ const Home = () => {
     <div className="">
       <Banner />
       <PopularCourse />
-      <ProductCard />
+      <Products />
       <Videos />
     </div>
   );
