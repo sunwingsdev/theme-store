@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAddCourseMutation } from "../../../redux/features/allApis/coursesApi/coursesApi";
 import { useToasts } from "react-toast-notifications";
 import TextInput from "../../../components/shared/TextInput";
 import SelectInput from "../../../components/shared/SelectInput";
 import TextareaInput from "../../../components/shared/TextareaInput";
 import { imageUpload } from "../../../apis/api";
+import { useAddWebsiteMutation } from "../../../redux/features/allApis/websitesApi/websitesApi";
 
 const AddWebsite = () => {
   const {
@@ -14,7 +14,7 @@ const AddWebsite = () => {
     reset,
     formState: { errors },
   } = useForm();
-  const [addCourse] = useAddCourseMutation();
+  const [addWebsite] = useAddWebsiteMutation();
   const [imagePreview, setImagePreview] = useState(null);
   const [image, setImage] = useState(null);
   const [modules, setModules] = useState([]);
@@ -85,7 +85,7 @@ const AddWebsite = () => {
       data.image = imageUrl;
       data.features = modules;
       try {
-        const result = await addCourse(data);
+        const result = await addWebsite(data);
         if (result.data.insertedId) {
           addToast("Website added successfully", {
             appearance: "success",
@@ -94,6 +94,7 @@ const AddWebsite = () => {
           setLoading(false);
           reset();
           setImagePreview(null);
+          setModules([]);
         }
       } catch (error) {
         addToast("Failed to add website", {
