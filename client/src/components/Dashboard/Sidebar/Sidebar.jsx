@@ -151,6 +151,32 @@ const Sidebar = () => {
           <li className="text-white cursor-pointer">
             <div
               className="bg-green-600 hover:bg-green-700  duration-300 py-2 px-4 flex gap-2 items-center lg:text-lg"
+              onClick={() => toggleCollapse("admission")}
+            >
+              Courses
+            </div>
+            <ul
+              className={`pl-4 mt-2 text-sm lg:text-base ${
+                collapsed.admission
+                  ? "hidden"
+                  : "block transition-all ease-in duration-500"
+              }`}
+            >
+              <Link to="/dashboard/admission-student">
+                <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
+                  Add Course
+                </li>
+              </Link>
+              <Link to="/dashboard/all-courses">
+                <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
+                  All Courses
+                </li>
+              </Link>
+            </ul>
+          </li>
+          <li className="text-white cursor-pointer">
+            <div
+              className="bg-green-600 hover:bg-green-700  duration-300 py-2 px-4 flex gap-2 items-center lg:text-lg"
               onClick={() => toggleCollapse("users")}
             >
               Users
