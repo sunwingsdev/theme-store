@@ -15,6 +15,7 @@ import AddWebsite from "../pages/Dashboard/AddCourse/AddWebsite";
 import UsersList from "../pages/Dashboard/UsersList/UsersList";
 import Product from "../pages/Home/product/Product";
 import DashboardHome from "../pages/Dashboard/dashboardHome/DashboardHome";
+import AllCoursesList from "../pages/Dashboard/AllCoursesList/AllCoursesList";
 
 const Router = createBrowserRouter([
   {
@@ -70,6 +71,10 @@ const Router = createBrowserRouter([
       {
         path: "users",
         element: <UsersList />,
+      },
+      {
+        path: "all-courses",
+        element: <AllCoursesList />,
       },
     ],
   },

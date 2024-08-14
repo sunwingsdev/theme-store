@@ -2,18 +2,16 @@ import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProviders";
 import { useToasts } from "react-toast-notifications";
-import { FaBars, FaTimes } from "react-icons/fa"; // Import hamburger and close icons
+import { FaBars, FaTimes } from "react-icons/fa"; 
 
 const Sidebar = () => {
   const { logOut } = useContext(AuthContext);
   const { addToast } = useToasts();
   const [collapsed, setCollapsed] = useState({
-    admission: true,
+    website: true,
     users: true,
-    saleHistory: true,
-    stockManager: true,
-    paymentGateway: true,
-    setting: true,
+    course: true,
+  
   });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false); // State to manage mobile menu visibility
 
@@ -79,20 +77,20 @@ const Sidebar = () => {
               <li className="cursor-pointer py-2 px-4">
                 <div
                   className="bg-green-600 hover:bg-green-700 duration-300 py-2 px-4 flex gap-2 items-center"
-                  onClick={() => toggleCollapse("admission")}
+                  onClick={() => toggleCollapse("website")}
                 >
                   Websites
                 </div>
                 <ul
                   className={`pl-4 mt-2 ${
-                    collapsed.admission
+                    collapsed.website
                       ? "hidden"
                       : "block transition-all ease-in duration-500"
                   }`}
                 >
-                  <Link to="/dashboard/admission-student">
+                  <Link to="/dashboard/websites-list">
                     <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
-                      Admission Student List
+                      Websites List
                     </li>
                   </Link>
                   <Link to="/dashboard/add-website">
@@ -125,25 +123,51 @@ const Sidebar = () => {
           <li className="text-white cursor-pointer">
             <div
               className="bg-green-600 hover:bg-green-700  duration-300 py-2 px-4 flex gap-2 items-center lg:text-lg"
-              onClick={() => toggleCollapse("admission")}
+              onClick={() => toggleCollapse("website")}
             >
               Websites
             </div>
             <ul
               className={`pl-4 mt-2 text-sm lg:text-base ${
-                collapsed.admission
+                collapsed.website
                   ? "hidden"
                   : "block transition-all ease-in duration-500"
               }`}
             >
-              <Link to="/dashboard/admission-student">
+              <Link to="/dashboard/websites-list">
                 <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
-                  Admission Student List
+                  Websites List
                 </li>
               </Link>
               <Link to="/dashboard/add-website">
                 <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
                   Add Website
+                </li>
+              </Link>
+            </ul>
+          </li>
+          <li className="text-white cursor-pointer">
+            <div
+              className="bg-green-600 hover:bg-green-700  duration-300 py-2 px-4 flex gap-2 items-center lg:text-lg"
+              onClick={() => toggleCollapse("course")}
+            >
+              Courses
+            </div>
+            <ul
+              className={`pl-4 mt-2 text-sm lg:text-base ${
+                collapsed.course
+                  ? "hidden"
+                  : "block transition-all ease-in duration-500"
+              }`}
+            >
+              <Link to="/dashboard/add-course">
+                <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
+                  Add Course
+                </li>
+              </Link>
+              <Link to="/dashboard/all-courses">
+                <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
+                  All Courses
                 </li>
               </Link>
             </ul>
