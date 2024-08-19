@@ -16,6 +16,7 @@ const websitesApi = require("./apis/websitesApi/websitesApi");
 const corsConfig = {
   origin: [
     "http://localhost:5173",
+    "http://localhost:5174",
     "https://rabbitcode.org",
     "http://rabbitcode.org",
     "www.rabbitcode.org",

@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { IoBookOutline, IoMenu, IoClose } from "react-icons/io5";
-// import logo from "../../../assets/logo/logo.png";
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../../../providers/AuthProviders";
 
 const Navbar = () => {
+  const { user } = useContext(AuthContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -15,7 +16,6 @@ const Navbar = () => {
     <div className="sticky top-0 bg-white z-20 px-4">
       <div className="container mx-auto">
         <div className="flex items-center justify-between py-4">
-          {/* <img className="w-20" src={logo} alt="Logo" /> */}
           <Link to="/">
             <h2 className="text-4xl font-bold">
               <span className="text-orange-500">Sell</span>
@@ -74,18 +74,22 @@ const Navbar = () => {
               >
                 <li>Contact</li>
               </NavLink>
-              <NavLink
-                className={`hover:border-b-2 hover:border-[#404040]`}
-                to="/dashboard"
-              >
-                <li>Dashboard</li>
-              </NavLink>
+              {user && (
+                <NavLink
+                  className={`hover:border-b-2 hover:border-[#404040]`}
+                  to="/dashboard"
+                >
+                  <li>Dashboard</li>
+                </NavLink>
+              )}
             </ul>
-            <Link to="/login">
-              <div className="px-6 py-1 text-base font-semibold bg-orange-500 text-white rounded-md shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] hover:shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)] transition-all duration-500">
-                Login
-              </div>
-            </Link>
+            {!user && (
+              <Link to="/login">
+                <div className="px-6 py-1 text-base font-semibold bg-orange-500 text-white rounded-md shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] hover:shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)] transition-all duration-500">
+                  Login
+                </div>
+              </Link>
+            )}
           </div>
           <div className="md:hidden flex items-center">
             <button onClick={toggleMenu}>

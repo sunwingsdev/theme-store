@@ -11,11 +11,13 @@ import Contact from "../pages/Home/Contact/Contact";
 import PopularCourse from "../components/Home/PopularCourse/PopularCourse";
 import AdmissionDetails from "../components/Dashboard/Sidebar/AdmissionDetails/AdmissionDetails";
 import WebsiteDetails from "../pages/Home/websiteDetails/WebsiteDetails";
-import AddWebsite from "../pages/Dashboard/AddCourse/AddWebsite";
+import AddWebsite from "../pages/Dashboard/AddWebsite/AddWebsite";
 import UsersList from "../pages/Dashboard/UsersList/UsersList";
 import Product from "../pages/Home/product/Product";
 import DashboardHome from "../pages/Dashboard/dashboardHome/DashboardHome";
-import AllCourses from "../pages/Dashboard/AllCourses/AllCourses";
+import AllCoursesList from "../pages/Dashboard/AllCoursesList/AllCoursesList";
+import AddCourse from "../pages/Dashboard/AddCourse/AddCourse";
+import WebsiteList from "../pages/Dashboard/WebsiteList/WebsiteList";
 
 const Router = createBrowserRouter([
   {
@@ -69,12 +71,20 @@ const Router = createBrowserRouter([
         element: <AddWebsite />,
       },
       {
+        path: "all-websites",
+        element: <WebsiteList />,
+      },
+      {
         path: "users",
         element: <UsersList />,
       },
       {
+        path: "add-course",
+        element: <AddCourse />,
+      },
+      {
         path: "all-courses",
-        element: <AllCourses />,
+        element: <AllCoursesList />,
       },
     ],
   },

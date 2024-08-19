@@ -10,6 +10,8 @@ export default function Products() {
   const [itemsPerPage] = useState(6);
   const [selectedCategory, setSelectedCategory] = useState("");
 
+  console.log(data);
+
   const categoryOptions = [
     {
       label: "All",
@@ -65,8 +67,8 @@ export default function Products() {
                 key={index}
                 className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-6 py-10"
               >
-                {currentItems?.map((course) => (
-                  <ProductCard key={course._id} course={course} />
+                {currentItems?.map((website) => (
+                  <ProductCard key={website._id} website={website} />
                 ))}
               </Tab.Panel>
             ))}
