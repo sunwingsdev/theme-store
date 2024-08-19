@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProviders";
 import { useToasts } from "react-toast-notifications";
-import { FaBars, FaTimes } from "react-icons/fa"; 
+import { FaBars, FaTimes } from "react-icons/fa";
 
 const Sidebar = () => {
   const { logOut } = useContext(AuthContext);
@@ -11,7 +11,6 @@ const Sidebar = () => {
     website: true,
     users: true,
     course: true,
-  
   });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false); // State to manage mobile menu visibility
 
@@ -88,7 +87,7 @@ const Sidebar = () => {
                       : "block transition-all ease-in duration-500"
                   }`}
                 >
-                  <Link to="/dashboard/websites-list">
+                  <Link to="/dashboard/all-websites">
                     <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
                       Websites List
                     </li>
@@ -134,7 +133,7 @@ const Sidebar = () => {
                   : "block transition-all ease-in duration-500"
               }`}
             >
-              <Link to="/dashboard/websites-list">
+              <Link to="/dashboard/all-websites">
                 <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
                   Websites List
                 </li>
