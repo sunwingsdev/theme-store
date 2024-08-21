@@ -1,15 +1,16 @@
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
 import { Link, useParams } from "react-router-dom";
-import { useGetAllCourseQuery } from "../../../redux/features/allApis/coursesApi/coursesApi";
 import Heading from "../../../components/shared/Heading";
+import Loader from "../../../components/shared/Loader";
+import { useGetAllWebsitesQuery } from "../../../redux/features/allApis/websitesApi/websitesApi";
 
 const WebsiteDetails = () => {
   const { id } = useParams();
-  const { data, isLoading } = useGetAllCourseQuery();
+  const { data, isLoading } = useGetAllWebsitesQuery();
 
   const singleWebsite = data?.find((singleData) => singleData._id === id);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loader />;
 
   return (
     <div className="">
@@ -35,7 +36,7 @@ const WebsiteDetails = () => {
                 Single License
               </h2>
               <h3 className="text-2xl md:text-3xl font-bold text-[#3c3b3e]">
-                $42.38 / {singleWebsite?.singleLicensePrice} ৳
+                {singleWebsite?.singleLicensePrice} ৳
               </h3>
               <p className="text-base">
                 <span className="font-bold">One </span>Premium themes
@@ -54,7 +55,7 @@ const WebsiteDetails = () => {
                 Unlimited License
               </h2>
               <h3 className="text-2xl md:text-3xl font-bold text-[#3c3b3e]">
-                $106 / {singleWebsite?.unlimitedLicensePrice} ৳
+                {singleWebsite?.unlimitedLicensePrice} ৳
               </h3>
               <p className="text-base">
                 <span className="font-bold">One </span>Premium themes

@@ -12,6 +12,7 @@ const usersApi = require("./apis/usersApi/usersApi");
 const queriesApi = require("./apis/queriesApi/queryApi");
 const coursesApi = require("./apis/coursesApi/coursesApi");
 const websitesApi = require("./apis/websitesApi/websitesApi");
+const videosApi = require("./apis/videosApi/videosApi");
 
 const corsConfig = {
   origin: [
@@ -60,10 +61,13 @@ async function run() {
     const coursesCollection = client
       .db("training-admission")
       .collection("courses");
+    // collection ends here--------
     const websitesCollection = client
       .db("training-admission")
       .collection("websites");
-    // collection ends here--------
+    const videosCollection = client
+      .db("training-admission")
+      .collection("videos");
 
     // api start here-------
     app.use("/admission", admissionApi(admissionCollection));
@@ -71,6 +75,7 @@ async function run() {
     app.use("/query", queriesApi(queriesCollection));
     app.use("/courses", coursesApi(coursesCollection));
     app.use("/websites", websitesApi(websitesCollection));
+    app.use("/videos", videosApi(videosCollection));
     // api ends here--------
 
     // Send a ping to confirm a successful connection

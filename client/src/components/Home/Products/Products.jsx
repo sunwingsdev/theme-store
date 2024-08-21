@@ -10,8 +10,6 @@ export default function Products() {
   const [itemsPerPage] = useState(6);
   const [selectedCategory, setSelectedCategory] = useState("");
 
-  console.log(data);
-
   const categoryOptions = [
     {
       label: "All",
@@ -55,7 +53,11 @@ export default function Products() {
             {categoryOptions.map(({ label, value }) => (
               <Tab
                 key={value}
-                className="text-gray-800 hover:text-white hover:bg-black border hover:border-gray-800 rounded-full py-2 px-6 text-base font-semibold focus:outline-none data-[selected]:bg-white/10 data-[hover]:bg-white/5 data-[selected]:data-[hover]:bg-white/10 data-[focus]:outline-1 data-[focus]:outline-white transition-all duration-300 shadow-[0_3px_10px_rgb(0,0,0,0.2)]"
+                className={`${
+                  selectedCategory === value
+                    ? "bg-black text-white"
+                    : "text-gray-800 hover:text-white hover:bg-black hover:border-gray-800"
+                } border rounded-full py-2 px-6 text-base font-semibold focus:outline-none data-[selected]:bg-white/10 data-[hover]:bg-white/5 data-[selected]:data-[hover]:bg-white/10 data-[focus]:outline-1 data-[focus]:outline-white transition-all duration-300 shadow-[0_3px_10px_rgb(0,0,0,0.2)]`}
               >
                 {label}
               </Tab>
@@ -67,9 +69,17 @@ export default function Products() {
                 key={index}
                 className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-6 py-10"
               >
-                {currentItems?.map((website) => (
-                  <ProductCard key={website._id} website={website} />
-                ))}
+                {currentItems.length ? (
+                  currentItems?.map((website) => (
+                    <ProductCard key={website._id} website={website} />
+                  ))
+                ) : (
+                  <div className="flex items-center justify-center col-span-full py-20">
+                    <p className="text-center font-semibold text-lg">
+                      No Product found in this category
+                    </p>
+                  </div>
+                )}
               </Tab.Panel>
             ))}
           </Tab.Panels>

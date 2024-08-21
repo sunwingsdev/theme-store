@@ -18,6 +18,7 @@ import DashboardHome from "../pages/Dashboard/dashboardHome/DashboardHome";
 import AllCoursesList from "../pages/Dashboard/AllCoursesList/AllCoursesList";
 import AddCourse from "../pages/Dashboard/AddCourse/AddCourse";
 import WebsiteList from "../pages/Dashboard/WebsiteList/WebsiteList";
+import AddVideo from "../pages/Dashboard/AddVideo/AddVideo";
 
 const Router = createBrowserRouter([
   {
@@ -86,6 +87,11 @@ const Router = createBrowserRouter([
         path: "all-courses",
         element: <AllCoursesList />,
       },
+      {
+        path: "add-video",
+        element: <AddVideo />,
+      },
+   
     ],
   },
   {

@@ -8,6 +8,7 @@ import {
 import Modal from "../../../components/shared/Modal";
 import { useToasts } from "react-toast-notifications";
 import { EditCourseForm } from "../../../components/Dashboard/EditCourseForm/EditCourseForm";
+import DeleteModal from "../../../components/shared/DeleteModal";
 
 const AllCoursesList = () => {
   const [deleteCourse] = useDeleteCourseMutation();
@@ -66,30 +67,11 @@ const AllCoursesList = () => {
         </div>
       </div>
       {openDeleteModal && (
-        <Modal
-          isOpen={openDeleteModal}
-          closeModal={() => setOpenDeleteModal(false)}
-        >
-          <div className="my-6">
-            <h2 className="text-2xl text-center mb-4">
-              Are you sure want to delete?
-            </h2>
-            <div className="flex items-center justify-center gap-2">
-              <button
-                onClick={() => setOpenDeleteModal(false)}
-                className="bg-green-600 text-white hover:bg-green-800 py-2 px-4"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleDelete}
-                className="bg-red-600 text-white hover:bg-red-800 py-2 px-4"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        </Modal>
+        <DeleteModal
+          openDeleteModal={openDeleteModal}
+          setOpenDeleteModal={setOpenDeleteModal}
+          handleDelete={handleDelete}
+        />
       )}
 
       {openEditModal && (
