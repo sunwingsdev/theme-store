@@ -124,6 +124,11 @@ const Sidebar = () => {
                       Add Course
                     </li>
                   </Link>
+                  <Link to="/dashboard/admission">
+                    <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
+                      Admission
+                    </li>
+                  </Link>
                 </ul>
               </li>
               <li className="cursor-pointer py-2 px-4">
@@ -145,7 +150,6 @@ const Sidebar = () => {
                       Add & Manage Videos
                     </li>
                   </Link>
-                
                 </ul>
               </li>
               <li
@@ -218,6 +222,11 @@ const Sidebar = () => {
                   All Courses
                 </li>
               </Link>
+              <Link to="/dashboard/admission">
+                <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
+                  Admission
+                </li>
+              </Link>
             </ul>
           </li>
           <li className="text-white cursor-pointer">
@@ -239,7 +248,6 @@ const Sidebar = () => {
                   Add & Manage Videos
                 </li>
               </Link>
-          
             </ul>
           </li>
           <li className="text-white cursor-pointer">

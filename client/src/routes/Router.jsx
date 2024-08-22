@@ -88,10 +88,13 @@ const Router = createBrowserRouter([
         element: <AllCoursesList />,
       },
       {
+        path: "admission",
+        element: <AdmissionStudent />,
+      },
+      {
         path: "add-video",
         element: <AddVideo />,
       },
-   
     ],
   },
   {

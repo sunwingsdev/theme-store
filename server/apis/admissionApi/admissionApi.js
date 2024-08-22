@@ -23,9 +23,10 @@ const admissionApi = (admissionCollection) => {
 
   // delete a admission
   admissionRouter.delete("/:id", async (req, res) => {
-    const id = req.params.id;
+    const { id } = req.params;
     const query = { _id: new ObjectId(id) };
     const result = await admissionCollection.deleteOne(query);
+    console.log(result);
     res.send(result);
   });
 

@@ -1,7 +1,11 @@
-
 import Modal from "./Modal";
 
-const DeleteModal = ({ openDeleteModal, setOpenDeleteModal, handleDelete }) => {
+const DeleteModal = ({
+  openDeleteModal,
+  setOpenDeleteModal,
+  handleDelete,
+  loading,
+}) => {
   return (
     <Modal
       isOpen={openDeleteModal}
@@ -20,9 +24,10 @@ const DeleteModal = ({ openDeleteModal, setOpenDeleteModal, handleDelete }) => {
           </button>
           <button
             onClick={handleDelete}
-            className="bg-red-600 text-white hover:bg-red-800 py-2 px-4"
+            disabled={loading}
+            className="bg-red-600 text-white hover:bg-red-800 py-2 px-4 disabled:bg-slate-500 disabled:text-black"
           >
-            Delete
+            {loading ? "Deleting ..." : "Delete"}
           </button>
         </div>
       </div>

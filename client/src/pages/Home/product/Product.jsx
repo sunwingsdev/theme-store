@@ -1,4 +1,5 @@
-import CourseTab from "../../../components/Home/CourseTab/CourseTab";
+
+import Products from "../../../components/Home/Products/Products";
 
 const Product = () => {
   return (
@@ -62,9 +63,7 @@ const Product = () => {
         </div>
       </div>
       <div className="container mx-auto">
-        <div className="px-4">
-          <CourseTab />
-        </div>
+        <Products />
       </div>
     </div>
   );

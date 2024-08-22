@@ -17,8 +17,19 @@ const websitesApi = baseApi.injectEndpoints({
       query: () => "/websites",
       providesTags: ["websites"],
     }),
-    
+
+    // delete a website
+    deleteWebsite: builder.mutation({
+      query: (id) => ({
+        url: `/websites/${id}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
-export const { useAddWebsiteMutation, useGetAllWebsitesQuery } = websitesApi;
+export const {
+  useAddWebsiteMutation,
+  useGetAllWebsitesQuery,
+  useDeleteWebsiteMutation,
+} = websitesApi;
