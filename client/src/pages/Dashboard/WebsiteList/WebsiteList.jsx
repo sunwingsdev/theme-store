@@ -6,6 +6,8 @@ import {
 import { Link } from "react-router-dom";
 import DeleteModal from "../../../components/shared/DeleteModal";
 import { useToasts } from "react-toast-notifications";
+import Modal from "../../../components/shared/Modal";
+import EditWebsiteForm from "../../../components/Dashboard/EditWebsiteForm/EditWebsiteForm";
 
 const WebsitesList = () => {
   const { data: websites, isLoading } = useGetAllWebsitesQuery();
@@ -14,6 +16,7 @@ const WebsitesList = () => {
   const [id, setId] = useState("");
   const [loading, setLoading] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
   const [filterTech, setFilterTech] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [websitesPerPage] = useState(10);
@@ -45,9 +48,14 @@ const WebsitesList = () => {
     }
   };
 
-  //   const handleEdit = (website) => {
-  //     // Logic to handle editing a website
-  //   };
+  const handleOpenEditModal = (id) => {
+    setOpenEditModal(true);
+    setId(id);
+  };
+
+  // const handleEdit = async () => {
+  //   // Logic to handle editing a website
+  // };
 
   const technologyOptions = [
     {
@@ -163,13 +171,13 @@ const WebsitesList = () => {
                         to={website.demoLink}
                         className="text-indigo-600 hover:text-indigo-900"
                       >
-                        View
+                        View Demo
                       </Link>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <button
+                        onClick={() => handleOpenEditModal(website._id)}
                         className="text-indigo-600 hover:text-indigo-900"
-                        //   onClick={() => handleEdit(website)}
                       >
                         Edit
                       </button>
@@ -209,6 +217,9 @@ const WebsitesList = () => {
         handleDelete={handleDelete}
         loading={loading}
       />
+      <Modal isOpen={openEditModal} closeModal={() => setOpenEditModal(false)}>
+        <EditWebsiteForm id={id} closeModal={() => setOpenEditModal(false)} />
+      </Modal>
     </>
   );
 };

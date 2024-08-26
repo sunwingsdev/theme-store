@@ -9,13 +9,7 @@ const UsersList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(10);
 
-  // const handleDelete = async (id) => {
-  //   // Logic to handle deleting a user
-  // };
 
-  // const handleEdit = (user) => {
-  //   // Logic to handle editing a user
-  // };
 
   const filteredUsers =
     users?.filter((user) => {
@@ -91,16 +85,7 @@ const UsersList = () => {
                 <td className="px-6 py-4 whitespace-nowrap">{user.email}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{user.role}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <button
-                    className="text-indigo-600 hover:text-indigo-900"
-                    // onClick={() => handleEdit(user)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="text-red-600 hover:text-red-900 ml-4"
-                    // onClick={() => handleDelete(user.id)}
-                  >
+                  <button className="text-red-600 hover:text-red-900 ml-4">
                     Delete
                   </button>
                 </td>

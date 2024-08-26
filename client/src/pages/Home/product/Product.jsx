@@ -1,12 +1,11 @@
-
 import Products from "../../../components/Home/Products/Products";
 
 const Product = () => {
   return (
     <div className="">
-      <div className="bg-black relative h-[400px] lg:h-[500px]">
+      <div className="bg-black relative h-[350px] lg:h-[400px]">
         <img
-          className="w-full h-[400px] lg:h-[500px]"
+          className="w-full h-[350px] lg:h-[400px] object-fill"
           src="https://eunoiawebdesign.eu/wp-content/uploads/2019/02/web-design-for-tourism.jpg"
           alt=""
         />
@@ -20,7 +19,7 @@ const Product = () => {
             Websites Project.
           </p>
           {/* search */}
-          <form className="max-w-60 sm:max-w-xs lg:max-w-md mx-auto mt-6">
+          {/* <form className="max-w-60 sm:max-w-xs lg:max-w-md mx-auto mt-6">
             <label
               htmlFor="default-search"
               className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -59,7 +58,7 @@ const Product = () => {
                 Search
               </button>
             </div>
-          </form>
+          </form> */}
         </div>
       </div>
       <div className="container mx-auto">

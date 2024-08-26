@@ -18,8 +18,8 @@ const Navbar = () => {
         <div className="flex items-center justify-between py-4">
           <Link to="/">
             <h2 className="text-4xl font-bold">
-              <span className="text-orange-500">Sell</span>
-              Website
+              <span className="text-orange-500">Rabbit</span>
+              Code
             </h2>
           </Link>
           <div className="hidden md:flex flex-row gap-8">

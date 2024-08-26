@@ -1,29 +1,26 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useToasts } from "react-toast-notifications";
-import TextInput from "../../../components/shared/TextInput";
-import SelectInput from "../../../components/shared/SelectInput";
-import { useAddWebsiteMutation } from "../../../redux/features/allApis/websitesApi/websitesApi";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css"; // Import the styles for React Quill
+import { useEditWebsiteMutation } from "../../../redux/features/allApis/websitesApi/websitesApi";
+import TextInput from "../../shared/TextInput";
+import SelectInput from "../../shared/SelectInput";
+import TextareaInput from "../../shared/TextareaInput";
 
-const AddWebsite = () => {
+const EditWebsiteForm = ({ id, closeModal }) => {
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
-  const [addWebsite] = useAddWebsiteMutation();
+  const [editWebsite] = useEditWebsiteMutation();
   const [image, setImage] = useState(null);
-  const [zipfile, setZipfile] = useState(null);
   const [modules, setModules] = useState([]);
   const [moduleInput, setModuleInput] = useState("");
+  const [zipfile, setZipfile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [details, setDetails] = useState(""); // React Quill content
   const { addToast } = useToasts();
-
   const categoryOptions = [
     { label: "News", value: "news" },
     { label: "Ecommerce", value: "e-commerce" },
@@ -54,7 +51,8 @@ const AddWebsite = () => {
 
   const onSubmit = async (data) => {
     const formData = new FormData();
-
+    console.log(data);
+    console.log("Form data before appending", [...formData.entries()]);
     formData.append("title", data.title);
     formData.append("category", data.category);
     formData.append("technology", data.technology);
@@ -64,27 +62,29 @@ const AddWebsite = () => {
     formData.append("singleLicensePrice", data.singleLicensePrice);
     formData.append("unlimitedLicensePrice", data.unlimitedLicensePrice);
     formData.append("details", data.details);
+    formData.append("id", id);
     // Append each module individually
     modules.forEach((module) => formData.append("features[]", module));
 
     if (image) formData.append("image", image);
     if (zipfile) formData.append("file", zipfile);
 
+    // Log the entire FormData object
+    console.log("Form data after appending", [...formData.entries()]);
     try {
-      setLoading(true);
-      const result = await addWebsite(formData);
-      if (result.data.insertedId) {
-        addToast("Website added successfully", {
+      // setLoading(true);
+      const result = await editWebsite(formData);
+      if (result.data.modifiedCount > 0) {
+        addToast("Website edited successfully", {
           appearance: "success",
           autoDismiss: true,
         });
         reset();
-        setImage(null);
         setImagePreview(null);
-        setZipfile(null);
+        closeModal();
       }
     } catch (error) {
-      addToast("Failed to add website", {
+      addToast("Failed to edit website", {
         appearance: "error",
         autoDismiss: true,
       });
@@ -94,11 +94,8 @@ const AddWebsite = () => {
   };
 
   return (
-    <div className="min-h-screen w-4/5 bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="w-full bg-white p-8 shadow-lg rounded-lg">
-        <h2 className="text-center text-2xl font-extrabold text-gray-900 mb-6">
-          Add New Website
-        </h2>
+    <div className=" bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className=" w-full bg-white p-8 shadow-lg rounded-lg">
         <form onSubmit={handleSubmit(onSubmit)} className="">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {/* Image Upload */}
@@ -268,42 +265,12 @@ const AddWebsite = () => {
               </ul>
             </div>
 
-            {/* React Quill for Details */}
-            <div className="md:col-span-2">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
-                Details
-              </label>
-              <ReactQuill
-                value={details}
-                onChange={setDetails}
-                className="bg-white"
-                modules={{
-                  toolbar: [
-                    [
-                      { header: "1" },
-                      { header: "2" },
-                      { font: [] },
-                    ],
-                    ["bold", "italic", "underline", "strike", "blockquote"],
-                    [{ color: [] }],
-                    [{ align: [] }],
-                    [
-                      { list: "ordered" },
-                      { list: "bullet" },
-                      { indent: "-1" },
-                      { indent: "+1" },
-                    ],
-                    ["link", "image"],
-                    ["clean"],
-                  ],
-                }}
-              />
-              {errors.details && (
-                <span className="text-red-600 text-sm">
-                  {errors.details.message}
-                </span>
-              )}
-            </div>
+            <TextareaInput
+              name={"details"}
+              label={"Details"}
+              register={register}
+              errors={errors}
+            />
 
             {/* Zip File Upload */}
             <div className="flex flex-col justify-center md:col-span-2">
@@ -376,4 +343,4 @@ const AddWebsite = () => {
   );
 };
 
-export default AddWebsite;
+export default EditWebsiteForm;

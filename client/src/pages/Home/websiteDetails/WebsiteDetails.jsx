@@ -11,21 +11,28 @@ const WebsiteDetails = () => {
   const singleWebsite = data?.find((singleData) => singleData._id === id);
 
   if (isLoading) return <Loader />;
-
   return (
     <div className="">
       {/* single website details page header area */}
       <Heading title={singleWebsite?.title} />
       {/* all single card */}
       <div className="container mx-auto">
-        <div className="flex items-center justify-center mt-10 md:mt-16">
+        <div className="flex items-center justify-center gap-4 mt-10 md:mt-16">
           <Link
-            to={singleWebsite?.demoLink}
+            to={singleWebsite?.demoFrontend}
             rel="noreferrer"
             target={"_blank"}
             className="bg-white hover:bg-red-600 hover:text-white text-red-600 border border-red-600 rounded-full p-2 px-10 text-lg font-bold hover:shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] transition-all duration-300"
           >
-            Live Demo
+            Live Frontend Demo
+          </Link>
+          <Link
+            to={singleWebsite?.demoBackend}
+            rel="noreferrer"
+            target={"_blank"}
+            className="bg-white hover:bg-red-600 hover:text-white text-red-600 border border-red-600 rounded-full p-2 px-10 text-lg font-bold hover:shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] transition-all duration-300"
+          >
+            Live Backend Demo
           </Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-10 md:py-14 lg:py-20 px-6 lg:px-10">
@@ -71,47 +78,24 @@ const WebsiteDetails = () => {
           <div className="py-10 px-6 bg-gray-300 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded">
             <div className="space-y-3">
               <h2 className="text-xl md:text-2xl font-bold border-b-2 py-1 mb-4">
-                Responsive
+                Features
               </h2>
-              <p className="text-base flex items-center gap-1 border-b">
-                <span className="font-bold">
-                  <IoCheckmarkCircleOutline />{" "}
-                </span>
-                Responsive Design
-              </p>
-              <p className="text-base flex items-center gap-1 border-b">
-                <span className="font-bold">
-                  <IoCheckmarkCircleOutline />{" "}
-                </span>
-                Responsive Navigation
-              </p>
-              <p className="text-base flex items-center gap-1 border-b">
-                <span className="font-bold">
-                  <IoCheckmarkCircleOutline />{" "}
-                </span>
-                Responsive Editing
-              </p>
-              <p className="text-base flex items-center gap-1 border-b">
-                <span className="font-bold">
-                  <IoCheckmarkCircleOutline />{" "}
-                </span>
-                Excellent layout
-              </p>
-              <p className="text-base flex items-center gap-1 border-b">
-                <span className="font-bold">
-                  <IoCheckmarkCircleOutline />{" "}
-                </span>
-                Optimized for Faster Loading
-              </p>
+              {singleWebsite?.features?.map((feature) => (
+                <p
+                  key={feature}
+                  className="text-base flex items-center gap-1 border-b"
+                >
+                  <span className="font-bold">
+                    <IoCheckmarkCircleOutline />{" "}
+                  </span>
+                  {feature}
+                </p>
+              ))}
             </div>
           </div>
           {/* single card */}
           <div className="order-5 md:col-span-2 bg-slate-100 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] mt-5 rounded">
-            <img
-              className="w-full"
-              src="https://www.thecreativemomentum.com/hs-fs/hubfs/blog-files/2106%20blogs/2106-21-Marketing101WebHomepage-image-h2-1.jpg?width=600&name=2106-21-Marketing101WebHomepage-image-h2-1.jpg"
-              alt=""
-            />
+            <img className="w-full" src={singleWebsite?.image} alt="" />
           </div>
           {/* single card */}
           <div className="order-4 lg:order-6 py-10 px-6 bg-gray-300 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded">

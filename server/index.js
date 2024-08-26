@@ -3,6 +3,7 @@ const cors = require("cors");
 const app = express();
 require("dotenv").config();
 const port = process.env.PORT || 5000;
+const path = require("path");
 const { MongoClient, ServerApiVersion } = require("mongodb");
 
 // import api modules
@@ -28,6 +29,9 @@ const corsConfig = {
   optionSuccessStatus: 200,
   methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
 };
+
+// Serve static files from the "uploads" directory
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // middlewares
 app.use(cors(corsConfig));

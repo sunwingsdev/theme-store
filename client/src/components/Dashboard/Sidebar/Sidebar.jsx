@@ -73,55 +73,56 @@ const Sidebar = () => {
                 onClick={closeMobileMenu}
               />
             </div>
-            <ul className="p-4">
-              <li className="cursor-pointer py-2 px-4">
+            <ul className="p-4 space-y-2">
+              <li className="text-white cursor-pointer">
                 <div
-                  className="bg-green-600 hover:bg-green-700 duration-300 py-2 px-4 flex gap-2 items-center"
+                  className="bg-green-600 hover:bg-green-700  duration-300 py-2 px-4 flex gap-2 items-center lg:text-lg"
                   onClick={() => toggleCollapse("website")}
                 >
                   Websites
                 </div>
                 <ul
-                  className={`pl-4 mt-2 ${
+                  className={`pl-4 mt-2 text-sm lg:text-base ${
                     collapsed.website
                       ? "hidden"
                       : "block transition-all ease-in duration-500"
                   }`}
                 >
-                  <Link to="/dashboard/all-websites">
-                    <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
-                      Websites List
-                    </li>
-                  </Link>
+                  {" "}
                   <Link to="/dashboard/add-website">
                     <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
                       Add Website
                     </li>
                   </Link>
+                  <Link to="/dashboard/all-websites">
+                    <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
+                      Websites List
+                    </li>
+                  </Link>
                 </ul>
               </li>
-              <li className="cursor-pointer py-2 px-4">
+              <li className="text-white cursor-pointer">
                 <div
-                  className="bg-green-600 hover:bg-green-700 duration-300 py-2 px-4 flex gap-2 items-center"
+                  className="bg-green-600 hover:bg-green-700  duration-300 py-2 px-4 flex gap-2 items-center lg:text-lg"
                   onClick={() => toggleCollapse("course")}
                 >
                   Courses
                 </div>
                 <ul
-                  className={`pl-4 mt-2 ${
+                  className={`pl-4 mt-2 text-sm lg:text-base ${
                     collapsed.course
                       ? "hidden"
                       : "block transition-all ease-in duration-500"
                   }`}
                 >
-                  <Link to="/dashboard/all-courses">
-                    <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
-                      Courses List
-                    </li>
-                  </Link>
                   <Link to="/dashboard/add-course">
                     <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
                       Add Course
+                    </li>
+                  </Link>
+                  <Link to="/dashboard/all-courses">
+                    <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
+                      All Courses
                     </li>
                   </Link>
                   <Link to="/dashboard/admission">
@@ -131,15 +132,15 @@ const Sidebar = () => {
                   </Link>
                 </ul>
               </li>
-              <li className="cursor-pointer py-2 px-4">
+              <li className="text-white cursor-pointer">
                 <div
-                  className="bg-green-600 hover:bg-green-700 duration-300 py-2 px-4 flex gap-2 items-center"
+                  className="bg-green-600 hover:bg-green-700  duration-300 py-2 px-4 flex gap-2 items-center lg:text-lg"
                   onClick={() => toggleCollapse("video")}
                 >
                   Videos
                 </div>
                 <ul
-                  className={`pl-4 mt-2 ${
+                  className={`pl-4 mt-2 text-sm lg:text-base ${
                     collapsed.video
                       ? "hidden"
                       : "block transition-all ease-in duration-500"
@@ -148,6 +149,27 @@ const Sidebar = () => {
                   <Link to="/dashboard/add-video">
                     <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
                       Add & Manage Videos
+                    </li>
+                  </Link>
+                </ul>
+              </li>
+              <li className="text-white cursor-pointer">
+                <div
+                  className="bg-green-600 hover:bg-green-700  duration-300 py-2 px-4 flex gap-2 items-center lg:text-lg"
+                  onClick={() => toggleCollapse("users")}
+                >
+                  Users
+                </div>
+                <ul
+                  className={`pl-4 mt-2 text-sm lg:text-base ${
+                    collapsed.users
+                      ? "hidden"
+                      : "block transition-all ease-in duration-500"
+                  }`}
+                >
+                  <Link to="/dashboard/users">
+                    <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
+                      Users List
                     </li>
                   </Link>
                 </ul>
@@ -186,14 +208,15 @@ const Sidebar = () => {
                   : "block transition-all ease-in duration-500"
               }`}
             >
-              <Link to="/dashboard/all-websites">
-                <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
-                  Websites List
-                </li>
-              </Link>
+              {" "}
               <Link to="/dashboard/add-website">
                 <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
                   Add Website
+                </li>
+              </Link>
+              <Link to="/dashboard/all-websites">
+                <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
+                  Websites List
                 </li>
               </Link>
             </ul>
@@ -269,11 +292,6 @@ const Sidebar = () => {
                   Users List
                 </li>
               </Link>
-              {/* <Link to="/dashboard/add-website">
-                <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
-                  Add Website
-                </li>
-              </Link> */}
             </ul>
           </li>
           <li
