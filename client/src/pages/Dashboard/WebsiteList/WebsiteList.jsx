@@ -168,7 +168,7 @@ const WebsitesList = () => {
                       <Link
                         rel="noreferrer"
                         target={"_blank"}
-                        to={website.demoLink}
+                        to={website.demoFrontend}
                         className="text-indigo-600 hover:text-indigo-900"
                       >
                         View Demo

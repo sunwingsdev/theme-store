@@ -41,7 +41,7 @@ const ProductCard = ({ website }) => {
           </div>
           <div className="flex gap-4 flex-row items-center justify-between xl:text-base md:text-sm text-xs">
             <Link
-              to={website?.demoLink}
+              to={website?.demoFrontend}
               rel="noreferrer"
               target={"_blank"}
               className="text-center border w-full border-red-600 p-[8px] font-semibold

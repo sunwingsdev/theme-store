@@ -1,3 +1,4 @@
+import moment from "moment";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
 import { Link, useParams } from "react-router-dom";
 import Heading from "../../../components/shared/Heading";
@@ -97,6 +98,10 @@ const WebsiteDetails = () => {
           <div className="order-5 md:col-span-2 bg-slate-100 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] mt-5 rounded">
             <img className="w-full" src={singleWebsite?.image} alt="" />
           </div>
+          <div
+            className="order-7 md:col-span-2"
+            dangerouslySetInnerHTML={{ __html: singleWebsite?.details }}
+          ></div>
           {/* single card */}
           <div className="order-4 lg:order-6 py-10 px-6 bg-gray-300 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded">
             <div className="space-y-3">
@@ -105,11 +110,11 @@ const WebsiteDetails = () => {
               </h2>
               <p className="text-base flex gap-1 border-b">
                 <span className="font-medium">Latest updated :</span>
-                25 July 2023
+                {moment(singleWebsite?.modifiedAt).format("Do MMMM YYYY")}
               </p>
               <p className="text-base flex items-center gap-1 border-b">
                 <span className="font-medium">Created :</span>
-                25 July 2023
+                {moment(singleWebsite?.createdAt).format("Do MMMM YYYY")}
               </p>
               <p className="text-base flex items-center gap-1 border-b">
                 <span className="font-medium">Documentation :</span>

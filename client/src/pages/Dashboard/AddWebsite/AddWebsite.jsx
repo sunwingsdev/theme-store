@@ -16,10 +16,10 @@ const AddWebsite = () => {
   } = useForm();
   const [addWebsite] = useAddWebsiteMutation();
   const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const [zipfile, setZipfile] = useState(null);
   const [modules, setModules] = useState([]);
   const [moduleInput, setModuleInput] = useState("");
-  const [imagePreview, setImagePreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const [details, setDetails] = useState(""); // React Quill content
   const { addToast } = useToasts();
@@ -63,7 +63,7 @@ const AddWebsite = () => {
     formData.append("demoBackend", data.demoBackend);
     formData.append("singleLicensePrice", data.singleLicensePrice);
     formData.append("unlimitedLicensePrice", data.unlimitedLicensePrice);
-    formData.append("details", data.details);
+    formData.append("details", details);
     // Append each module individually
     modules.forEach((module) => formData.append("features[]", module));
 
@@ -82,6 +82,7 @@ const AddWebsite = () => {
         setImage(null);
         setImagePreview(null);
         setZipfile(null);
+        setLoading(false)
       }
     } catch (error) {
       addToast("Failed to add website", {
@@ -279,11 +280,7 @@ const AddWebsite = () => {
                 className="bg-white"
                 modules={{
                   toolbar: [
-                    [
-                      { header: "1" },
-                      { header: "2" },
-                      { font: [] },
-                    ],
+                    [{ header: "1" }, { header: "2" }, { font: [] }],
                     ["bold", "italic", "underline", "strike", "blockquote"],
                     [{ color: [] }],
                     [{ align: [] }],

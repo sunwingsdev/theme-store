@@ -1,12 +1,18 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useToasts } from "react-toast-notifications";
-import { useEditWebsiteMutation } from "../../../redux/features/allApis/websitesApi/websitesApi";
+import {
+  useEditWebsiteMutation,
+  useGetAllWebsitesQuery,
+} from "../../../redux/features/allApis/websitesApi/websitesApi";
 import TextInput from "../../shared/TextInput";
 import SelectInput from "../../shared/SelectInput";
-import TextareaInput from "../../shared/TextareaInput";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css"; // Import the styles for React Quill
+import Loader from "../../shared/Loader";
 
 const EditWebsiteForm = ({ id, closeModal }) => {
+  const { data: websites, isLoading } = useGetAllWebsitesQuery();
   const {
     register,
     handleSubmit,
@@ -17,10 +23,15 @@ const EditWebsiteForm = ({ id, closeModal }) => {
   const [image, setImage] = useState(null);
   const [modules, setModules] = useState([]);
   const [moduleInput, setModuleInput] = useState("");
+  const [details, setDetails] = useState("");
   const [zipfile, setZipfile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const { addToast } = useToasts();
+
+  const selectedWebsite = websites?.find((website) => website._id === id);
+  console.log(selectedWebsite);
+
   const categoryOptions = [
     { label: "News", value: "news" },
     { label: "Ecommerce", value: "e-commerce" },
@@ -51,8 +62,7 @@ const EditWebsiteForm = ({ id, closeModal }) => {
 
   const onSubmit = async (data) => {
     const formData = new FormData();
-    console.log(data);
-    console.log("Form data before appending", [...formData.entries()]);
+
     formData.append("title", data.title);
     formData.append("category", data.category);
     formData.append("technology", data.technology);
@@ -61,7 +71,7 @@ const EditWebsiteForm = ({ id, closeModal }) => {
     formData.append("demoBackend", data.demoBackend);
     formData.append("singleLicensePrice", data.singleLicensePrice);
     formData.append("unlimitedLicensePrice", data.unlimitedLicensePrice);
-    formData.append("details", data.details);
+    formData.append("details", details);
     formData.append("id", id);
     // Append each module individually
     modules.forEach((module) => formData.append("features[]", module));
@@ -69,10 +79,8 @@ const EditWebsiteForm = ({ id, closeModal }) => {
     if (image) formData.append("image", image);
     if (zipfile) formData.append("file", zipfile);
 
-    // Log the entire FormData object
-    console.log("Form data after appending", [...formData.entries()]);
     try {
-      // setLoading(true);
+      setLoading(true);
       const result = await editWebsite(formData);
       if (result.data.modifiedCount > 0) {
         addToast("Website edited successfully", {
@@ -82,6 +90,7 @@ const EditWebsiteForm = ({ id, closeModal }) => {
         reset();
         setImagePreview(null);
         closeModal();
+        setLoading(false);
       }
     } catch (error) {
       addToast("Failed to edit website", {
@@ -92,6 +101,7 @@ const EditWebsiteForm = ({ id, closeModal }) => {
       setLoading(false);
     }
   };
+  if (isLoading) <Loader />;
 
   return (
     <div className=" bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -158,7 +168,7 @@ const EditWebsiteForm = ({ id, closeModal }) => {
                   </span>
                 )}
               </div>
-              {imagePreview && (
+              {imagePreview ? (
                 <div
                   className={`mt-2 w-1/2 relative ${!imagePreview && "hidden"}`}
                 >
@@ -173,10 +183,18 @@ const EditWebsiteForm = ({ id, closeModal }) => {
                       setImage(null);
                       setImagePreview(null);
                     }}
-                    className="absolute top-1 right-1 text-red-600 bg-white rounded-full p-1"
+                    className="absolute top-1 right-1 text-red-600 bg-white rounded-full p-2"
                   >
                     Remove
                   </button>
+                </div>
+              ) : (
+                <div className="w-1/2 mt-2">
+                  <img
+                    src={selectedWebsite?.image}
+                    alt="image preview"
+                    className="max-h-[200px] mx-auto"
+                  />
                 </div>
               )}
             </div>
@@ -194,31 +212,41 @@ const EditWebsiteForm = ({ id, closeModal }) => {
               options={technologyOptions}
               register={register}
             />
-            <TextInput name={"title"} label={"Title"} register={register} />
+            <TextInput
+              name={"title"}
+              label={"Title"}
+              register={register}
+              defaultValue={selectedWebsite?.title}
+            />
             <TextInput
               name={"tutorialLink"}
               label={"Tutorial Link"}
               register={register}
+              defaultValue={selectedWebsite?.tutorialLink}
             />
             <TextInput
               name={"demoFrontend"}
               label={"Demo Frontend Link"}
               register={register}
+              defaultValue={selectedWebsite?.demoFrontend}
             />
             <TextInput
               name={"demoBackend"}
               label={"Demo Backend Link"}
               register={register}
+              defaultValue={selectedWebsite?.demoBackend}
             />
             <TextInput
               name={"singleLicensePrice"}
               label={"Single License Price"}
               register={register}
+              defaultValue={selectedWebsite?.singleLicensePrice}
             />
             <TextInput
               name={"unlimitedLicensePrice"}
               label={"Unlimited License Price"}
               register={register}
+              defaultValue={selectedWebsite?.unlimitedLicensePrice}
             />
 
             <div>
@@ -247,30 +275,65 @@ const EditWebsiteForm = ({ id, closeModal }) => {
                 </label>
               </div>
               <ul className="mt-2">
-                {modules.map((module, index) => (
-                  <li
-                    key={index}
-                    className="flex items-center justify-between bg-blue-gray-50 rounded p-2 mb-2 text-sm text-blue-gray-900"
-                  >
-                    {module}
-                    <button
-                      type="button"
-                      onClick={() => removeModule(index)}
-                      className="text-red-600"
-                    >
-                      Remove
-                    </button>
-                  </li>
-                ))}
+                {modules.length > 0
+                  ? modules.map((module, index) => (
+                      <li
+                        key={index}
+                        className="flex items-center justify-between bg-blue-gray-50 rounded p-2 text-sm text-blue-gray-900"
+                      >
+                        {module}
+                        <button
+                          type="button"
+                          onClick={() => removeModule(index)}
+                          className="text-red-600"
+                        >
+                          Remove
+                        </button>
+                      </li>
+                    ))
+                  : selectedWebsite?.features?.map((feature) => (
+                      <li
+                        key={feature}
+                        className="flex items-center justify-between bg-blue-gray-50 rounded p-2 text-sm text-blue-gray-900"
+                      >
+                        {feature}
+                      </li>
+                    ))}
               </ul>
             </div>
 
-            <TextareaInput
-              name={"details"}
-              label={"Details"}
-              register={register}
-              errors={errors}
-            />
+            {/* React Quill for Details */}
+            <div className="md:col-span-2">
+              <label className="block text-gray-700 text-sm font-bold mb-2">
+                Details
+              </label>
+              <ReactQuill
+                value={details}
+                onChange={setDetails}
+                className="bg-white"
+                modules={{
+                  toolbar: [
+                    [{ header: "1" }, { header: "2" }, { font: [] }],
+                    ["bold", "italic", "underline", "strike", "blockquote"],
+                    [{ color: [] }],
+                    [{ align: [] }],
+                    [
+                      { list: "ordered" },
+                      { list: "bullet" },
+                      { indent: "-1" },
+                      { indent: "+1" },
+                    ],
+                    ["link", "image"],
+                    ["clean"],
+                  ],
+                }}
+              />
+              {errors.details && (
+                <span className="text-red-600 text-sm">
+                  {errors.details.message}
+                </span>
+              )}
+            </div>
 
             {/* Zip File Upload */}
             <div className="flex flex-col justify-center md:col-span-2">
@@ -314,7 +377,7 @@ const EditWebsiteForm = ({ id, closeModal }) => {
                 />
               </label>
               {zipfile && (
-                <div className="mt-2 flex justify-between items-center text-blue-gray-900 bg-blue-gray-50 p-2 rounded">
+                <div className="mt-2 flex justify-between items-center text-blue-gray-900 bg-blue-50 p-2 rounded">
                   <span>{zipfile.name}</span>
                   <button
                     type="button"
@@ -334,7 +397,7 @@ const EditWebsiteForm = ({ id, closeModal }) => {
               className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               disabled={loading}
             >
-              {loading ? "Adding Website..." : "Add Website"}
+              {loading ? "Editing Website..." : "Edit Website"}
             </button>
           </div>
         </form>
