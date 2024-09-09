@@ -18,22 +18,22 @@ const WebsiteDetails = () => {
       <Heading title={singleWebsite?.title} />
       {/* all single card */}
       <div className="container mx-auto">
-        <div className="flex items-center justify-center gap-4 mt-10 md:mt-16">
+        <div className="flex flex-row items-center justify-center gap-4 mt-10 md:mt-16">
           <Link
             to={singleWebsite?.demoFrontend}
             rel="noreferrer"
             target={"_blank"}
-            className="bg-white hover:bg-red-600 hover:text-white text-red-600 border border-red-600 rounded-full p-2 px-10 text-lg font-bold hover:shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] transition-all duration-300"
+            className="bg-white whitespace-nowrap hover:bg-red-600 hover:text-white text-red-600 border border-red-600 rounded-full px-4 py-2 md:px-10 text-base md:text-lg font-bold hover:shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] transition-all duration-300"
           >
-            Live Frontend Demo
+            Frontend Demo
           </Link>
           <Link
             to={singleWebsite?.demoBackend}
             rel="noreferrer"
             target={"_blank"}
-            className="bg-white hover:bg-red-600 hover:text-white text-red-600 border border-red-600 rounded-full p-2 px-10 text-lg font-bold hover:shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] transition-all duration-300"
+            className="bg-white whitespace-nowrap hover:bg-red-600 hover:text-white text-red-600 border border-red-600 rounded-full px-4 py-2 md:px-10 text-base md:text-lg font-bold hover:shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] transition-all duration-300"
           >
-            Live Backend Demo
+            Dashboard Demo
           </Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-10 md:py-14 lg:py-20 px-6 lg:px-10">
@@ -52,9 +52,20 @@ const WebsiteDetails = () => {
               <p>1 Year Updates</p>
               <p>One Domain Usage</p>
             </div>
-            <button className="bg-slate-500 hover:bg-blue-700 text-white rounded-full w-[70%] p-2 text-lg font-bold mt-10 hover:shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px]  transition-all duration-300">
-              Buy Now
-            </button>
+            <Link
+              to={`/checkout/${singleWebsite._id}`}
+              state={{
+                websiteId: singleWebsite?._id,
+                licenseType: "single-license",
+                price: singleWebsite?.singleLicensePrice,
+                title: singleWebsite?.title,
+                zipFile: singleWebsite?.zipFile,
+              }}
+            >
+              <button className="bg-slate-500 hover:bg-blue-700 text-white rounded-full w-[70%] p-2 text-lg font-bold mt-10 hover:shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px]  transition-all duration-300">
+                Buy Now
+              </button>
+            </Link>
           </div>
           {/* single card */}
           <div className="py-10 px-6 text-center bg-slate-100 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] hover:shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] transition-all duration-300 rounded">
@@ -71,9 +82,20 @@ const WebsiteDetails = () => {
               <p>1 Year Updates</p>
               <p>Unlimited Domain Usage</p>
             </div>
-            <button className="bg-slate-500 hover:bg-blue-700 text-white rounded-full w-[70%] p-2 text-lg font-bold mt-10 hover:shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px]  transition-all duration-300">
-              Buy Now
-            </button>
+            <Link
+              to={`/checkout/${singleWebsite._id}`}
+              state={{
+                websiteId: singleWebsite?._id,
+                licenseType: "unlimited-license",
+                price: singleWebsite?.unlimitedLicensePrice,
+                title: singleWebsite?.title,
+                zipFile: singleWebsite?.zipFile,
+              }}
+            >
+              <button className="bg-slate-500 hover:bg-blue-700 text-white rounded-full w-[70%] p-2 text-lg font-bold mt-10 hover:shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px]  transition-all duration-300">
+                Buy Now
+              </button>
+            </Link>
           </div>
           {/* single card */}
           <div className="py-10 px-6 bg-gray-300 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded">

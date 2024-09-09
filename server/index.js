@@ -14,6 +14,9 @@ const queriesApi = require("./apis/queriesApi/queryApi");
 const coursesApi = require("./apis/coursesApi/coursesApi");
 const websitesApi = require("./apis/websitesApi/websitesApi");
 const videosApi = require("./apis/videosApi/videosApi");
+const ordersApi = require("./apis/ordersApi/ordersApi");
+const categoryApi = require("./apis/categoryApi/categoryApi");
+const subcategoryApi = require("./apis/subcategoryApi/subcategoryApi");
 
 const corsConfig = {
   origin: [
@@ -72,6 +75,15 @@ async function run() {
     const videosCollection = client
       .db("training-admission")
       .collection("videos");
+    const ordersCollection = client
+      .db("training-admission")
+      .collection("orders");
+    const categoriesCollection = client
+      .db("training-admission")
+      .collection("categories");
+    const subcategoriesCollection = client
+      .db("training-admission")
+      .collection("subcategories");
 
     // api start here-------
     app.use("/admission", admissionApi(admissionCollection));
@@ -80,6 +92,9 @@ async function run() {
     app.use("/courses", coursesApi(coursesCollection));
     app.use("/websites", websitesApi(websitesCollection));
     app.use("/videos", videosApi(videosCollection));
+    app.use("/orders", ordersApi(ordersCollection));
+    app.use("/category", categoryApi(categoriesCollection));
+    app.use("/subcategory", subcategoryApi(subcategoriesCollection));
     // api ends here--------
 
     // Send a ping to confirm a successful connection

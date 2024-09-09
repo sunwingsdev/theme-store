@@ -1,10 +1,9 @@
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../../providers/AuthProviders";
-import { imageUpload } from "../../../apis/api";
 import { useAddUserMutation } from "../../../redux/features/allApis/usersApi/UsersApi";
 import { useToasts } from "react-toast-notifications";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const {
@@ -13,64 +12,51 @@ const Register = () => {
     formState: { errors },
     watch,
   } = useForm();
-  const { createUser, updateUserProfile, user, setUser } =
+  const { createUser, updateUserProfile, user, setUser,  } =
     useContext(AuthContext);
 
   const [addUser] = useAddUserMutation();
   const [profilePicture, setProfilePicture] = useState(null);
   const [preview, setPreview] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [IsLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const navigate = useNavigate();
   const { addToast } = useToasts();
 
   const password = watch("password", "");
 
   const onSubmit = async (data) => {
     try {
-      setLoading(true);
-      const imageData = await imageUpload(profilePicture);
-      const imageUrl = imageData?.data?.display_url;
-      data.itemImage = imageUrl;
-      createUser(data.email, data.password)
-        .then((result) => {
-          updateUserProfile(data.name, imageUrl)
-            .then(async () => {
-              setUser({ ...user, displayName: data.name, photoUrl: imageUrl });
-              const userInfo = {
-                uid: result.user?.uid,
-                name: data.name,
-                image: imageUrl,
-                email: data.email,
-              };
-              try {
-                const result = await addUser(userInfo);
-                if (result.data.insertedId) {
-                  addToast("Signed up successfully", {
-                    appearance: "success",
-                    autoDismiss: true,
-                  });
-                  setLoading(false);
-                }
-              } catch (error) {
-                addToast("Failed to signed up", {
-                  appearance: "error",
-                  autoDismiss: true,
-                });
-              }
-            })
-            .catch((error) =>
-              addToast(error.message, {
-                appearance: "error",
-                autoDismiss: true,
-              })
-            );
-        })
-        .catch((error) => {
-          console.log(error.message);
+      setIsLoading(true);
+
+      const createUserResult = await createUser(data.email, data.password);
+      // Create FormData and append form fields
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("email", data.email);
+      formData.append("uid", createUserResult?.user?.uid);
+      formData.append("password", data.password);
+      // Append the profile picture to formData
+      if (profilePicture) {
+        formData.append("image", profilePicture);
+      }
+
+      // Send FormData to the backend
+      const result = await addUser(formData);
+      await updateUserProfile(data.name, result.data.image);
+      setUser({ ...user, displayName: data.name, photoURL: result.data.image });
+      if (result.data.insertedId) {
+        addToast(`${data.name} registered successfully`, {
+          appearance: "success",
+          autoDismiss: true,
         });
+      }
+      navigate("/");
+      setIsLoading(false);
     } catch (error) {
       console.log(error.message);
+      setIsLoading(false);
     }
   };
 
@@ -241,25 +227,27 @@ const Register = () => {
                     id="profilePicture"
                     onChange={handleProfilePictureChange}
                     className="hidden"
+                    accept="image/*"
                   />
                 </div>
               )}
             </div>
-            <button
-              type="submit"
-              className="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded"
-            >
-              {loading ? "Signing up" : "Sign up"}
-            </button>
-          </form>
-          <div className="mt-4 text-center">
-            <p>
-              Already have an account?{" "}
-              <Link to="/login" className="text-blue-500 hover:underline">
-                Login here
+            <div className="flex items-center justify-between">
+              <button
+                type="submit"
+                className="btn bg-blue-500 hover:bg-blue-700 disabled:bg-slate-600 disabled:text-black text-white font-bold py-2 px-6 rounded"
+                disabled={IsLoading}
+              >
+                {IsLoading ? "Loading..." : "Register"}
+              </button>
+              <Link
+                to="/login"
+                className="text-sm text-blue-500 hover:underline"
+              >
+                Already have an account?
               </Link>
-            </p>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>

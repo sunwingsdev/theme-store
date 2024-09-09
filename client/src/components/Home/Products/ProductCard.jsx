@@ -59,9 +59,6 @@ const ProductCard = ({ website }) => {
           </div>
         </div>
       </div>
-      {/* <Modal isOpen={isOpen} closeModal={closeModal}>
-        <AdmissionForm closeModal={closeModal} course={courseName} />
-      </Modal> */}
     </>
   );
 };
