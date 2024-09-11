@@ -23,6 +23,9 @@ const Footer = () => {
           <Link to="/contact" className="hover:text-gray-400">
             Contact
           </Link>
+          <Link to="/privacy-policy" className="hover:text-gray-400">
+            Privacy Policy
+          </Link>
         </nav>
         <div className="mt-8 lg:mt-0">
           <h3 className="text-lg font-semibold mb-2">
@@ -46,7 +49,6 @@ const Footer = () => {
             &copy; {new Date().getFullYear()} Sunwings . All rights reserved.
           </p>
         </div>
-        
       </div>
     </footer>
   );

@@ -25,6 +25,8 @@ import MyOrders from "../pages/Dashboard/MyOrders/MyOrders";
 import AdminRoute from "./AdminRoute";
 import AddCategory from "../pages/Dashboard/AddCategory/AddCategory";
 import OrderSuccess from "../pages/Home/OrderSuccess/OrderSuccess";
+import PrivacyPolicy from "../pages/Home/PrivacyPolicy/PrivacyPolicy";
+import HomeControl from "../pages/Dashboard/HomeControl/HomeControl";
 
 const Router = createBrowserRouter([
   {
@@ -46,6 +48,10 @@ const Router = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
+      },
+      {
+        path: "/privacy-policy",
+        element: <PrivacyPolicy />,
       },
       {
         path: "/courses",
@@ -154,6 +160,14 @@ const Router = createBrowserRouter([
         ),
       },
       {
+        path: "home-control",
+        element: (
+          <AdminRoute>
+            <HomeControl />
+          </AdminRoute>
+        ),
+      },
+      {
         path: "orders",
         element: (
           <AdminRoute>
@@ -167,6 +181,7 @@ const Router = createBrowserRouter([
       },
     ],
   },
+
   {
     path: "/register",
     element: <Register />,

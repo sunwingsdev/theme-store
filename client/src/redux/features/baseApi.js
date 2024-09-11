@@ -14,6 +14,7 @@ const baseApi = createApi({
     "orders",
     "categories",
     "subcategories",
+    "homeControls",
   ],
   endpoints: () => ({}),
 });

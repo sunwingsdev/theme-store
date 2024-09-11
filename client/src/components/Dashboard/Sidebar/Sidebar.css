@@ -1,0 +1,22 @@
+/* For WebKit browsers (Chrome, Safari, etc.) */
+.scrollable-element::-webkit-scrollbar {
+    display: none; /* Hides the scrollbar */
+  }
+  
+  /* For Firefox */
+  .scrollable-element {
+    scrollbar-width: none; /* Hides scrollbar */
+    overflow: auto; /* Ensure vertical scrolling */
+  }
+  
+  /* For IE and Edge */
+  .scrollable-element {
+    -ms-overflow-style: none; /* Hides scrollbar */
+    overflow: auto; /* Ensure vertical scrolling */
+  }
+  
+  /* Ensure the element is scrollable */
+  .scrollable-element {
+    overflow: auto; /* Enable scrolling */
+  }
+  

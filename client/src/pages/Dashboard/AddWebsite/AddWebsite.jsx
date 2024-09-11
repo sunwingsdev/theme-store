@@ -82,7 +82,7 @@ const AddWebsite = () => {
         setImage(null);
         setImagePreview(null);
         setZipfile(null);
-        setLoading(false)
+        setLoading(false);
       }
     } catch (error) {
       addToast("Failed to add website", {
@@ -95,7 +95,7 @@ const AddWebsite = () => {
   };
 
   return (
-    <div className="min-h-screen w-4/5 bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen md:w-4/5  flex items-center justify-center py-12 px-4 sm:px-6 w-full lg:px-8">
       <div className="w-full bg-white p-8 shadow-lg rounded-lg">
         <h2 className="text-center text-2xl font-extrabold text-gray-900 mb-6">
           Add New Website
