@@ -17,6 +17,10 @@ const videosApi = require("./apis/videosApi/videosApi");
 const ordersApi = require("./apis/ordersApi/ordersApi");
 const categoryApi = require("./apis/categoryApi/categoryApi");
 const subcategoryApi = require("./apis/subcategoryApi/subcategoryApi");
+const homeControlApi = require("./apis/homeControlApi/homeControlApi");
+const controlVideoApi = require("./apis/controlVideoApi/controlVideoApi");
+const controlLogoApi = require("./apis/controlLogoApi/controlLogoApi");
+const reviewsApi = require("./apis/reviewsApi/reviewsApi");
 
 const corsConfig = {
   origin: [
@@ -26,6 +30,10 @@ const corsConfig = {
     "http://rabbitcode.org",
     "www.rabbitcode.org",
     "rabbitcode.org",
+    "https://betweb.oracletechnology.net",
+    "http://betweb.oracletechnology.net",
+    "www.betweb.oracletechnology.net",
+    "betweb.oracletechnology.net",
     "*",
   ],
   credentials: true,
@@ -84,6 +92,18 @@ async function run() {
     const subcategoriesCollection = client
       .db("training-admission")
       .collection("subcategories");
+    const homeControlsCollection = client
+      .db("training-admission")
+      .collection("homeControls");
+    const controlVideoCollection = client
+      .db("training-admission")
+      .collection("controlVideos");
+    const controlLogoCollection = client
+      .db("training-admission")
+      .collection("controlLogos");
+    const reviewsCollection = client
+      .db("training-admission")
+      .collection("reviews");
 
     // api start here-------
     app.use("/admission", admissionApi(admissionCollection));
@@ -95,6 +115,10 @@ async function run() {
     app.use("/orders", ordersApi(ordersCollection));
     app.use("/category", categoryApi(categoriesCollection));
     app.use("/subcategory", subcategoryApi(subcategoriesCollection));
+    app.use("/home-control", homeControlApi(homeControlsCollection));
+    app.use("/control-videos", controlVideoApi(controlVideoCollection));
+    app.use("/control-logos", controlLogoApi(controlLogoCollection));
+    app.use("/reviews", reviewsApi(reviewsCollection));
     // api ends here--------
 
     // Send a ping to confirm a successful connection

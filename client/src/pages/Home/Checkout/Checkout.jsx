@@ -9,6 +9,8 @@ import { useAddOrderMutation } from "../../../redux/features/allApis/ordersApi/o
 import bkashLogo from "../../../assets/logo/bkash.png";
 import rocketLogo from "../../../assets/logo/rocket.png";
 import nagadLogo from "../../../assets/logo/nagad.png";
+import binanceLogo from "../../../assets/logo/binance.png";
+import payoneerLogo from "../../../assets/logo/payoneer.png";
 
 const paymentMethods = [
   {
@@ -34,6 +36,22 @@ const paymentMethods = [
     number: "01329747925",
     code: "*167#",
     className: "bg-[#EC3B41]",
+  },
+  {
+    id: "binance",
+    title: "Binance",
+    logo: binanceLogo,
+    number: "1234578",
+    code: "Binance Pay",
+    className: "bg-[#ecc360]",
+  },
+  {
+    id: "payoneer",
+    title: "Payoneer",
+    logo: payoneerLogo,
+    number: "12345678",
+    code: "Payoneer App",
+    className: "bg-[#FF4F00]",
   },
 ];
 
@@ -94,15 +112,10 @@ const Checkout = () => {
             appearance: "success",
             autoDismiss: true,
           });
-          
-          // Navigate to OrderSuccess page with order details
           navigate("/order-success", { state: { orderDetails: orderInfo } });
         }
       } catch (error) {
-        addToast(error.message, {
-          appearance: "error",
-          autoDismiss: true,
-        });
+        addToast(error.message, { appearance: "error", autoDismiss: true });
         setIsLoading(false);
       }
     }
@@ -117,7 +130,9 @@ const Checkout = () => {
           <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
               <div className="bg-gray-50 p-6 rounded-lg shadow mb-6">
-                <h3 className="text-lg font-medium text-gray-900">Order Summary</h3>
+                <h3 className="text-lg font-medium text-gray-900">
+                  Order Summary
+                </h3>
                 <div className="mt-4">
                   <div className="flex justify-between text-sm text-gray-600">
                     <p>Theme</p>
@@ -139,7 +154,9 @@ const Checkout = () => {
               </div>
 
               <div className="bg-gray-50 p-6 rounded-lg shadow">
-                <h3 className="text-lg font-medium text-gray-900">Payment Method</h3>
+                <h3 className="text-lg font-medium text-gray-900">
+                  Payment Method
+                </h3>
                 <RadioGroup
                   value={selectedPaymentMethod}
                   onChange={(method) => {
@@ -148,7 +165,9 @@ const Checkout = () => {
                   }}
                   className="mt-4"
                 >
-                  <RadioGroup.Label className="sr-only">Choose a payment method</RadioGroup.Label>
+                  <RadioGroup.Label className="sr-only">
+                    Choose a payment method
+                  </RadioGroup.Label>
                   <div className="space-y-4">
                     {paymentMethods.map((method) => (
                       <RadioGroup.Option
@@ -166,14 +185,24 @@ const Checkout = () => {
                       >
                         {({ checked }) => (
                           <div className="flex items-center justify-between w-full">
-                            <RadioGroup.Label as="p" className="font-medium text-lg">
+                            <RadioGroup.Label
+                              as="p"
+                              className="font-medium text-lg"
+                            >
                               <div className="flex items-center gap-2">
-                                <img className="w-10 h-10 rounded-lg" src={method.logo} alt={method.title} />
+                                <img
+                                  className="w-10 h-10 rounded-lg"
+                                  src={method.logo}
+                                  alt={method.title}
+                                />
                                 <p>{method.title}</p>
                               </div>
                             </RadioGroup.Label>
                             {checked && (
-                              <IoCheckmarkCircle className="h-6 w-6 text-white" aria-hidden="true" />
+                              <IoCheckmarkCircle
+                                className="h-6 w-6 text-white"
+                                aria-hidden="true"
+                              />
                             )}
                           </div>
                         )}
@@ -185,42 +214,136 @@ const Checkout = () => {
             </div>
 
             {selectedPaymentMethod && (
+              // Inside the Checkout component, replace the `Payment Instructions` section with this updated code:
+
               <div
-                className={`lg:col-span-1 mt-6 lg:mt-0 p-6 border rounded-lg ${selectedPaymentMethod?.className} text-white`}
+                className={`lg:col-span-1 mt-6 lg:mt-0 p-6 border rounded-lg ${selectedPaymentMethod.className} text-white`}
               >
-                <h4 className="text-md font-semibold mb-2">Payment Instructions</h4>
+                <h4 className="text-md font-semibold mb-2">
+                  Payment Instructions
+                </h4>
                 <ul className="list-disc pl-5 space-y-2 text-sm">
-                  <li>
-                    Dial <span className="font-bold">{selectedPaymentMethod.code}</span> or open the{" "}
-                    <span className="font-bold">{selectedPaymentMethod.title} app</span>.
-                  </li>
-                  <li>Choose &apos;Send Money&apos;.</li>
-                  <li>
-                    Enter the receiver&apos;s account number:{" "}
-                    <span className="font-bold">
-                      {isNumberRevealed
-                        ? selectedPaymentMethod.number
-                        : "013********"}
-                    </span>
-                    <button
-                      onClick={handleCopyNumber}
-                      className="ml-2 text-sm bg-gray-200 p-1 text-black rounded hover:bg-gray-300"
-                    >
-                      <IoCopyOutline className="inline-block mr-1" /> Copy
-                    </button>
-                  </li>
-                  <li>
-                    Enter the amount: <span className="font-bold">{price} ৳</span>.
-                  </li>
-                  <li>Confirm with your PIN.</li>
-                  <li>
-                    You will receive a confirmation message from{" "}
-                    <span className="font-bold">{selectedPaymentMethod.title}</span>.
-                  </li>
-                  <li>Enter the transaction ID below to complete your purchase.</li>
+                  {selectedPaymentMethod.id === "bkash" ||
+                  selectedPaymentMethod.id === "nagad" ||
+                  selectedPaymentMethod.id === "rocket" ? (
+                    <>
+                      <li>
+                        Dial{" "}
+                        <span className="font-bold">
+                          {selectedPaymentMethod.code}
+                        </span>{" "}
+                        or open the{" "}
+                        <span className="font-bold">
+                          {selectedPaymentMethod.title}
+                        </span>{" "}
+                        app.
+                      </li>
+                      <li>Choose 'Send Money'.</li>
+                      <li>
+                        Enter the receiver's account number:{" "}
+                        <span className="font-bold">
+                          {isNumberRevealed
+                            ? selectedPaymentMethod.number
+                            : "013********"}
+                        </span>
+                        <button
+                          onClick={handleCopyNumber}
+                          className="ml-2 text-sm bg-gray-200 p-1 text-black rounded hover:bg-gray-300"
+                        >
+                          <IoCopyOutline className="inline-block mr-1" /> Copy
+                        </button>
+                      </li>
+                      <li>
+                        Enter the amount:{" "}
+                        <span className="font-bold">{price} ৳</span>.
+                      </li>
+                      <li>Confirm with your PIN.</li>
+                      <li>
+                        You will receive a confirmation message from{" "}
+                        <span className="font-bold">
+                          {selectedPaymentMethod.title}
+                        </span>
+                        .
+                      </li>
+                      <li>
+                        Enter the transaction ID below to complete your
+                        purchase.
+                      </li>
+                    </>
+                  ) : selectedPaymentMethod.id === "binance" ? (
+                    <>
+                      <li>
+                        Open the <span className="font-bold">Binance app</span>{" "}
+                        and navigate to Binance Pay.
+                      </li>
+                      <li>
+                        Enter the receiver's Binance ID:{" "}
+                        <span className="font-bold">
+                          {isNumberRevealed
+                            ? selectedPaymentMethod.number
+                            : "********"}
+                        </span>
+                        <button
+                          onClick={handleCopyNumber}
+                          className="ml-2 text-sm bg-gray-200 p-1 text-black rounded hover:bg-gray-300"
+                        >
+                          <IoCopyOutline className="inline-block mr-1" /> Copy
+                        </button>
+                      </li>
+                      <li>Enter the amount and confirm the transaction.</li>
+                      <li>
+                        Provide the transaction ID below to complete your order.
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <li>
+                        Open the <span className="font-bold">Payoneer app</span>
+                        .
+                      </li>
+                      <li>
+                        Enter the receiver's Payoneer ID:{" "}
+                        <span className="font-bold">
+                          {isNumberRevealed
+                            ? selectedPaymentMethod.number
+                            : "********"}
+                        </span>
+                        <button
+                          onClick={handleCopyNumber}
+                          className="ml-2 text-sm bg-gray-200 p-1 text-black rounded hover:bg-gray-300"
+                        >
+                          <IoCopyOutline className="inline-block mr-1" /> Copy
+                        </button>
+                      </li>
+                      <li>Enter the amount and complete the transaction.</li>
+                      <li>
+                        Enter the transaction ID below to finalize your
+                        purchase.
+                      </li>
+                    </>
+                  )}
                 </ul>
+
                 <div className="mt-4">
-                  <label htmlFor="transaction-id" className="block text-sm font-medium">
+                  <label
+                    className="block text-sm font-medium mb-1"
+                    htmlFor="phone-number"
+                  >
+                    Your Mobile Number
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone-number"
+                    value={number}
+                    onChange={(e) => setNumber(e.target.value)}
+                    className="mt-1 block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                </div>
+                <div className="mt-4">
+                  <label
+                    className="block text-sm font-medium mb-1"
+                    htmlFor="transaction-id"
+                  >
                     Transaction ID
                   </label>
                   <input
@@ -228,35 +351,18 @@ const Checkout = () => {
                     id="transaction-id"
                     value={transactionId}
                     onChange={(e) => setTransactionId(e.target.value)}
-                    className="mt-1 block text-black p-3 w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    placeholder="Enter your transaction ID"
+                    className="mt-1 block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
-                <div className="mt-4">
-                  <label htmlFor="number" className="block text-sm font-medium">
-                    Your Phone Number
-                  </label>
-                  <input
-                    type="text"
-                    id="number"
-                    value={number}
-                    onChange={(e) => setNumber(e.target.value)}
-                    className="mt-1 block text-black p-3 w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    placeholder="Enter your phone number"
-                  />
-                </div>
+                <button
+                  onClick={handleSubmit}
+                  disabled={isLoading}
+                  className="w-full mt-6 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  {isLoading ? "Processing..." : "Complete Purchase"}
+                </button>
               </div>
             )}
-          </div>
-
-          <div className="mt-6 flex justify-end">
-            <button
-              onClick={handleSubmit}
-              disabled={isLoading}
-              className="px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition-all duration-300"
-            >
-              {isLoading ? "Placing Order..." : "Place Order"}
-            </button>
           </div>
         </div>
       </div>

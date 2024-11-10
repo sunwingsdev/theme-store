@@ -27,6 +27,8 @@ import AddCategory from "../pages/Dashboard/AddCategory/AddCategory";
 import OrderSuccess from "../pages/Home/OrderSuccess/OrderSuccess";
 import PrivacyPolicy from "../pages/Home/PrivacyPolicy/PrivacyPolicy";
 import HomeControl from "../pages/Dashboard/HomeControl/HomeControl";
+import AboutControl from "../pages/Dashboard/AboutControl/AboutControl";
+import Reviews from "../pages/Dashboard/Reviews/Reviews";
 
 const Router = createBrowserRouter([
   {
@@ -164,6 +166,22 @@ const Router = createBrowserRouter([
         element: (
           <AdminRoute>
             <HomeControl />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "about-control",
+        element: (
+          <AdminRoute>
+            <AboutControl />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "reviews",
+        element: (
+          <AdminRoute>
+            <Reviews />
           </AdminRoute>
         ),
       },

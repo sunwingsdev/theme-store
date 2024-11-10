@@ -41,10 +41,10 @@ export default function Products() {
   const totalPages = Math.ceil(filteredData?.length / itemsPerPage);
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto px-2">
       <div className="w-full px-2 py-10 pb-20 sm:px-0">
         <Tab.Group>
-          <Tab.List className="flex items-center justify-center gap-4 overflow-x-auto py-2 px-10">
+          <Tab.List className="flex items-center justify-center gap-2 md:gap-4 overflow-x-auto py-2 px-10">
             <Tab
               onClick={() => handleCategorySelect("")}
               className={`${

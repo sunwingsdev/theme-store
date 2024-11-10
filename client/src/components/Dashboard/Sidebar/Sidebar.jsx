@@ -6,6 +6,7 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import { useGetUserByUidQuery } from "../../../redux/features/allApis/usersApi/UsersApi";
 import Loader from "../../shared/Loader";
 import { useGetOrdersQuery } from "../../../redux/features/allApis/ordersApi/ordersApi";
+import oracleLogo from "../../../assets/logo/oracle-logo.png";
 import "./Sidebar.css";
 
 const Sidebar = () => {
@@ -64,7 +65,7 @@ const Sidebar = () => {
   if (loading || isLoading || orderLoading) return <Loader />;
 
   return (
-    <div>
+    <div className="">
       {/* Hamburger icon for mobile menu */}
       <div className="lg:hidden">
         <FaBars
@@ -76,12 +77,13 @@ const Sidebar = () => {
 
       {/* Mobile menu */}
       <div
+        style={{ overflow: "auto", scrollbarWidth: "none" }}
         className={`fixed inset-0 z-50 bg-gray-500 bg-opacity-50 w-64 h-screen transform ${
           mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-300 ease-in-out lg:hidden`}
       >
-        <div className="w-64 bg-gray-800 text-white h-full">
-          <div className="flex justify-between items-center p-2">
+        <div className="w-64 bg-gray-800 text-white">
+          <div className="flex justify-between items-center p-2 ">
             {/* Close button for mobile menu */}
             <FaTimes
               className="text-white text-2xl cursor-pointer"
@@ -90,9 +92,10 @@ const Sidebar = () => {
           </div>
           <div className="px-5 pt-1">
             <Link onClick={closeMobileMenu} to="/">
-              <h2 className="text-3xl font-bold text-center text-orange-500">
-                Rabbit<span className="text-white">Code</span>
-              </h2>
+              <img className="w-full" src={oracleLogo} alt="logo" />
+              {/* <h2 className="text-3xl font-bold text-center text-orange-500">
+                Oracle<span className="text-white"> Technology</span>
+              </h2> */}
             </Link>
           </div>
           <div className="px-5 py-1 flex items-center gap-4">
@@ -108,7 +111,7 @@ const Sidebar = () => {
               <p className="text-sm text-gray-300">{singleUser?.email}</p>
             </div>
           </div>
-          <ul className="px-4 py-2 space-y-2 h-screen">
+          <ul className="px-4 py-2 space-y-2">
             <Link onClick={closeMobileMenu} to="/dashboard">
               <li className="text-white cursor-pointer bg-green-600 hover:bg-green-700 duration-300 py-1.5 px-3 flex gap-2 items-center lg:text-lg">
                 Dashboard Home
@@ -278,6 +281,39 @@ const Sidebar = () => {
                 </ul>
               </li>
             )}
+            {singleUser?.role === "admin" && (
+              <li className="text-white cursor-pointer">
+                <div
+                  className="bg-green-600 hover:bg-green-700 duration-300 py-1.5 px-3 flex gap-2 items-center lg:text-lg"
+                  onClick={() => toggleCollapse("frontend")}
+                >
+                  Frontend Controls
+                </div>
+                <ul
+                  className={`pl-4 mt-2 text-sm lg:text-base ${
+                    collapsed.frontend
+                      ? "hidden"
+                      : "block transition-all ease-in duration-500"
+                  }`}
+                >
+                  <Link onClick={closeMobileMenu} to="/dashboard/home-control">
+                    <li className="bg-green-500 hover:bg-green-600 mb-2 py-1.5 px-3 w-full">
+                      Home Control
+                    </li>
+                  </Link>
+                  <Link onClick={closeMobileMenu} to="/dashboard/about-control">
+                    <li className="bg-green-500 hover:bg-green-600 mb-2 py-1.5 px-3 w-full">
+                      About Control
+                    </li>
+                  </Link>
+                  <Link onClick={closeMobileMenu} to="/dashboard/reviews">
+                    <li className="bg-green-500 hover:bg-green-600 mb-2 py-1.5 px-3 w-full">
+                      Reviews
+                    </li>
+                  </Link>
+                </ul>
+              </li>
+            )}
             <li>
               <button
                 onClick={handleLogout}
@@ -294,9 +330,10 @@ const Sidebar = () => {
       <div className="hidden lg:flex flex-col h-screen bg-gray-800 w-64 text-white ">
         <div className="px-5 pt-4">
           <Link onClick={closeMobileMenu} to="/">
-            <h2 className="text-4xl font-bold text-center text-orange-500">
-              Rabbit<span className="text-white">Code</span>
-            </h2>
+            <img className="w-full" src={oracleLogo} alt="logo" />
+            {/* <h2 className="text-4xl font-bold text-center text-orange-500">
+              Oracle<span className="text-white"> Technology</span>
+            </h2> */}
           </Link>
         </div>
         <div className="px-5 py-2 flex items-center gap-4">
@@ -504,6 +541,16 @@ const Sidebar = () => {
                 <Link onClick={closeMobileMenu} to="/dashboard/home-control">
                   <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
                     Home Control
+                  </li>
+                </Link>
+                <Link onClick={closeMobileMenu} to="/dashboard/about-control">
+                  <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
+                    About Control
+                  </li>
+                </Link>
+                <Link onClick={closeMobileMenu} to="/dashboard/reviews">
+                  <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
+                    Reviews
                   </li>
                 </Link>
               </ul>

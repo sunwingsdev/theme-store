@@ -17,8 +17,21 @@ const homeControlApi = baseApi.injectEndpoints({
       query: () => "/home-control",
       providesTags: ["homeControls"],
     }),
+
+    // update home control
+    updateHomeControl: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/home-control/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["homeControls"],
+    }),
   }),
 });
 
-export const { useAddHomeControlMutation, useGetAllHomeControlsQuery } =
-  homeControlApi;
+export const {
+  useAddHomeControlMutation,
+  useGetAllHomeControlsQuery,
+  useUpdateHomeControlMutation,
+} = homeControlApi;

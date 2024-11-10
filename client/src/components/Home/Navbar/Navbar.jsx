@@ -4,6 +4,7 @@ import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProviders";
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
 import { useToasts } from "react-toast-notifications";
+import oracleLogo from "../../../assets/logo/oracle-logo.png";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -38,11 +39,14 @@ const Navbar = () => {
     <div className="sticky top-0 bg-white z-20 px-4">
       <div className="container mx-auto">
         <div className="flex items-center justify-between py-4">
-          <Link to="/">
-            <h2 className="text-4xl font-bold">
-              <span className="text-orange-500">Rabbit</span>Code
-            </h2>
-          </Link>
+          <div className="">
+            <Link to="/">
+              <img className="w-40" src={oracleLogo} alt="logo" />
+              {/* <h2 className="text-4xl font-bold">
+                <span className="text-orange-500">Oracle</span> Technology
+              </h2> */}
+            </Link>
+          </div>
           <div className="hidden md:flex flex-row gap-8">
             <ul className="flex flex-row items-center justify-center gap-8 text-base font-semibold text-[#1f1e1e]">
               <NavLink
