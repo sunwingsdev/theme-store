@@ -17,7 +17,27 @@ const usersApi = baseApi.injectEndpoints({
       query: () => "/users",
       providesTags: ["users"],
     }),
+
+    // get a single user
+    getUserByUid: builder.query({
+      query: (uid) => `/users/${uid}`,
+      providesTags: ["users"],
+    }),
+
+    // update role
+    updateRole: builder.mutation({
+      query: ({ id, role }) => ({
+        url: `/users/${id}`,
+        method: "PATCH",
+        body: { role },
+      }),
+    }),
   }),
 });
 
-export const { useAddUserMutation, useGetAllUsersQuery } = usersApi;
+export const {
+  useAddUserMutation,
+  useGetAllUsersQuery,
+  useGetUserByUidQuery,
+  useUpdateRoleMutation,
+} = usersApi;

@@ -180,7 +180,7 @@ const AddCourse = () => {
             type="submit"
             className="mt-6 w-full disabled:bg-slate-500 disabled:text-slate-900 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
-            {loading ? "Adding..." : "Add Website"}
+            {loading ? "Adding..." : "Add Course"}
           </button>
         </form>
       </div>

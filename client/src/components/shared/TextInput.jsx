@@ -2,10 +2,8 @@ const TextInput = ({ name, label, register, defaultValue }) => {
   return (
     <div className="relative w-full h-10">
       <input
-        {...register(name, {
-          required: `${label} is required`,
-        })}
-        className="peer w-full h-full bg-transparent text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-blue-gray-200 focus:border-blue-600"
+        {...register(name)}
+        className="peer w-full h-full bg-transparent text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-blue-400 focus:border-blue-600"
         placeholder=" "
         defaultValue={defaultValue}
       />

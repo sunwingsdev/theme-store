@@ -1,19 +1,11 @@
-// import { useState } from "react";
-// import Modal from "../../shared/Modal";
-// import AdmissionForm from "../AdmissionForm/AdmissionForm";
+import { FaHeart } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { AiOutlineLike } from "react-icons/ai";
 
 const ProductCard = ({ website }) => {
-  // const [isOpen, setIsOpen] = useState(false);
-  // const [courseName, setCourseName] = useState("");
-
-  // const openModal = (course) => {
-  //   setIsOpen(true);
-  //   setCourseName(course);
-  // };
-  // const closeModal = () => {
-  //   setIsOpen(false);
-  // };
+  // Generate random numbers between 1 and 999 for likes and hearts
+  const randomHearts = Math.floor(Math.random() * (999 - 1 + 1)) + 1;
+  const randomLikes = Math.floor(Math.random() * (99 - 1 + 1)) + 1;
 
   return (
     <>
@@ -32,20 +24,26 @@ const ProductCard = ({ website }) => {
             </h2>
           </Link>
           <p className="text-[#4b4b50] text-base font-medium">
-            Single License: $40 / {website?.singleLicensePrice} BDT
+            Single License: {website?.singleLicensePrice} BDT
           </p>
           <p className="text-[#4b4b50] text-base font-medium">
-            Unlimited : $40 / {website?.unlimitedLicensePrice} BDT
+            Unlimited : {website?.unlimitedLicensePrice} BDT
           </p>
-          <div className="py-2 text-right text-[#6d6e76] text-[14px]">
-            <p>680 Review</p>
+          <div className="py-2 text-right text-[#6d6e76] text-[14px] flex justify-between">
+            <div className="flex items-center justify-start gap-2">
+              <FaHeart className="text-red-600 md:text-xl" />
+              <span>({randomHearts}k+)</span>
+            </div>
+            <div className="flex items-center justify-start gap-2">
+              <AiOutlineLike className="text-red-600 md:text-xl" />
+              <span>({randomLikes}k+)</span>
+            </div>
           </div>
           <div className="flex gap-4 flex-row items-center justify-between xl:text-base md:text-sm text-xs">
             <Link
-              to={website?.demoLink}
+              to={website?.demoFrontend}
               rel="noreferrer"
               target={"_blank"}
-              // onClick={() => openModal(course?.courseName)}
               className="text-center border w-full border-red-600 p-[8px] font-semibold
          rounded-sm hover:bg-red-600 text-red-600 hover:text-white transition-all duration-300"
             >
@@ -61,9 +59,6 @@ const ProductCard = ({ website }) => {
           </div>
         </div>
       </div>
-      {/* <Modal isOpen={isOpen} closeModal={closeModal}>
-        <AdmissionForm closeModal={closeModal} course={courseName} />
-      </Modal> */}
     </>
   );
 };

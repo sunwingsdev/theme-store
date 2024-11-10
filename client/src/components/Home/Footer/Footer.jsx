@@ -1,14 +1,27 @@
 import { Link } from "react-router-dom";
-
+import { useGetAllHomeControlsQuery } from "../../../redux/features/allApis/homeControlApi/homeControlApi";
+import oracleLogo from '../../../assets/logo/oracle-logo.png'
 const Footer = () => {
+  const { data: controls } = useGetAllHomeControlsQuery();
+  // const footerTitle = controls?.find(
+  //   (control) => control.subcategory === "footer-title"
+  // );
+  const footerSubtitle = controls?.find(
+    (control) => control.subcategory === "footer-subtitle"
+  );
   return (
     <footer className="bg-[#343434] text-white pt-12 pb-8 px-4">
       <div className="container mx-auto flex flex-col lg:flex-row justify-between items-center">
         <div className="mb-8 lg:mb-0">
-          <h2 className="text-3xl font-semibold">
-            Sunwings <br /> Training Centre
-          </h2>
-          <p className="mt-2">A short description of the company.</p>
+        <img className="w-48" src={oracleLogo} alt="logo" />
+          {/* <h2 className="text-3xl font-semibold">
+            {footerTitle ? footerTitle?.text : "RabbitCode"}
+          </h2> */}
+          <p className="mt-2">
+            {footerSubtitle
+              ? footerSubtitle?.text
+              : "A short description of the company."}
+          </p>
         </div>
         <nav className="flex flex-wrap justify-center lg:justify-end space-x-4">
           <Link to="/" className="hover:text-gray-400">
@@ -22,6 +35,9 @@ const Footer = () => {
           </Link> */}
           <Link to="/contact" className="hover:text-gray-400">
             Contact
+          </Link>
+          <Link to="/privacy-policy" className="hover:text-gray-400">
+            Privacy Policy
           </Link>
         </nav>
         <div className="mt-8 lg:mt-0">
@@ -46,7 +62,6 @@ const Footer = () => {
             &copy; {new Date().getFullYear()} Sunwings . All rights reserved.
           </p>
         </div>
-        
       </div>
     </footer>
   );
