@@ -2,7 +2,7 @@ import CourseTab from "../CourseTab/CourseTab";
 
 const PopularCourse = () => {
   return (
-    <div className="mt-[124px]">
+    <div className="mt-[124px] px-4">
       <div>
         <h2 className="text-[#1f1e1e] text-[44px] text-center font-bold">
           Popular Courses
@@ -15,8 +15,8 @@ const PopularCourse = () => {
           time.
         </p>
       </div>
-      <div className="container mx-auto">
-        <div className="px-4">
+      <div className="">
+        <div className="">
           <CourseTab />
         </div>
       </div>

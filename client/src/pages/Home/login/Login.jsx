@@ -18,6 +18,7 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
+  
 
   const onSubmit = async (data) => {
     try {
@@ -27,7 +28,7 @@ const Login = () => {
         appearance: "success",
         autoDismiss: true,
       });
-      navigate(from, { replace: true });
+      navigate(from);
       setLoading(false);
     } catch (error) {
       addToast("Failed to log in", {
@@ -114,6 +115,12 @@ const Login = () => {
             Don&apos;t have an account?{" "}
             <Link to="/register" className="text-blue-500 hover:underline">
               Register here
+            </Link>
+          </p>
+          <p>
+            or Go back to{" "}
+            <Link to="/" className="text-blue-500 hover:underline">
+              Home
             </Link>
           </p>
         </div>

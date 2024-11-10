@@ -12,6 +12,7 @@ import { useState } from "react";
 import { useToasts } from "react-toast-notifications";
 import moment from "moment";
 import AdmissionDetails from "../../../components/Dashboard/Sidebar/AdmissionDetails/AdmissionDetails";
+import DeleteModal from "../../../components/shared/DeleteModal";
 
 const AdmissionStudent = () => {
   const { data, isLoading } = useGetStudentsQuery();
@@ -31,17 +32,14 @@ const AdmissionStudent = () => {
     setIsOpenDeleteModal(true);
     setId(id);
   };
-  const closeDeleteModal = () => {
-    setIsOpenDeleteModal(false);
-  };
+
   if (isLoading) {
     return <Loader />;
   }
 
   // Function to handle the delete action
   const handleDelete = async () => {
-    // Implement delete functionality here
-    console.log("Delete", id);
+
     try {
       const result = await deleteSingleStudent(id);
       if (result.data.insertedId) {
@@ -86,27 +84,12 @@ const AdmissionStudent = () => {
             <FaTrash size={25} className="text-red-500" />
           </div>
         </div>
-        <Modal isOpen={isOpenDeleteModal} closeModal={closeDeleteModal}>
-          <div className="">
-            <h2 className="text-center pb-6 pt-4 text-xl">
-              Are you sure want to delete it?
-            </h2>
-            <div className="flex flex-row gap-2 items-center justify-center w-full">
-              <button
-                onClick={closeDeleteModal}
-                className="bg-green-600 hover:bg-green-800 px-5 py-3 rounded text-white text-lg"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleDelete}
-                className="bg-red-600 hover:bg-red-800 px-5 py-3 rounded text-white text-lg"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        </Modal>
+        <DeleteModal
+          openDeleteModal={isOpenDeleteModal}
+          setOpenDeleteModal={setIsOpenDeleteModal}
+          handleDelete={handleDelete}
+        />
+
         <Modal isOpen={isOpenViewModal} closeModal={closeViewModal}>
           <AdmissionDetails rowData={rowData} />
         </Modal>
