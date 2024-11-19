@@ -53,9 +53,6 @@ const WebsitesList = () => {
     setId(id);
   };
 
-  // const handleEdit = async () => {
-  //   // Logic to handle editing a website
-  // };
 
   const technologyOptions = [
     {

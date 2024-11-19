@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useToasts } from "react-toast-notifications";
 import {
@@ -10,9 +10,11 @@ import SelectInput from "../../shared/SelectInput";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import the styles for React Quill
 import Loader from "../../shared/Loader";
+import { useGetCategoriesQuery } from "../../../redux/features/allApis/categoryApi/categoryApi";
 
 const EditWebsiteForm = ({ id, closeModal }) => {
   const { data: websites, isLoading } = useGetAllWebsitesQuery();
+  const { data: categoryOptions } = useGetCategoriesQuery();
   const {
     register,
     handleSubmit,
@@ -30,12 +32,16 @@ const EditWebsiteForm = ({ id, closeModal }) => {
   const { addToast } = useToasts();
 
   const selectedWebsite = websites?.find((website) => website._id === id);
-  console.log(selectedWebsite);
+  useEffect(() => {
+    if (selectedWebsite?.details) {
+      setDetails(selectedWebsite.details);
+    }
+  }, [selectedWebsite?.details]);
 
-  const categoryOptions = [
-    { label: "News", value: "news" },
-    { label: "Ecommerce", value: "e-commerce" },
-  ];
+  // const categoryOptions = [
+  //   { label: "News", value: "news" },
+  //   { label: "Ecommerce", value: "e-commerce" },
+  // ];
 
   const technologyOptions = [
     { label: "React", value: "react" },
@@ -308,8 +314,8 @@ const EditWebsiteForm = ({ id, closeModal }) => {
                 Details
               </label>
               <ReactQuill
-                value={details}
-                onChange={setDetails}
+                value={details} // Bind the state to React Quill
+                onChange={setDetails} // Update the state on change
                 className="bg-white"
                 modules={{
                   toolbar: [
