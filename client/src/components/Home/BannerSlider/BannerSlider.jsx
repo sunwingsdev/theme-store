@@ -70,11 +70,7 @@ const BannerSlider = () => {
       title: "English Language",
       link: "",
     },
-    {
-      image: "https://www.creativeitinstitute.com/images/department/robot.png",
-      title: "Robotics & Automation",
-      link: "",
-    },
+
     {
       image: "https://www.creativeitinstitute.com/images/department/aws.png",
       title: "Cloud Computing",
@@ -141,7 +137,7 @@ const BannerSlider = () => {
     <div className="container mx-auto px-2 md:px-4 lg:px-8 w-full absolute bottom-[-90px] left-1/2 transform -translate-x-1/2">
       <div className="slider-container w-full px-4 relative">
         <Slider {...settings}>
-          {slideList.map((item, i) => (
+          {slideList?.map((item, i) => (
             <div key={i} className="slide-item">
               <div className="flex flex-col bg-white p-[15px] rounded-2xl w-[135px] h-[150px] shadow-md items-center justify-center mx-6 my-3">
                 <img

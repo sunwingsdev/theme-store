@@ -29,6 +29,8 @@ import PrivacyPolicy from "../pages/Home/PrivacyPolicy/PrivacyPolicy";
 import HomeControl from "../pages/Dashboard/HomeControl/HomeControl";
 import AboutControl from "../pages/Dashboard/AboutControl/AboutControl";
 import Reviews from "../pages/Dashboard/Reviews/Reviews";
+import PaymentGateway from "../pages/Dashboard/PaymentGateway/PaymentGateway";
+import ContactUsControl from "../pages/Dashboard/ContactUsControl/ContactUsControl";
 
 const Router = createBrowserRouter([
   {
@@ -178,6 +180,14 @@ const Router = createBrowserRouter([
         ),
       },
       {
+        path: "contact-control",
+        element: (
+          <AdminRoute>
+            <ContactUsControl />
+          </AdminRoute>
+        ),
+      },
+      {
         path: "reviews",
         element: (
           <AdminRoute>
@@ -190,6 +200,14 @@ const Router = createBrowserRouter([
         element: (
           <AdminRoute>
             <Orders />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "payment-gateway",
+        element: (
+          <AdminRoute>
+            <PaymentGateway />
           </AdminRoute>
         ),
       },

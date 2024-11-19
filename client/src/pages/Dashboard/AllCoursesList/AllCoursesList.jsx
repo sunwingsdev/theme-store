@@ -43,7 +43,6 @@ const AllCoursesList = () => {
         appearance: "error",
         autoDismiss: true,
       });
-      console.log(error.message);
     }
   };
 
@@ -56,7 +55,7 @@ const AllCoursesList = () => {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {courses &&
-            courses.map((course) => (
+            courses?.map((course) => (
               <DashboardCourseCard
                 key={course._id}
                 course={course}

@@ -27,7 +27,6 @@ const usersApi = (usersCollection) => {
           : undefined,
       };
 
-      console.log(userInfo);
 
       const result = await usersCollection.insertOne(userInfo);
       result.image = userInfo.image;

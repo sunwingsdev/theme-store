@@ -6,6 +6,8 @@ import SelectInput from "../../../components/shared/SelectInput";
 import { useAddWebsiteMutation } from "../../../redux/features/allApis/websitesApi/websitesApi";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import the styles for React Quill
+import { useGetCategoriesQuery } from "../../../redux/features/allApis/categoryApi/categoryApi";
+import { useGetTechnologiesQuery } from "../../../redux/features/allApis/technologyApi/technologyApi";
 
 const AddWebsite = () => {
   const {
@@ -14,6 +16,11 @@ const AddWebsite = () => {
     reset,
     formState: { errors },
   } = useForm();
+
+  const { data: categoryOptions, isLoading: categoryLoading } =
+    useGetCategoriesQuery();
+  const { data: technologyOptions, isLoading: technologyLoading } =
+    useGetTechnologiesQuery();
   const [addWebsite] = useAddWebsiteMutation();
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
@@ -23,17 +30,6 @@ const AddWebsite = () => {
   const [loading, setLoading] = useState(false);
   const [details, setDetails] = useState(""); // React Quill content
   const { addToast } = useToasts();
-
-  const categoryOptions = [
-    { label: "News", value: "news" },
-    { label: "Ecommerce", value: "e-commerce" },
-  ];
-
-  const technologyOptions = [
-    { label: "React", value: "react" },
-    { label: "Laravel", value: "laravel" },
-    { label: "Wordpress", value: "wordpress" },
-  ];
 
   const handleModuleInputChange = (e) => {
     setModuleInput(e.target.value);
@@ -191,12 +187,14 @@ const AddWebsite = () => {
               label={"Category"}
               options={categoryOptions}
               register={register}
+              loading={categoryLoading}
             />
             <SelectInput
               name={"technology"}
               label={"Technology"}
               options={technologyOptions}
               register={register}
+              loading={technologyLoading}
             />
             <TextInput name={"title"} label={"Title"} register={register} />
             <TextInput
@@ -251,7 +249,7 @@ const AddWebsite = () => {
                 </label>
               </div>
               <ul className="mt-2">
-                {modules.map((module, index) => (
+                {modules?.map((module, index) => (
                   <li
                     key={index}
                     className="flex items-center justify-between bg-blue-gray-50 rounded p-2 mb-2 text-sm text-blue-gray-900"
@@ -280,20 +278,47 @@ const AddWebsite = () => {
                 className="bg-white"
                 modules={{
                   toolbar: [
-                    [{ header: "1" }, { header: "2" }, { font: [] }],
-                    ["bold", "italic", "underline", "strike", "blockquote"],
-                    [{ color: [] }],
-                    [{ align: [] }],
+                    // Header and Font
+                    [{ header: [1, 2, 3, 4, 5, 6, false] }, { font: [] }],
+                    // Text Formatting
+                    ["bold", "italic", "underline", "strike"],
+                    // List, Indent, Align
                     [
                       { list: "ordered" },
                       { list: "bullet" },
                       { indent: "-1" },
                       { indent: "+1" },
                     ],
-                    ["link", "image"],
+                    [{ align: [] }],
+                    // Colors and Background
+                    [{ color: [] }, { background: [] }],
+                    // Blockquote, Code Block
+                    ["blockquote", "code-block"],
+                    // Links and Images
+                    ["link", "image", "video"],
+                    // Clean formatting
                     ["clean"],
                   ],
                 }}
+                formats={[
+                  "header",
+                  "font",
+                  "bold",
+                  "italic",
+                  "underline",
+                  "strike",
+                  "blockquote",
+                  "list",
+                  "bullet",
+                  "indent",
+                  "align",
+                  "color",
+                  "background",
+                  "link",
+                  "image",
+                  "video",
+                  "code-block",
+                ]}
               />
               {errors.details && (
                 <span className="text-red-600 text-sm">

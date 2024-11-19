@@ -6,7 +6,7 @@ import { TbFidgetSpinner } from "react-icons/tb";
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
 import { IoMdDoneAll } from "react-icons/io";
 
-const AdmissionForm = ({ closeModal, course }) => {
+const AdmissionForm = ({ closeModal }) => {
   const [loading, setLoading] = useState(false);
   const [addMission] = useAddAdmissionMutation();
   const { addToast } = useToasts();
@@ -28,7 +28,6 @@ const AdmissionForm = ({ closeModal, course }) => {
         closeModal();
         setLoading(false);
       }
-      console.log(result);
     } catch (error) {
       addToast(error.message, {
         appearance: "error",
@@ -117,7 +116,7 @@ const AdmissionForm = ({ closeModal, course }) => {
             <span className="text-red-500">Location is required</span>
           )}
         </div>
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="course"
@@ -144,7 +143,7 @@ const AdmissionForm = ({ closeModal, course }) => {
           {errors.course && (
             <span className="text-red-500">Please select a course</span>
           )}
-        </div>
+        </div> */}
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"

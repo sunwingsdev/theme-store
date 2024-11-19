@@ -2,15 +2,21 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   useAddReviewMutation,
+  useDeleteReviewMutation,
   useGetReviewsQuery,
 } from "../../../redux/features/allApis/reviewsApi/reviewsApi";
 import { useToasts } from "react-toast-notifications";
 import SpinLoader from "../../../components/shared/SpinLoader";
+import DeleteModal from "../../../components/shared/DeleteModal";
 
 const AddReview = () => {
   const { data: reviews, isLoading } = useGetReviewsQuery();
   const [addReview] = useAddReviewMutation();
+  const [deleteReview] = useDeleteReviewMutation();
   const [loading, setLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [id, setId] = useState("");
   const {
     register,
     handleSubmit,
@@ -21,12 +27,10 @@ const AddReview = () => {
   const { addToast } = useToasts();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const reviewsPerPage = 3; // Define how many reviews you want to display per page
+  const reviewsPerPage = 3;
 
-  // Calculate total number of pages
   const totalPages = Math.ceil(reviews?.length / reviewsPerPage);
 
-  // Get current reviews for pagination
   const indexOfLastReview = currentPage * reviewsPerPage;
   const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
   const currentReviews = reviews?.slice(indexOfFirstReview, indexOfLastReview);
@@ -64,22 +68,48 @@ const AddReview = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
+  const handleOpenDeleteModal = (id) => {
+    setOpenDeleteModal(true);
+    setId(id);
+  };
+
+  const handleDelete = async () => {
+    try {
+      setDeleteLoading(true);
+      const result = await deleteReview(id);
+      if (result.data.deletedCount > 0) {
+        addToast("Review deleted successfully", {
+          appearance: "success",
+          autoDismiss: true,
+        });
+        setDeleteLoading(false);
+        setOpenDeleteModal(false);
+      }
+    } catch (error) {
+      addToast(error.message, {
+        appearance: "error",
+        autoDismiss: true,
+      });
+      setDeleteLoading(false);
+    }
+  };
+
   return (
-    <div className="flex flex-col md:flex-row justify-center items-start min-h-screen gap-10 bg-gray-50 p-4">
+    <div className="flex flex-col md:flex-row justify-center items-start gap-4 py-8 px-6 md:px-12">
       {/* Left: Review Form */}
-      <div className="w-full  max-w-lg p-4 bg-white shadow-md rounded-lg">
-        <h2 className="text-3xl font-semibold text-center text-gray-800 mb-3">
-          Add Your Review
+      <div className="w-full p-10 bg-white shadow-lg rounded-lg border border-gray-200">
+        <h2 className="text-3xl font-semibold text-center text-gray-900 mb-6">
+          Share Your Experience
         </h2>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           {/* Name Field */}
-          <div className="mb-3">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Name
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Your Name
             </label>
             <input
               type="text"
-              className={`w-full px-2 py-1.5 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+              className={`w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                 errors.name ? "border-red-500" : "border-gray-300"
               }`}
               {...register("name", { required: "Name is required" })}
@@ -90,13 +120,13 @@ const AddReview = () => {
           </div>
 
           {/* Location Field */}
-          <div className="mb-3">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
               Location
             </label>
             <input
               type="text"
-              className={`w-full px-2 py-1.5 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+              className={`w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                 errors.location ? "border-red-500" : "border-gray-300"
               }`}
               {...register("location", { required: "Location is required" })}
@@ -109,17 +139,17 @@ const AddReview = () => {
           </div>
 
           {/* Star Rating Field */}
-          <div className="mb-3">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
               Rating
             </label>
-            <div className="flex space-x-1">
+            <div className="flex space-x-2">
               {[1, 2, 3, 4, 5].map((star) => (
                 <button
                   key={star}
                   type="button"
                   className={`text-3xl focus:outline-none transition-colors duration-200 ${
-                    rating >= star ? "text-orange-500" : "text-gray-300"
+                    rating >= star ? "text-yellow-500" : "text-gray-300"
                   }`}
                   onClick={() => handleStarClick(star)}
                 >
@@ -139,15 +169,15 @@ const AddReview = () => {
           </div>
 
           {/* Review Field */}
-          <div className="mb-3">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Review
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Your Review
             </label>
             <textarea
-              className={`w-full px-2 py-1.5 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                errors.review ? "border-orange-500" : "border-gray-300"
+              className={`w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                errors.review ? "border-red-500" : "border-gray-300"
               }`}
-              rows="5"
+              rows="4"
               {...register("review", { required: "Review is required" })}
             ></textarea>
             {errors.review && (
@@ -158,41 +188,41 @@ const AddReview = () => {
           </div>
 
           {/* Submit Button */}
-          <div className="">
+          <div className="mt-4">
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-orange-600 disabled:bg-slate-500 disabled:text-black text-white py-2 rounded shadow-sm hover:bg-orange-700 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-blue-300"
+              className="w-full bg-orange-600 disabled:bg-slate-500 text-white py-3 rounded-lg shadow-sm hover:bg-orange-700 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-blue-300"
             >
-              {loading ? <SpinLoader /> : "Add Review"}
+              {loading ? <SpinLoader /> : "Submit Review"}
             </button>
           </div>
         </form>
       </div>
 
       {/* Right: Review List with Pagination */}
-      {!isLoading ? (
-        <div className="w-full max-w-lg bg-white shadow-md rounded-lg p-4">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-3">
+      {!isLoading && reviews?.length > 0 && (
+        <div className="w-full mt-10 md:mt-0 bg-white shadow-lg rounded-lg border border-gray-200 p-8">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-6">
             Customer Reviews
           </h2>
-          <div className="space-y-2">
+          <div className="space-y-8">
             {currentReviews?.map((review, index) => (
               <div
                 key={index}
-                className="p-2 border-b border-gray-200 last:border-none"
+                className="bg-gray-50 p-6 rounded-lg shadow-md border border-gray-200 relative"
               >
-                <h3 className="text-lg font-semibold text-gray-800">
+                <h3 className="text-xl font-semibold text-gray-800">
                   {review.name}
                 </h3>
-                <p className="text-sm text-gray-500 mb-1">{review.location}</p>
-                <div className="flex space-x-1 mb-1">
+                <p className="text-sm text-gray-500 mb-3">{review.location}</p>
+                <div className="flex space-x-1 mb-4">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <span
                       key={star}
                       className={`text-xl ${
                         review.rating >= star
-                          ? "text-orange-500"
+                          ? "text-yellow-500"
                           : "text-gray-300"
                       }`}
                     >
@@ -200,38 +230,43 @@ const AddReview = () => {
                     </span>
                   ))}
                 </div>
-                <p className="text-gray-700">{review.review}</p>
+                <p className="text-gray-700 mb-4">{review.review}</p>
+                <button
+                  onClick={() => handleOpenDeleteModal(review._id)}
+                  className="absolute top-2 right-2 text-sm bg-red-500 px-2 py-1 hover:bg-red-700 text-white"
+                >
+                  Delete
+                </button>
               </div>
             ))}
           </div>
 
           {/* Pagination Buttons */}
-          <div className="mt-6 flex justify-between">
+          <div className="mt-8 flex justify-between">
             <button
-              className={`px-4 py-2 rounded-md text-white bg-orange-600 hover:bg-orange-700 transition-all ${
-                currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
-              }`}
               onClick={handlePreviousPage}
               disabled={currentPage === 1}
+              className="px-4 py-2 text-white bg-orange-600 rounded-lg hover:bg-orange-700 transition-all disabled:opacity-50"
             >
               Previous
             </button>
             <button
-              className={`px-4 py-2 rounded-md text-white bg-orange-600 hover:bg-orange-700 transition-all ${
-                currentPage === totalPages
-                  ? "opacity-50 cursor-not-allowed"
-                  : ""
-              }`}
               onClick={handleNextPage}
               disabled={currentPage === totalPages}
+              className="px-4 py-2 text-white bg-orange-600 rounded-lg hover:bg-orange-700 transition-all disabled:opacity-50"
             >
               Next
             </button>
           </div>
         </div>
-      ) : (
-        ""
       )}
+
+      <DeleteModal
+        openDeleteModal={openDeleteModal}
+        setOpenDeleteModal={setOpenDeleteModal}
+        handleDelete={handleDelete}
+        loading={deleteLoading}
+      />
     </div>
   );
 };

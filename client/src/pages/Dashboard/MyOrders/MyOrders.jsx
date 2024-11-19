@@ -46,13 +46,16 @@ const MyOrders = () => {
         </button>
       );
     } else if (rowData.status === "pending") {
-      return <span className="text-gray-500">Wait for accepting the order</span>;
+      return (
+        <span className="text-gray-500">Wait for accepting the order</span>
+      );
     }
     return null;
   };
 
   return (
     <div className="px-2 lg:px-6 text-gray-800 lg:mt-12 overflow-x-auto max-w-screen-2xl w-full">
+      <h1 className="text-center text-xl sm:text-2xl md:text-3xl">My orders</h1>
       {/* Sorting Select */}
       <div className="flex justify-end mb-4">
         <select

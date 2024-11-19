@@ -4,14 +4,17 @@ import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProviders";
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
 import { useToasts } from "react-toast-notifications";
-import oracleLogo from "../../../assets/logo/oracle-logo.png";
+import { useGetControlLogosQuery } from "../../../redux/features/allApis/controlLogoApi/controlLogoApi";
 
 const Navbar = () => {
+  const { data: controlLogos } = useGetControlLogosQuery();
   const { user, logOut } = useContext(AuthContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { addToast } = useToasts();
-
+  const bannerLogo = controlLogos?.find(
+    (logo) => logo.subcategory === "banner-logo"
+  );
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -41,7 +44,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between py-4">
           <div className="">
             <Link to="/">
-              <img className="w-40" src={oracleLogo} alt="logo" />
+              <img className="w-40" src={bannerLogo?.logo} alt="logo" />
               {/* <h2 className="text-4xl font-bold">
                 <span className="text-orange-500">Oracle</span> Technology
               </h2> */}

@@ -16,11 +16,12 @@ const websitesApi = require("./apis/websitesApi/websitesApi");
 const videosApi = require("./apis/videosApi/videosApi");
 const ordersApi = require("./apis/ordersApi/ordersApi");
 const categoryApi = require("./apis/categoryApi/categoryApi");
-const subcategoryApi = require("./apis/subcategoryApi/subcategoryApi");
+const technologyApi = require("./apis/technologyApi/technologyApi");
 const homeControlApi = require("./apis/homeControlApi/homeControlApi");
 const controlVideoApi = require("./apis/controlVideoApi/controlVideoApi");
 const controlLogoApi = require("./apis/controlLogoApi/controlLogoApi");
 const reviewsApi = require("./apis/reviewsApi/reviewsApi");
+const paymentMethodsApi = require("./apis/paymentMethodsApi/paymentMethodsApi");
 
 const corsConfig = {
   origin: [
@@ -89,9 +90,9 @@ async function run() {
     const categoriesCollection = client
       .db("training-admission")
       .collection("categories");
-    const subcategoriesCollection = client
+    const technologiesCollection = client
       .db("training-admission")
-      .collection("subcategories");
+      .collection("technologies");
     const homeControlsCollection = client
       .db("training-admission")
       .collection("homeControls");
@@ -104,6 +105,9 @@ async function run() {
     const reviewsCollection = client
       .db("training-admission")
       .collection("reviews");
+    const paymentMethodsCollection = client
+      .db("training-admission")
+      .collection("paymentMethods");
 
     // api start here-------
     app.use("/admission", admissionApi(admissionCollection));
@@ -114,11 +118,12 @@ async function run() {
     app.use("/videos", videosApi(videosCollection));
     app.use("/orders", ordersApi(ordersCollection));
     app.use("/category", categoryApi(categoriesCollection));
-    app.use("/subcategory", subcategoryApi(subcategoriesCollection));
+    app.use("/technology", technologyApi(technologiesCollection));
     app.use("/home-control", homeControlApi(homeControlsCollection));
     app.use("/control-videos", controlVideoApi(controlVideoCollection));
     app.use("/control-logos", controlLogoApi(controlLogoCollection));
     app.use("/reviews", reviewsApi(reviewsCollection));
+    app.use("/payment-methods", paymentMethodsApi(paymentMethodsCollection));
     // api ends here--------
 
     // Send a ping to confirm a successful connection

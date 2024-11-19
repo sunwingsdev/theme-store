@@ -24,10 +24,10 @@ const ProductCard = ({ website }) => {
             </h2>
           </Link>
           <p className="text-[#4b4b50] text-base font-medium">
-            Single License: {website?.singleLicensePrice} BDT
+            Single License: $ {website?.singleLicensePrice}
           </p>
           <p className="text-[#4b4b50] text-base font-medium">
-            Unlimited : {website?.unlimitedLicensePrice} BDT
+            Unlimited : $ {website?.unlimitedLicensePrice}
           </p>
           <div className="py-2 text-right text-[#6d6e76] text-[14px] flex justify-between">
             <div className="flex items-center justify-start gap-2">

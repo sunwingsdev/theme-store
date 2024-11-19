@@ -4,12 +4,51 @@ import { useAddQueryMutation } from "../../../redux/features/allApis/queriesApi/
 import { useToasts } from "react-toast-notifications";
 import { useState } from "react";
 import Heading from "../../../components/shared/Heading";
+import { useGetAllHomeControlsQuery } from "../../../redux/features/allApis/homeControlApi/homeControlApi";
 
 const Contact = () => {
+  const { data: controls } = useGetAllHomeControlsQuery();
   const { register, handleSubmit, reset } = useForm();
   const [loading, setLoading] = useState(false);
   const [addQuery] = useAddQueryMutation();
   const { addToast } = useToasts();
+  const contactOfficeTitleControl = controls?.find(
+    (control) =>
+      control.page === "contact" &&
+      control.subcategory === "contact-office-title"
+  );
+  const contactOfficeTextControl = controls?.find(
+    (control) =>
+      control.page === "contact" &&
+      control.subcategory === "contact-office-text"
+  );
+  const contactPhoneTitleControl = controls?.find(
+    (control) =>
+      control.page === "contact" &&
+      control.subcategory === "contact-phone-title"
+  );
+  const contactPhoneTextControl = controls?.find(
+    (control) =>
+      control.page === "contact" && control.subcategory === "contact-phone-text"
+  );
+  const contactVisitTitleControl = controls?.find(
+    (control) =>
+      control.page === "contact" &&
+      control.subcategory === "contact-visit-title"
+  );
+  const contactVisitTextControl = controls?.find(
+    (control) =>
+      control.page === "contact" && control.subcategory === "contact-visit-text"
+  );
+  const contactEmailTitleControl = controls?.find(
+    (control) =>
+      control.page === "contact" &&
+      control.subcategory === "contact-email-title"
+  );
+  const contactEmailTextControl = controls?.find(
+    (control) =>
+      control.page === "contact" && control.subcategory === "contact-email-text"
+  );
 
   const onSubmit = async (data) => {
     // Handle form submission here
@@ -43,37 +82,110 @@ const Contact = () => {
       <div className="container mx-auto">
         <div className="flex flex-col lg:flex-row justify-center text-center lg:text-start gap-12 mt-16">
           <div className="">
-            <h3 className="text-[#ff1e1e] text-[22px] font-bold pb-[3px] leading-[33px]">
-              Head Office [Main Campus, Dhaka]
+            <h3
+              style={{
+                fontSize: `${contactOfficeTitleControl?.fontSize}px`,
+                color: contactOfficeTitleControl?.textColor,
+                backgroundColor: contactOfficeTitleControl?.backgroundColor,
+              }}
+              className="text-[#ff1e1e] text-[22px] font-bold pb-[3px] leading-[33px]"
+            >
+              {contactOfficeTitleControl?.text
+                ? contactOfficeTitleControl?.text
+                : "Head Office [Main Campus, Dhaka]"}
             </h3>
-            <p className="text-[#212529] leading-[1.5rem]">
-              A.I. Nannu Tower (6th Floor) <br /> Beside of Mirpur DOHS Shopping
-              Complex <br /> 1st Gate, Mirpur DOHS, <br />
-              Dhaka 1216, Bangladesh
-            </p>
+            {contactOfficeTextControl?.text ? (
+              <p
+                className="py-6"
+                dangerouslySetInnerHTML={{
+                  __html: contactOfficeTextControl?.text,
+                }}
+              ></p>
+            ) : (
+              <p className="text-[#212529] leading-[1.5rem]">
+                A.I. Nannu Tower (6th Floor) <br /> Beside of Mirpur DOHS
+                Shopping Complex <br /> 1st Gate, Mirpur DOHS, <br />
+                Dhaka 1216
+              </p>
+            )}
           </div>
           <div className="flex flex-col sm:flex-row items-center justify-start m-auto lg:m-0 sm:items-start gap-8">
             <div className="">
-              <h3 className="text-[#1f1e1e] text-[22px] leading-[33px] pb-[3px] font-bold">
-                Phone Number
+              <h3
+                style={{
+                  fontSize: `${contactPhoneTitleControl?.fontSize}px`,
+                  color: contactPhoneTitleControl?.textColor,
+                  backgroundColor: contactPhoneTitleControl?.backgroundColor,
+                }}
+                className="text-[#1f1e1e] text-[22px] leading-[33px] pb-[3px] font-bold"
+              >
+                {contactPhoneTitleControl?.text
+                  ? contactPhoneTitleControl?.text
+                  : "Phone Number"}
               </h3>
-              <p className="text-[#212529] leading-[1.5rem]">
-                +880 1777308777 <br /> +880 1777308777 <br /> +880 1777308777{" "}
-                <br /> +880 1777308777 <br /> +880 1777308777
-              </p>
+              {contactOfficeTitleControl?.text ? (
+                <p
+                  className="py-6"
+                  dangerouslySetInnerHTML={{
+                    __html: contactPhoneTextControl?.text,
+                  }}
+                ></p>
+              ) : (
+                <p className="text-[#212529] leading-[1.5rem]">
+                  +880 1777308777 <br /> +880 1777308777 <br /> +880 1777308777{" "}
+                  <br /> +880 1777308777 <br /> +880 1777308777
+                </p>
+              )}
             </div>
             <div>
-              <h3 className="text-[#1f1e1e] text-[22px] leading-[33px] pb-[3px] font-bold">
-                Office Visit Time:
+              <h3
+                style={{
+                  fontSize: `${contactVisitTitleControl?.fontSize}px`,
+                  color: contactVisitTitleControl?.textColor,
+                  backgroundColor: contactVisitTitleControl?.backgroundColor,
+                }}
+                className="text-[#1f1e1e] text-[22px] leading-[33px] pb-[3px] font-bold"
+              >
+                {contactVisitTitleControl?.text
+                  ? contactVisitTitleControl?.text
+                  : "Office Visit Time:"}
               </h3>
-              <p>
-                Saturday- Thursday <br />
-                10:00 am to 7:00 pm
+              {contactOfficeTitleControl?.text ? (
+                <p
+                  className="py-6"
+                  dangerouslySetInnerHTML={{
+                    __html: contactVisitTextControl?.text,
+                  }}
+                ></p>
+              ) : (
+                <p className="text-[#212529] leading-[1.5rem]">
+                  Saturday- Thursday <br />
+                  10:00 am to 7:00 pm
+                </p>
+              )}
+              <h3
+                style={{
+                  fontSize: `${contactEmailTitleControl?.fontSize}px`,
+                  color: contactEmailTitleControl?.textColor,
+                  backgroundColor: contactEmailTitleControl?.backgroundColor,
+                }}
+                className="text-[#1f1e1e] text-[22px] leading-[33px] pb-[3px] font-bold"
+              >
+                {contactEmailTitleControl?.text
+                  ? contactEmailTitleControl?.text
+                  : "Email:"}
+              </h3>
+              <p
+                style={{
+                  fontSize: `${contactEmailTextControl?.fontSize}px`,
+                  color: contactEmailTextControl?.textColor,
+                  backgroundColor: contactEmailTextControl?.backgroundColor,
+                }}
+              >
+                {contactEmailTextControl?.text
+                  ? contactEmailTextControl?.text
+                  : "oracletechnology.net@gmail.com"}
               </p>
-              <h3 className="text-[#1f1e1e] text-[22px] leading-[33px] pb-[3px] font-bold pt-2">
-                Email:
-              </h3>
-              <p>sunwingsdev@gmail.com</p>
             </div>
           </div>
         </div>

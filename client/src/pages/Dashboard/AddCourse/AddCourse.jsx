@@ -31,7 +31,6 @@ const AddCourse = () => {
   };
 
   const onSubmit = async (data) => {
-    console.log(data);
     try {
       setLoading(true);
       const imageData = await imageUpload(image);

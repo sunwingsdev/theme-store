@@ -17,7 +17,6 @@ const videosApi = (videosCollection) => {
     "/",
     upload.fields([{ name: "image", maxCount: 1 }]),
     async (req, res) => {
-      console.log(req.body, req.files);
       const videoInfo = {
         thumbnail: req.files["image"]
           ? `${serverUrl}/uploads/images/${req.files["image"][0].filename}`

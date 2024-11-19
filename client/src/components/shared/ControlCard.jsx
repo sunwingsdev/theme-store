@@ -13,7 +13,7 @@ import ColorPicker from "../HomepageControls/ColorPicker";
 const ControlCard = ({ name, page, category }) => {
   const { data: controls } = useGetAllHomeControlsQuery();
   const [addHomeControl] = useAddHomeControlMutation();
-  const [updateHomeControl] = useUpdateHomeControlMutation(); // Update mutation for editing
+  const [updateHomeControl] = useUpdateHomeControlMutation(); 
   const [loading, setLoading] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const { control, handleSubmit, reset, setValue } = useForm();

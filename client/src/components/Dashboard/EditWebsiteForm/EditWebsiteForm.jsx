@@ -10,9 +10,15 @@ import SelectInput from "../../shared/SelectInput";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import the styles for React Quill
 import Loader from "../../shared/Loader";
+import { useGetCategoriesQuery } from "../../../redux/features/allApis/categoryApi/categoryApi";
+import { useGetTechnologiesQuery } from "../../../redux/features/allApis/technologyApi/technologyApi";
 
 const EditWebsiteForm = ({ id, closeModal }) => {
   const { data: websites, isLoading } = useGetAllWebsitesQuery();
+  const { data: categories, isLoading: categoryLoading } =
+    useGetCategoriesQuery();
+  const { data: technologies, isLoading: technoLoading } =
+    useGetTechnologiesQuery();
   const {
     register,
     handleSubmit,
@@ -30,19 +36,6 @@ const EditWebsiteForm = ({ id, closeModal }) => {
   const { addToast } = useToasts();
 
   const selectedWebsite = websites?.find((website) => website._id === id);
-  console.log(selectedWebsite);
-
-  const categoryOptions = [
-    { label: "News", value: "news" },
-    { label: "Ecommerce", value: "e-commerce" },
-  ];
-
-  const technologyOptions = [
-    { label: "React", value: "react" },
-    { label: "Laravel", value: "laravel" },
-    { label: "Wordpress", value: "wordpress" },
-  ];
-
   const handleModuleInputChange = (e) => {
     setModuleInput(e.target.value);
   };
@@ -203,14 +196,16 @@ const EditWebsiteForm = ({ id, closeModal }) => {
             <SelectInput
               name={"category"}
               label={"Category"}
-              options={categoryOptions}
+              options={categories}
               register={register}
+              loading={categoryLoading}
             />
             <SelectInput
               name={"technology"}
               label={"Technology"}
-              options={technologyOptions}
+              options={technologies}
               register={register}
+              loading={technoLoading}
             />
             <TextInput
               name={"title"}

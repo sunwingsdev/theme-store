@@ -44,7 +44,7 @@ const WebsiteDetails = () => {
                 Single License
               </h2>
               <h3 className="text-2xl md:text-3xl font-bold text-[#3c3b3e]">
-                {singleWebsite?.singleLicensePrice} ৳
+                $ {singleWebsite?.singleLicensePrice}
               </h3>
               <p className="text-base">
                 <span className="font-bold">One </span>Premium themes
@@ -74,7 +74,7 @@ const WebsiteDetails = () => {
                 Unlimited License
               </h2>
               <h3 className="text-2xl md:text-3xl font-bold text-[#3c3b3e]">
-                {singleWebsite?.unlimitedLicensePrice} ৳
+                $ {singleWebsite?.unlimitedLicensePrice}
               </h3>
               <p className="text-base">
                 <span className="font-bold">One </span>Premium themes
@@ -134,10 +134,10 @@ const WebsiteDetails = () => {
                 <span className="font-medium">Latest updated :</span>
                 {moment(singleWebsite?.modifiedAt).format("Do MMMM YYYY")}
               </p>
-              <p className="text-base flex items-center gap-1 border-b">
+              {/* <p className="text-base flex items-center gap-1 border-b">
                 <span className="font-medium">Created :</span>
                 {moment(singleWebsite?.createdAt).format("Do MMMM YYYY")}
-              </p>
+              </p> */}
               <p className="text-base flex items-center gap-1 border-b">
                 <span className="font-medium">Documentation :</span>
                 Well Documented

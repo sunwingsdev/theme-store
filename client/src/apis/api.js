@@ -18,7 +18,6 @@ export const imageUpload = async (image) => {
       }
     );
     const data = response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.log(error.message);

@@ -56,17 +56,17 @@ export default function Products() {
               All
             </Tab>
             {categoryOptions?.length ? (
-              categoryOptions.map(({ _id, categoryLabel, categoryValue }) => (
+              categoryOptions?.map(({ _id, label, value }) => (
                 <Tab
                   key={_id}
-                  onClick={() => handleCategorySelect(categoryValue)}
+                  onClick={() => handleCategorySelect(value)}
                   className={`${
-                    selectedCategory === categoryValue
+                    selectedCategory === value
                       ? "bg-black text-white"
                       : "text-gray-800 hover:text-white hover:bg-black hover:border-gray-800"
                   } border rounded-full py-2 px-6 text-base font-semibold focus:outline-none transition-all duration-300 shadow-[0_3px_10px_rgb(0,0,0,0.2)]`}
                 >
-                  {categoryLabel}
+                  {label}
                 </Tab>
               ))
             ) : (
@@ -78,7 +78,7 @@ export default function Products() {
         {/* Directly render filtered items */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-6 py-10">
           {currentItems?.length ? (
-            currentItems.map((website) => (
+            currentItems?.map((website) => (
               <ProductCard key={website._id} website={website} />
             ))
           ) : (

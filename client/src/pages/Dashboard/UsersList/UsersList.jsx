@@ -13,11 +13,12 @@ import { useToasts } from "react-toast-notifications";
 const UsersList = () => {
   const { data: users, refetch, isLoading } = useGetAllUsersQuery();
   const [updateRole] = useUpdateRoleMutation();
+  const { addToast } = useToasts();
+
   const [searchTerm, setSearchTerm] = useState("");
   const [filterRole, setFilterRole] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(10);
-  const { addToast } = useToasts();
 
   // Filter users based on search term and role
   const filteredUsers =
@@ -44,7 +45,7 @@ const UsersList = () => {
   // Handle role assignment
   const handleRoleChange = async (userId, newRole) => {
     try {
-      const result = await updateRole({ id: userId, role: newRole }); // Assuming updateUserRole expects an object with id and role
+      const result = await updateRole({ id: userId, role: newRole });
       if (result.data.modifiedCount > 0) {
         addToast("User role updated successfully", {
           appearance: "success",
@@ -53,21 +54,21 @@ const UsersList = () => {
         refetch();
       }
     } catch (error) {
-      addToast(error.message, {
-        appearance: "success",
+      addToast("Failed to update role", {
+        appearance: "error",
         autoDismiss: true,
       });
     }
   };
 
   return (
-    <div className="p-6 w-full">
-      <div className="mb-4 flex space-x-4">
+    <div className="px-2 lg:px-6 text-gray-800 lg:mt-12 overflow-x-auto max-w-screen-2xl w-full">
+      <div className="flex flex-col md:flex-row md:justify-between mb-4 space-y-2 md:space-y-0 md:space-x-4">
         <InputText
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search by name or email"
-          className="p-inputtext-sm"
+          className="px-4 border border-gray-300 rounded-md shadow-sm"
         />
         <Dropdown
           value={filterRole}
@@ -77,7 +78,7 @@ const UsersList = () => {
           ]}
           onChange={(e) => setFilterRole(e.value)}
           placeholder="Filter by role"
-          className="p-inputtext-sm"
+          className="px-4 border border-gray-300 rounded-md shadow-sm"
         />
       </div>
 
@@ -87,7 +88,9 @@ const UsersList = () => {
         <DataTable
           value={currentUsers}
           paginator={false}
-          className="p-datatable-sm"
+          className="w-full bg-white shadow-lg rounded-lg"
+          stripedRows
+          showGridlines
         >
           <Column
             field="image"
@@ -106,24 +109,17 @@ const UsersList = () => {
           <Column
             header="Actions"
             body={(rowData) => (
-              <div className="flex items-center">
+              <div className="flex items-center space-x-2">
                 <Dropdown
                   value={rowData.role}
                   options={[
                     { label: "Admin", value: "admin" },
                     { label: "User", value: "user" },
-                    // Add more roles as needed
                   ]}
                   onChange={(e) => handleRoleChange(rowData._id, e.value)}
                   placeholder="Give Role"
                   className="p-inputtext-sm"
                 />
-                {/* <button
-                  className="text-red-600 hover:text-red-900 ml-4"
-                  onClick={() => console.log("Delete user", rowData.id)}
-                >
-                  Delete
-                </button> */}
               </div>
             )}
           />

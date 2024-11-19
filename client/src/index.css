@@ -27,3 +27,29 @@ th {
     padding: 0 60px;
   }
 }
+
+/* Orders.css */
+.p-datatable-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.p-datatable-table td,
+.p-datatable-table th {
+  border: 1px solid #ccc; /* Adjust the color as needed */
+}
+
+.p-datatable-table tr:nth-child(odd) {
+  background-color: #f9f9f9; /* Light grey for striped rows */
+}
+
+/* Add this to your global CSS or Tailwind configuration */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+

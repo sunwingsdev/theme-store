@@ -6,10 +6,11 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import { useGetUserByUidQuery } from "../../../redux/features/allApis/usersApi/UsersApi";
 import Loader from "../../shared/Loader";
 import { useGetOrdersQuery } from "../../../redux/features/allApis/ordersApi/ordersApi";
-import oracleLogo from "../../../assets/logo/oracle-logo.png";
 import "./Sidebar.css";
+import { useGetControlLogosQuery } from "../../../redux/features/allApis/controlLogoApi/controlLogoApi";
 
 const Sidebar = () => {
+  const { data: controlLogos } = useGetControlLogosQuery();
   const { user, loading, logOut } = useContext(AuthContext);
   const { data: singleUser, isLoading } = useGetUserByUidQuery(user?.uid);
   const { data: orders, isLoading: orderLoading } = useGetOrdersQuery();
@@ -22,7 +23,12 @@ const Sidebar = () => {
     video: true,
     order: true,
     frontend: true,
+    paymentMethods: true,
   });
+
+  const bannerLogo = controlLogos?.find(
+    (logo) => logo.subcategory === "banner-logo"
+  );
 
   const pendingOrders = orders?.filter((order) => order.status === "pending");
   const myPendingOrders = pendingOrders?.filter(
@@ -92,10 +98,7 @@ const Sidebar = () => {
           </div>
           <div className="px-5 pt-1">
             <Link onClick={closeMobileMenu} to="/">
-              <img className="w-full" src={oracleLogo} alt="logo" />
-              {/* <h2 className="text-3xl font-bold text-center text-orange-500">
-                Oracle<span className="text-white"> Technology</span>
-              </h2> */}
+              <img className="w-full" src={bannerLogo?.logo} alt="logo" />
             </Link>
           </div>
           <div className="px-5 py-1 flex items-center gap-4">
@@ -132,6 +135,11 @@ const Sidebar = () => {
                       : "block transition-all ease-in duration-500"
                   }`}
                 >
+                  <Link onClick={closeMobileMenu} to="/dashboard/add-category">
+                    <li className="bg-green-500 hover:bg-green-600 mb-2 py-1.5 px-3 w-full">
+                      Add Category & Technology
+                    </li>
+                  </Link>
                   <Link onClick={closeMobileMenu} to="/dashboard/add-website">
                     <li className="bg-green-500 hover:bg-green-600 mb-2 py-1.5 px-3 w-full">
                       Add Website
@@ -285,6 +293,32 @@ const Sidebar = () => {
               <li className="text-white cursor-pointer">
                 <div
                   className="bg-green-600 hover:bg-green-700 duration-300 py-1.5 px-3 flex gap-2 items-center lg:text-lg"
+                  onClick={() => toggleCollapse("paymentMethods")}
+                >
+                  Payment Gateway
+                </div>
+                <ul
+                  className={`pl-4 mt-2 text-sm lg:text-base ${
+                    collapsed.paymentMethods
+                      ? "hidden"
+                      : "block transition-all ease-in duration-500"
+                  }`}
+                >
+                  <Link
+                    onClick={closeMobileMenu}
+                    to="/dashboard/payment-gateway"
+                  >
+                    <li className="bg-green-500 hover:bg-green-600 mb-2 py-1.5 px-3 w-full">
+                      Add & Manage Payment Gateway
+                    </li>
+                  </Link>
+                </ul>
+              </li>
+            )}
+            {singleUser?.role === "admin" && (
+              <li className="text-white cursor-pointer">
+                <div
+                  className="bg-green-600 hover:bg-green-700 duration-300 py-1.5 px-3 flex gap-2 items-center lg:text-lg"
                   onClick={() => toggleCollapse("frontend")}
                 >
                   Frontend Controls
@@ -304,6 +338,14 @@ const Sidebar = () => {
                   <Link onClick={closeMobileMenu} to="/dashboard/about-control">
                     <li className="bg-green-500 hover:bg-green-600 mb-2 py-1.5 px-3 w-full">
                       About Control
+                    </li>
+                  </Link>
+                  <Link
+                    onClick={closeMobileMenu}
+                    to="/dashboard/contact-control"
+                  >
+                    <li className="bg-green-500 hover:bg-green-600 mb-2 py-1.5 px-3 w-full">
+                      Contact Control
                     </li>
                   </Link>
                   <Link onClick={closeMobileMenu} to="/dashboard/reviews">
@@ -330,7 +372,7 @@ const Sidebar = () => {
       <div className="hidden lg:flex flex-col h-screen bg-gray-800 w-64 text-white ">
         <div className="px-5 pt-4">
           <Link onClick={closeMobileMenu} to="/">
-            <img className="w-full" src={oracleLogo} alt="logo" />
+            <img className="w-full" src={bannerLogo?.logo} alt="logo" />
             {/* <h2 className="text-4xl font-bold text-center text-orange-500">
               Oracle<span className="text-white"> Technology</span>
             </h2> */}
@@ -374,6 +416,11 @@ const Sidebar = () => {
                     : "block transition-all ease-in duration-500"
                 }`}
               >
+                <Link onClick={closeMobileMenu} to="/dashboard/add-category">
+                  <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
+                    Add Category & Technology
+                  </li>
+                </Link>
                 <Link onClick={closeMobileMenu} to="/dashboard/add-website">
                   <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
                     Add Website
@@ -527,6 +574,29 @@ const Sidebar = () => {
             <li className="text-white cursor-pointer">
               <div
                 className="bg-green-600 hover:bg-green-700 duration-300 py-2 px-4 flex gap-2 items-center lg:text-lg"
+                onClick={() => toggleCollapse("paymentMethods")}
+              >
+                Payment Gateway
+              </div>
+              <ul
+                className={`pl-4 mt-2 text-sm lg:text-base ${
+                  collapsed.paymentMethods
+                    ? "hidden"
+                    : "block transition-all ease-in duration-500"
+                }`}
+              >
+                <Link onClick={closeMobileMenu} to="/dashboard/payment-gateway">
+                  <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
+                    Add & Manage Payment Gateway
+                  </li>
+                </Link>
+              </ul>
+            </li>
+          )}
+          {singleUser?.role === "admin" && (
+            <li className="text-white cursor-pointer">
+              <div
+                className="bg-green-600 hover:bg-green-700 duration-300 py-2 px-4 flex gap-2 items-center lg:text-lg"
                 onClick={() => toggleCollapse("frontend")}
               >
                 Frontend Controls
@@ -546,6 +616,11 @@ const Sidebar = () => {
                 <Link onClick={closeMobileMenu} to="/dashboard/about-control">
                   <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
                     About Control
+                  </li>
+                </Link>
+                <Link onClick={closeMobileMenu} to="/dashboard/contact-control">
+                  <li className="bg-green-500 hover:bg-green-600 mb-2 py-2 px-4 w-full">
+                    Contact Control
                   </li>
                 </Link>
                 <Link onClick={closeMobileMenu} to="/dashboard/reviews">
