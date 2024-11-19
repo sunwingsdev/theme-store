@@ -21,32 +21,6 @@ const AboutUs = () => {
     (control) =>
       control.page === "about" && control.subcategory === "about-button"
   );
-  // const contentList = [
-  //   {
-  //     number: 63700,
-  //     label: "Successful Students",
-  //   },
-  //   {
-  //     number: 30000,
-  //     label: "Expert Freelancers",
-  //   },
-  //   {
-  //     number: 20000,
-  //     label: "Skilled Job Holders",
-  //   },
-  //   {
-  //     number: 600,
-  //     label: "Industry Expert",
-  //   },
-  //   {
-  //     number: 91,
-  //     label: "Success Ratio",
-  //   },
-  //   {
-  //     number: 700,
-  //     label: "Companies",
-  //   },
-  // ];
 
   return (
     <div className="">
@@ -84,19 +58,23 @@ const AboutUs = () => {
                 ? aboutTitleControl?.text
                 : "World-Renowned Businessman Making Organization"}
             </h2>
-            <p
-              style={{
-                fontSize: `${aboutTextControl?.fontSize}px`,
-                color: aboutTextControl?.textColor,
-                backgroundColor: aboutTextControl?.backgroundColor,
-              }}
-              className="text-[#605f62] text-base leading-7 py-6"
-            >
-              {" "}
-              {aboutTextControl?.text
-                ? aboutTextControl?.text
-                : "সানউইংস ট্রেনিং সেন্টার গত 3 বছর ধরে আইটি বিশেষজ্ঞ তৈরির লক্ষ্য নিয়ে কাজ করছে। একটি দ্রুত গতিশীল বিশ্বে, যেখানে প্রতিটি সেক্টর প্রযুক্তির উপর নির্ভর করে, আপনাকে একটি উন্নত ভবিষ্যত সুরক্ষিত করতে আইটি দক্ষতা বিকাশ করতে হবে। অত্যন্ত নিষ্ঠার সাথে, আমরা 70,000 এরও বেশি আইটি বিশেষজ্ঞ তৈরি করতে সক্ষম হয়েছি যারা বর্তমানে বিভিন্ন সেক্টরে কাজ করছে।"}
-            </p>
+
+            {aboutTextControl?.text ? (
+              <p
+                className="py-6"
+                dangerouslySetInnerHTML={{ __html: aboutTextControl?.text }}
+              ></p>
+            ) : (
+              <p className="text-[#605f62] text-base leading-7 py-6">
+                সানউইংস ট্রেনিং সেন্টার গত 3 বছর ধরে আইটি বিশেষজ্ঞ তৈরির লক্ষ্য
+                নিয়ে কাজ করছে। একটি দ্রুত গতিশীল বিশ্বে, যেখানে প্রতিটি সেক্টর
+                প্রযুক্তির উপর নির্ভর করে, আপনাকে একটি উন্নত ভবিষ্যত সুরক্ষিত
+                করতে আইটি দক্ষতা বিকাশ করতে হবে। অত্যন্ত নিষ্ঠার সাথে, আমরা
+                70,000 এরও বেশি আইটি বিশেষজ্ঞ তৈরি করতে সক্ষম হয়েছি যারা
+                বর্তমানে বিভিন্ন সেক্টরে কাজ করছে।
+              </p>
+            )}
+
             <PrimaryButton
               control={aboutButtonControl}
               icon={IoBookOutline}

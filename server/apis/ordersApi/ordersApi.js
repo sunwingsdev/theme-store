@@ -1,17 +1,36 @@
 const express = require("express");
 const { ObjectId } = require("mongodb");
+const upload = require("../../utils/utils");
+const path = require("path");
 
 const ordersApi = (ordersCollection) => {
   const ordersRouter = express.Router();
+  // Serve static files from the "uploads" directory
+  ordersRouter.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-  // add an order
-  ordersRouter.post("/", async (req, res) => {
-    const ordersInfo = req.body;
-    ordersInfo.createdAt = new Date();
-    ordersInfo.status = "pending";
-    const result = await ordersCollection.insertOne(ordersInfo);
-    res.send(result);
-  });
+  // Get the server URL from environment variables
+  const serverUrl = process.env.SERVER_URL || "http://localhost:5000";
+
+  ordersRouter.post(
+    "/",
+    upload.fields([{ name: "image", maxCount: 1 }]),
+    async (req, res) => {
+      const ordersInfo = req.body;
+      ordersInfo.createdAt = new Date();
+      ordersInfo.status = "pending";
+      const screenshot = req.files["image"]
+        ? `${serverUrl}/uploads/images/${req.files["image"][0].filename}`
+        : undefined;
+      ordersInfo.paymentInputs = ordersInfo.paymentInputs
+        ? JSON.parse(ordersInfo.paymentInputs)
+        : [];
+      if (screenshot) {
+        ordersInfo.paymentInputs.push({ screenshot });
+      }
+      const result = await ordersCollection.insertOne(ordersInfo);
+      res.send(result);
+    }
+  );
 
   //   get all orders
   ordersRouter.get("/", async (req, res) => {

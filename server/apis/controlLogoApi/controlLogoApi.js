@@ -13,25 +13,22 @@ const controlLogoApi = (controlLogoCollection) => {
 
   router.post(
     "/",
-    upload.fields([
-      { name: "logo", maxCount: 1 },
-    ]),
+    upload.fields([{ name: "image", maxCount: 1 }]),
     async (req, res) => {
-      console.log(req?.files);
-      // try {
-      //   const logoInfo = {
-      //     page: req.body.page,
-      //     subcategory: req.body.subcategory,
-      //     createdAt: new Date(),
-      //     logo: req.files["logo"]
-      //       ? `${serverUrl}/uploads/images/${req.files["logo"][0].filename}`
-      //       : undefined,
-      //   };
-      //   const result = await controlLogoCollection.insertOne(logoInfo);
-      //   res.send(result);
-      // } catch (error) {
-      //   res.status(500).json({ error: error.message });
-      // }
+      try {
+        const logoInfo = {
+          page: req.body.page,
+          subcategory: req.body.subcategory,
+          createdAt: new Date(),
+          logo: req.files["image"]
+            ? `${serverUrl}/uploads/images/${req.files["image"][0].filename}`
+            : undefined,
+        };
+        const result = await controlLogoCollection.insertOne(logoInfo);
+        res.send(result);
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
     }
   );
 

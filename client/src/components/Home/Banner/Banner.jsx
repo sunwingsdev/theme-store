@@ -92,19 +92,17 @@ const Banner = () => {
                   text={"Browse Course"}
                   arrow={false}
                   hover={true}
-                >
-                  Browse
-                </PrimaryButton>
+                ></PrimaryButton>
               </Link>
-              <PrimaryButton
-                control={secondButtonControl}
-                icon={IoBookOutline}
-                text={"Join Free Seminar"}
-                arrow={false}
-                hover={true}
-              >
-                Browse
-              </PrimaryButton>
+              <Link to={"/product"}>
+                <PrimaryButton
+                  control={secondButtonControl}
+                  icon={IoBookOutline}
+                  text={"Join Free Seminar"}
+                  arrow={false}
+                  hover={true}
+                ></PrimaryButton>
+              </Link>
             </div>
             <div className="flex flex-row items-center justify-start gap-3 py-6">
               <img src={isoImg} alt="iso" />

@@ -1,4 +1,5 @@
 const express = require("express");
+const { ObjectId } = require("mongodb");
 
 const categoryApi = (categoriesCollection) => {
   const categoryRouter = express.Router();
@@ -14,6 +15,14 @@ const categoryApi = (categoriesCollection) => {
   //   get all categories
   categoryRouter.get("/", async (req, res) => {
     const result = await categoriesCollection.find().toArray();
+    res.send(result);
+  });
+
+  // delete  a category
+  categoryRouter.delete("/:id", async (req, res) => {
+    const { id } = req.params;
+    const query = { _id: new ObjectId(id) };
+    const result = await categoriesCollection.deleteOne(query);
     res.send(result);
   });
   return categoryRouter;

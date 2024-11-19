@@ -1,6 +1,7 @@
 import BannerVideo from "../../../components/HomepageControls/BannerVideo";
 import LogoUpload from "../../../components/HomepageControls/LogoUpload";
 import ControlCard from "../../../components/shared/ControlCard";
+import QuillTextEditor from "../../../components/shared/QuillTextEditor";
 
 const HomeControl = () => {
   return (
@@ -17,7 +18,7 @@ const HomeControl = () => {
         <ControlCard category="banner" name="first-button" page="home" />
         <ControlCard category="banner" name="second-button" page="home" />
         <ControlCard category="footer" name="footer-title" page="home" />
-        <ControlCard category="footer" name="footer-subtitle" page="home" />
+        <QuillTextEditor category="footer" name="footer-subtitle" page="home" />
       </div>
     </div>
   );

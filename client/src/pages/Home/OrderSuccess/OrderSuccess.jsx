@@ -44,7 +44,7 @@ const OrderSuccess = () => {
             </div>
             <div className="flex justify-between">
               <p>Price:</p>
-              <p className="font-medium">{price} ৳</p>
+              <p className="font-medium">$ {price}</p>
             </div>
             <div className="flex justify-between">
               <p>Payment Method:</p>

@@ -26,7 +26,7 @@ const NavbarTop = () => {
           <div className="flex flex-row justify-center items-center gap-5">
             <div className="flex flex-row gap-[5px] justify-center items-center">
               <FaPhoneAlt size={11} />
-              <p>{navTopNumber ? navTopAddress?.text : "01329747922"}</p>
+              <p>{navTopNumber ? navTopNumber?.text : "01329747922"}</p>
             </div>
             <div className="flex flex-row gap-[5px] justify-center items-center">
               <HiOutlineMail size={15} />

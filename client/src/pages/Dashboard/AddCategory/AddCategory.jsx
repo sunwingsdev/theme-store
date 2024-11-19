@@ -2,18 +2,34 @@ import { useForm } from "react-hook-form";
 import {
   useAddCategoryMutation,
   useGetCategoriesQuery,
+  useDeleteCategoryMutation,
 } from "../../../redux/features/allApis/categoryApi/categoryApi";
-import { useAddSubcategoryMutation } from "../../../redux/features/allApis/subcategoryApi/subcategoryApi";
 import { useToasts } from "react-toast-notifications";
-import loading from "../../../../public/assets/loading.json";
 import { useState } from "react";
+import {
+  useAddTechnologyMutation,
+  useGetTechnologiesQuery,
+  useDeleteTechnologyMutation,
+} from "../../../redux/features/allApis/technologyApi/technologyApi";
+import { FaTrash } from "react-icons/fa";
 
 const AddCategory = () => {
-  const { data: categories, isLoading } = useGetCategoriesQuery();
+  const {
+    data: categories,
+    isLoading: isCategoriesLoading,
+    refetch: categoryRefetch,
+  } = useGetCategoriesQuery();
+  const {
+    data: technologies,
+    isLoading: isTechnologiesLoading,
+    refetch: techRefetch,
+  } = useGetTechnologiesQuery();
   const [addCategory] = useAddCategoryMutation();
+  const [deleteCategory] = useDeleteCategoryMutation();
+  const [addTechnology] = useAddTechnologyMutation();
+  const [deleteTechnology] = useDeleteTechnologyMutation();
   const [categoryLoading, setCategoryLoading] = useState(false);
-  const [setsubcategoryLoading, setSetsubcategoryLoading] = useState(false);
-  const [addSubcategory] = useAddSubcategoryMutation();
+  const [technologyLoading, setTechnologyLoading] = useState(false);
   const { addToast } = useToasts();
 
   // Separate form instances for each form
@@ -24,53 +40,88 @@ const AddCategory = () => {
   } = useForm();
 
   const {
-    register: registerSubcategory,
-    handleSubmit: handleSubmitSubcategory,
-    reset: resetSubcategory,
+    register: registerTechnology,
+    handleSubmit: handleSubmitTechnology,
+    reset: resetTechnology,
   } = useForm();
 
   const onSubmitCategory = async (data) => {
-    console.log("Category Data: ", data);
-
     try {
       setCategoryLoading(true);
       const result = await addCategory(data);
-      if (result.data.insertedId) {
+      if (result.data?.insertedId) {
         addToast("Category added successfully", {
           appearance: "success",
           autoDismiss: true,
         });
-        setCategoryLoading(false);
-        resetCategory(); // Optional: Reset the form after submission
+        resetCategory();
+        categoryRefetch();
       }
     } catch (error) {
       addToast("Failed to add category", {
         appearance: "error",
         autoDismiss: true,
       });
+    } finally {
       setCategoryLoading(false);
     }
   };
 
-  const onSubmitSubcategory = async (data) => {
-    console.log("Subcategory Data: ", data);
+  const onSubmitTechnology = async (data) => {
     try {
-      setSetsubcategoryLoading(true);
-      const result = await addSubcategory(data);
-      if (result.data.insertedId) {
-        addToast("Subcategory added successfully", {
+      setTechnologyLoading(true);
+      const result = await addTechnology(data);
+      if (result.data?.insertedId) {
+        addToast("Technology added successfully", {
           appearance: "success",
           autoDismiss: true,
         });
-        resetSubcategory(); // Optional: Reset the form after submission
-        setsubcategoryLoading(false);
+        resetTechnology();
+        techRefetch();
       }
     } catch (error) {
-      addToast("Failed to add subcategory", {
+      addToast("Failed to add technology", {
         appearance: "error",
         autoDismiss: true,
       });
-      setsubcategoryLoading(false);
+    } finally {
+      setTechnologyLoading(false);
+    }
+  };
+
+  const handleDeleteCategory = async (id) => {
+    try {
+      const result = await deleteCategory(id);
+      if (result.data.deletedCount > 0) {
+        addToast("Category deleted successfully", {
+          appearance: "info",
+          autoDismiss: true,
+        });
+        categoryRefetch();
+      }
+    } catch (error) {
+      addToast("Failed to delete category", {
+        appearance: "error",
+        autoDismiss: true,
+      });
+    }
+  };
+
+  const handleDeleteTechnology = async (id) => {
+    try {
+      const result = await deleteTechnology(id);
+      if (result.data.deletedCount > 0) {
+        addToast("Technology deleted successfully", {
+          appearance: "info",
+          autoDismiss: true,
+        });
+        techRefetch();
+      }
+    } catch (error) {
+      addToast("Failed to delete technology", {
+        appearance: "error",
+        autoDismiss: true,
+      });
     }
   };
 
@@ -92,7 +143,7 @@ const AddCategory = () => {
               </label>
               <input
                 type="text"
-                {...registerCategory("categoryLabel", { required: true })}
+                {...registerCategory("label", { required: true })}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Enter category label"
               />
@@ -103,7 +154,7 @@ const AddCategory = () => {
               </label>
               <input
                 type="text"
-                {...registerCategory("categoryValue", { required: true })}
+                {...registerCategory("value", { required: true })}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Enter category value"
               />
@@ -113,52 +164,67 @@ const AddCategory = () => {
               type="submit"
               className="w-full py-3 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition duration-300"
             >
-              {categoryLoading
-                ? `Adding category ${loading}...`
-                : "Add Category"}
+              {categoryLoading ? "Adding category..." : "Add Category"}
             </button>
           </form>
-        </div>
 
-        {/* Add Subcategory Form */}
-        <div className="bg-white p-6 rounded-lg shadow-lg">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-6">
-            Add Subcategory
-          </h2>
-          <form
-            onSubmit={handleSubmitSubcategory(onSubmitSubcategory)}
-            className="space-y-5"
-          >
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Select Category
-              </label>
-              <select
-                {...registerSubcategory("category", { required: true })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
-              >
-                <option value="">Select a category</option>
-                {/* Add dynamic options here */}
+          {/* Display Categories */}
+          <div className="mt-8">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">
+              Existing Categories
+            </h3>
+            {isCategoriesLoading ? (
+              <p>Loading categories...</p>
+            ) : (
+              <div className="space-y-4">
                 {categories?.length !== 0 ? (
-                  categories?.map(({ _id, categoryValue, categoryLabel }) => (
-                    <option key={_id} value={categoryValue}>
-                      {categoryLabel}
-                    </option>
+                  categories?.map((category) => (
+                    <div
+                      key={category._id}
+                      className="flex items-center justify-between bg-gray-100 p-4 rounded-md shadow-sm"
+                    >
+                      <div>
+                        <p className="text-gray-800 font-medium">
+                          {category.label}
+                        </p>
+                        <p className="text-gray-600 text-sm">
+                          Value: {category.value}
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => handleDeleteCategory(category._id)}
+                        className="text-red-500 hover:text-red-700"
+                      >
+                        <FaTrash />
+                      </button>
+                    </div>
                   ))
                 ) : (
-                  <option disabled>Loading...</option>
+                  <p>No categories</p>
                 )}
-              </select>
-            </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Add Technology Form */}
+        <div className="bg-white p-6 rounded-lg shadow-lg">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+            Add Technology
+          </h2>
+          <form
+            onSubmit={handleSubmitTechnology(onSubmitTechnology)}
+            className="space-y-5"
+          >
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Label
               </label>
               <input
                 type="text"
-                {...registerSubcategory("subcategoryLabel", { required: true })}
+                {...registerTechnology("label", { required: true })}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                placeholder="Enter subcategory label"
+                placeholder="Enter label for technology"
               />
             </div>
             <div>
@@ -167,18 +233,57 @@ const AddCategory = () => {
               </label>
               <input
                 type="text"
-                {...registerSubcategory("subcategoryValue", { required: true })}
+                {...registerTechnology("value", { required: true })}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                placeholder="Enter subcategory value"
+                placeholder="Enter value for technology"
               />
             </div>
             <button
+              disabled={technologyLoading}
               type="submit"
               className="w-full py-3 bg-green-600 text-white font-semibold rounded-md hover:bg-green-700 transition duration-300"
             >
-              Add Subcategory
+              {technologyLoading ? "Adding technology..." : "Add Technology"}
             </button>
           </form>
+
+          {/* Display Technologies */}
+          <div className="mt-8">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">
+              Existing Technologies
+            </h3>
+            {isTechnologiesLoading ? (
+              <p>Loading technologies...</p>
+            ) : (
+              <div className="space-y-4">
+                {technologies?.length !== 0 ? (
+                  technologies?.map((technology) => (
+                    <div
+                      key={technology._id}
+                      className="flex items-center justify-between bg-gray-100 p-4 rounded-md shadow-sm"
+                    >
+                      <div>
+                        <p className="text-gray-800 font-medium">
+                          {technology.label}
+                        </p>
+                        <p className="text-gray-600 text-sm">
+                          Value: {technology.value}
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => handleDeleteTechnology(technology._id)}
+                        className="text-red-500 hover:text-red-700"
+                      >
+                        <FaTrash />
+                      </button>
+                    </div>
+                  ))
+                ) : (
+                  <p>No technologies</p>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -54,7 +54,6 @@ const AddVideo = () => {
         appearance: "error",
         autoDismiss: true,
       });
-      console.log(error.message);
     }
   };
 

@@ -8,13 +8,17 @@ import {
 import TextInput from "../../shared/TextInput";
 import SelectInput from "../../shared/SelectInput";
 import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css"; // Import the styles for React Quill
+import "react-quill/dist/quill.snow.css"; 
 import Loader from "../../shared/Loader";
 import { useGetCategoriesQuery } from "../../../redux/features/allApis/categoryApi/categoryApi";
+import { useGetTechnologiesQuery } from "../../../redux/features/allApis/technologyApi/technologyApi";
 
 const EditWebsiteForm = ({ id, closeModal }) => {
   const { data: websites, isLoading } = useGetAllWebsitesQuery();
-  const { data: categoryOptions } = useGetCategoriesQuery();
+  const { data: categories, isLoading: categoryLoading } =
+    useGetCategoriesQuery();
+  const { data: technologies, isLoading: technoLoading } =
+    useGetTechnologiesQuery();
   const {
     register,
     handleSubmit,
@@ -23,47 +27,31 @@ const EditWebsiteForm = ({ id, closeModal }) => {
   } = useForm();
   const [editWebsite] = useEditWebsiteMutation();
   const [image, setImage] = useState(null);
-  const [modules, setModules] = useState([]);
   const [moduleInput, setModuleInput] = useState("");
   const [details, setDetails] = useState("");
-  const [zipfile, setZipfile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [editIndex, setEditIndex] = useState(null);
   const { addToast } = useToasts();
 
   const selectedWebsite = websites?.find((website) => website._id === id);
+  const handleModuleInputChange = (e) => {
+    setModuleInput(e.target.value);
+  };
+  const [zipfile, setZipfile] = useState(selectedWebsite?.zipfile || null);
+  const [modules, setModules] = useState(selectedWebsite?.features || []);
+
   useEffect(() => {
     if (selectedWebsite?.details) {
       setDetails(selectedWebsite.details);
     }
   }, [selectedWebsite?.details]);
 
-  // const categoryOptions = [
-  //   { label: "News", value: "news" },
-  //   { label: "Ecommerce", value: "e-commerce" },
-  // ];
-
-  const technologyOptions = [
-    { label: "React", value: "react" },
-    { label: "Laravel", value: "laravel" },
-    { label: "Wordpress", value: "wordpress" },
-  ];
-
-  const handleModuleInputChange = (e) => {
-    setModuleInput(e.target.value);
-  };
-
   const addModule = () => {
     if (moduleInput.trim() !== "") {
       setModules([...modules, moduleInput]);
       setModuleInput("");
     }
-  };
-
-  const removeModule = (index) => {
-    const updatedModules = [...modules];
-    updatedModules.splice(index, 1);
-    setModules(updatedModules);
   };
 
   const onSubmit = async (data) => {
@@ -106,6 +94,31 @@ const EditWebsiteForm = ({ id, closeModal }) => {
     } finally {
       setLoading(false);
     }
+  };
+  const startEditing = (index) => {
+    setEditIndex(index);
+    setModuleInput(modules[index]);
+  };
+
+  const saveEdit = () => {
+    if (moduleInput.trim() !== "") {
+      const updatedModules = [...modules];
+      updatedModules[editIndex] = moduleInput;
+      setModules(updatedModules);
+      setEditIndex(null);
+      setModuleInput("");
+    }
+  };
+
+  const cancelEdit = () => {
+    setEditIndex(null);
+    setModuleInput("");
+  };
+
+  const deleteFeature = (index) => {
+    const updatedModules = [...modules];
+    updatedModules.splice(index, 1);
+    setModules(updatedModules);
   };
   if (isLoading) <Loader />;
 
@@ -209,14 +222,18 @@ const EditWebsiteForm = ({ id, closeModal }) => {
             <SelectInput
               name={"category"}
               label={"Category"}
-              options={categoryOptions}
+              options={categories}
               register={register}
+              loading={categoryLoading}
+              defaultValue={selectedWebsite?.category}
             />
             <SelectInput
               name={"technology"}
               label={"Technology"}
-              options={technologyOptions}
+              options={technologies}
               register={register}
+              loading={technoLoading}
+              defaultValue={selectedWebsite?.technology}
             />
             <TextInput
               name={"title"}
@@ -255,7 +272,7 @@ const EditWebsiteForm = ({ id, closeModal }) => {
               defaultValue={selectedWebsite?.unlimitedLicensePrice}
             />
 
-            <div>
+            <div className="md:col-span-2">
               <div className="w-full">
                 <label
                   htmlFor="features"
@@ -267,44 +284,64 @@ const EditWebsiteForm = ({ id, closeModal }) => {
                       type="text"
                       value={moduleInput}
                       onChange={handleModuleInputChange}
-                      placeholder="Add Features "
+                      placeholder="Add or Edit Features"
                       className="w-full h-10 bg-transparent text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-blue-gray-200 focus:border-blue-600"
                     />
-                    <button
-                      type="button"
-                      className="absolute top-1 right-1 py-1.5 px-3 text-white bg-orange-600 rounded"
-                      onClick={addModule}
-                    >
-                      +
-                    </button>
+                    {editIndex !== null ? (
+                      <>
+                        <button
+                          type="button"
+                          className="absolute top-1 right-20 py-1.5 px-3 text-white bg-green-600 rounded"
+                          onClick={saveEdit}
+                        >
+                          Save
+                        </button>
+                        <button
+                          type="button"
+                          className="absolute top-1 right-1 py-1.5 px-3 text-white bg-red-600 rounded"
+                          onClick={cancelEdit}
+                        >
+                          Cancel
+                        </button>
+                      </>
+                    ) : (
+                      <button
+                        type="button"
+                        className="absolute top-1 right-1 py-1.5 px-3 text-white bg-orange-600 rounded"
+                        onClick={addModule}
+                      >
+                        +
+                      </button>
+                    )}
                   </div>
                 </label>
               </div>
               <ul className="mt-2">
-                {modules.length > 0
-                  ? modules.map((module, index) => (
-                      <li
-                        key={index}
-                        className="flex items-center justify-between bg-blue-gray-50 rounded p-2 text-sm text-blue-gray-900"
-                      >
-                        {module}
+                {modules.length > 0 &&
+                  modules.map((module, index) => (
+                    <li
+                      key={index}
+                      className="flex items-center justify-between bg-blue-gray-50 rounded p-2 text-sm text-blue-gray-900"
+                    >
+                      {module}
+                      <div className="flex gap-2">
                         <button
                           type="button"
-                          onClick={() => removeModule(index)}
+                          onClick={() => startEditing(index)}
+                          className="text-green-600"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => deleteFeature(index)}
                           className="text-red-600"
                         >
-                          Remove
+                          Delete
                         </button>
-                      </li>
-                    ))
-                  : selectedWebsite?.features?.map((feature) => (
-                      <li
-                        key={feature}
-                        className="flex items-center justify-between bg-blue-gray-50 rounded p-2 text-sm text-blue-gray-900"
-                      >
-                        {feature}
-                      </li>
-                    ))}
+                      </div>
+                    </li>
+                  ))}
               </ul>
             </div>
 
@@ -340,7 +377,6 @@ const EditWebsiteForm = ({ id, closeModal }) => {
                 </span>
               )}
             </div>
-
             {/* Zip File Upload */}
             <div className="flex flex-col justify-center md:col-span-2">
               <label

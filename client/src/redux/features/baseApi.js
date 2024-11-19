@@ -13,11 +13,12 @@ const baseApi = createApi({
     "videos",
     "orders",
     "categories",
-    "subcategories",
+    "technologies",
     "homeControls",
     "controlLogos",
     "controlVideos",
     "reviews",
+    "paymentMethods",
   ],
   endpoints: () => ({}),
 });
